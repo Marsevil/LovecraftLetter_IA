@@ -1,0 +1,59 @@
+classDiagram
+    class Sanity {
+    <<enumeration>>
+        SANE
+        INSANE
+        NEUTRAL
+    }
+
+    class Card {
+    <<interface>>
+        - name : string
+        - description : string
+        - value : int
+        - sanity : Sanity
+
+        + getDescrption() string
+        + getName() string
+        + getValue() int
+        + hasInsane()* bool
+        + effect(sanity : Sanity)* void
+    }
+
+    class SaneCard {
+    <<abstract>>
+        + effect(sanity : Sanity)* void
+        + hasInsane() bool
+    }
+
+    class InsaneCard {
+    <<abstract>>
+        + effect(sanity : Sanity)* void
+        + hasInsane() bool
+    }
+
+    class SpecifiedCard {
+        + effect(sanity : Sanity) void
+    }
+
+    class GameManager {
+        
+    }
+
+    class Player {
+        - saneToken : int
+        - insaneToken : int
+
+        + updateToken() void
+        + getSaneToken() int
+        + getInsaneToken() int
+    }
+
+    Card <|.. SaneCard
+    InsaneCard <|.. SaneCard
+    SpecifiedCard <|.. SaneCard
+    SpecifiedCard <|.. InsaneCard
+    Player "1" -- "0..*" Card : hand
+    Player "1" -- "0..*" Card : discard
+    GameManager "1" -- "0..*" Card : deck
+    GameManager "1" -- "2..6" Player
