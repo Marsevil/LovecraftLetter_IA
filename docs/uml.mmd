@@ -13,6 +13,7 @@ classDiagram
         - value : int
         - sanity : Sanity
 
+        + Card(_name : string, _description : string, _value : int)
         + getDescrption() string
         + getName() string
         + getValue() int
@@ -22,22 +23,27 @@ classDiagram
 
     class SaneCard {
     <<abstract>>
+        + SaneCard(_name : string, _description : string, _value : int)
         + effect(sanity : Sanity)* void
         + hasInsane() bool
     }
 
     class InsaneCard {
     <<abstract>>
+        + InsaneCard(_name : string, _description : string, _value : int)
         + effect(sanity : Sanity)* void
         + hasInsane() bool
     }
 
     class SpecifiedCard {
+        + SpecifiedCard(_name : string, _description : string, _value : int)
         + effect(sanity : Sanity) void
     }
 
     class GameManager {
-        
+        - currentPlayer : Player
+        + GameManager() void
+        + getCurrentPlayerHand() void
     }
 
     class Player {
