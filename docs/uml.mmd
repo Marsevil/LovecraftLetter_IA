@@ -36,7 +36,7 @@ classDiagram
     }
 
     class SpecifiedCard {
-        + SpecifiedCard()
+        + SpecifiedCard(_name : string, _description : string, _value : int)
         + effect(sanity : Sanity) void
     }
 
@@ -52,8 +52,11 @@ classDiagram
         - insaneToken : int
 
         + updateToken() void
+        + getHand() : List<Card>
+        + getDiscard() : List<Card>
         + getSaneToken() int
         + getInsaneToken() int
+        + roundWon() : void
     }
 
     class Application {
