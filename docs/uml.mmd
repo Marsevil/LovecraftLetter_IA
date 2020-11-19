@@ -13,6 +13,7 @@ classDiagram
         - value : int
         - sanity : Sanity
 
+        + Card(_name : string, _description : string, _value : int)
         + getDescrption() string
         + getName() string
         + getValue() int
@@ -22,22 +23,28 @@ classDiagram
 
     class SaneCard {
     <<abstract>>
+        + SaneCard(_name : string, _description : string, _value : int)
         + effect(sanity : Sanity)* void
         + hasInsane() bool
     }
 
     class InsaneCard {
     <<abstract>>
+        + InsaneCard(_name : string, _description : string, _value : int)
         + effect(sanity : Sanity)* void
         + hasInsane() bool
     }
 
     class SpecifiedCard {
+        + SpecifiedCard()
         + effect(sanity : Sanity) void
     }
 
     class GameManager {
-        
+        - roundNumber : int
+
+        + GameManager(nbPlayer : int)
+        + isGameEnd() : int
     }
 
     class Player {
@@ -49,6 +56,10 @@ classDiagram
         + getInsaneToken() int
     }
 
+    class Application {
+        + Application()
+    }
+
     Card <|.. SaneCard
     InsaneCard <|.. SaneCard
     SpecifiedCard <|.. SaneCard
@@ -57,3 +68,5 @@ classDiagram
     Player "1" -- "0..*" Card : discard
     GameManager "1" -- "0..*" Card : deck
     GameManager "1" -- "2..6" Player
+    GameManager "1" -- "1" Player : Current
+    Application "1" -- "1" GameManager
