@@ -1,4 +1,4 @@
-class SaneCard:
+class SaneCard (Card):
     """ SaneCard class (abstract) is defined by :
         - SaneCard(_name : string, _description : string, _value : int)
         - effect(sanity : Sanity)
@@ -6,9 +6,7 @@ class SaneCard:
 
 
     def __init__(self, _name, _description, _value):
-        self.name = _name
-        self.description = _description
-        self.value = _value
+        super().__init__(_name, _description, _value)
 
 
     def hasInsane():
