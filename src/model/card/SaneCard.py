@@ -11,8 +11,5 @@ class SaneCard:
         self.value = _value
 
 
-    def effect(sanity): pass
-
     def hasInsane():
         return False
-        
