@@ -29,7 +29,7 @@ class Player:
 
     def play():
         return 0
-        
+
     def getHand():
         return self.hand
 
@@ -53,4 +53,3 @@ class Player:
 
     def setInsaneTocken(insaneToken):
         self.insaneToken = insaneToken
-
