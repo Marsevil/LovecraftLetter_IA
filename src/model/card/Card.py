@@ -8,7 +8,9 @@ class Card(ABC):
     
     @abstractmethod
     def __init__(self,name,description,value):
-        ...
+        self._name = name
+        self._description = description
+        self._value = value
 
     @property
     def name(self):
