@@ -1,0 +1,67 @@
+
+##Test part
+#class Implementation(Card):
+#    
+#    _name = "Default name"
+#    
+#    def __init__(self,name,description,value):
+#        self._name = name
+#        self._description = description
+#        self._value = value
+#    
+#    @property
+#    def name(self):
+#        return self._name
+#
+#
+#    @name.setter
+#    def name(self, newvalue):
+#        self._name = newvalue
+#
+#
+#    def getName(self):
+#        return self._name
+#    
+#    @property
+#    def description(self):
+#        return self._description
+#
+#
+#    @description.setter
+#    def description(self, newvalue):
+#        self._description = newvalue
+#
+#
+#    def getDescription(self):
+#        return self._description
+#
+#    @property
+#    def value(self):
+#        return self._value
+#
+#
+#    @value.setter
+#    def value(self, newvalue):
+#        self._value = newvalue
+#
+#
+#    def getValue(self):
+#        return self._value
+#    
+#    @property
+#    def sanity(self):
+#        return self._sanity
+#
+#
+#    @sanity.setter
+#    def sanity(self, newvalue):
+#        self._sanity = newvalue
+#
+#
+#    def getSanity(self):
+#        return self._sanity
+#
+#i = Implementation("t","a",2)
+#print('Implementation.value:', i.value)
+
+
