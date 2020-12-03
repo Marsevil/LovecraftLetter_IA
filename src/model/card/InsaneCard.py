@@ -4,12 +4,9 @@ import SaneCard
 class InsaneCard(SaneCard):
 
     ## Constructor
+    @abstractmethod
     def __init__(self, _name, _description, _value):
         super().__init__(_name, _description, _value)
-
-    ## @inherit
-    def effect(sanity):
-        pass
 
     ## @inherit
     def hasInsane():
