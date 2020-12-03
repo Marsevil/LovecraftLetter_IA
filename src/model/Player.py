@@ -1,7 +1,6 @@
-#coding: utf-8
-
 class Player:
 
+    ##Constructor
     def __init__(self, saneToken, insaneTocken, hand, discard, knockedOut):
         #number of sane tocken
         self.saneToken = saneToken
