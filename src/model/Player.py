@@ -1,3 +1,5 @@
+from card import Card, Sanity
+
 class Player:
 
     ##Constructor
@@ -10,24 +12,54 @@ class Player:
         self.discard = discard
         #true if the player is knocked out of the current round
         self.knockedOut = knockedOut
-    
-    def updateTocken():
-        #the state of mind of the player
-        mind = "sane"
 
+    def stateOfMind():
+        #search the current state of mind of the player
+        mind = Sanity.SANE
+        
         #browse the discard pile
         for card in self.getDiscard:
             if (card.hasInsane()):
-                mind = "insane"
+                mind = Sanity.INSANE
+    
+        return mind
+
+    def updateTocken():
+        #get the current state of mind
+        mind = self.stateOfMind()
 
         #update state of mind tocken
-        if (mind == "sane"):
+        if (mind == Sanity.SANE):
             self.setSaneToken(self.getSaneTocken() + 1)
         else:
             self.setInsaneTocken(self.getInsaneTocken() + 1)
 
-    def play():
-        return 0
+    def play(cardPos,effectMind):
+        #the card that is played
+        card = self.getHand()[cardPos]
+
+        #check if the player can apply an insane effect
+        #and if the card has an insane effect
+        if(effectMind == Sanity.INSANE):
+
+            #get the current state of mind
+            mind = self.stateOfMind()
+
+            cardInsane = card.hasInsane()
+
+            #if playing an insane effect is impossible
+            #force to apply the sane one
+            if((mind != Sanity.INSANE) or (not cardInsane)):
+                effectMind = Sanity.Sane
+
+        #apply the effect of the card
+        card.effect(effectMind)
+
+        #move the card in the discard pile
+        newDiscard = self.getDiscard().push(card)
+        self.setDiscard(newDiscard)
+        newHand = self.getHand().remove(card)
+        self.setHand(newHand)
 
     def getHand():
         return self.hand
