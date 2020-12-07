@@ -1,5 +1,6 @@
-from enum import Enum
+from enum import Enum, unique
 
+@unique
 class Sanity(Enum):
     SANE = 1
     INSANE = 2
