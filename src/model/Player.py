@@ -13,39 +13,39 @@ class Player:
         #true if the player is knocked out of the current round
         self.knockedOut = knockedOut
 
-    def stateOfMind():
+    def stateOfMind(self):
         #search the current state of mind of the player
         mind = Sanity.SANE
         
         #browse the discard pile
         for card in self.getDiscard:
-            if (card.hasInsane()):
+            if (card.hasInsane(self)):
                 mind = Sanity.INSANE
     
         return mind
 
-    def updateTocken():
+    def updateTocken(self):
         #get the current state of mind
-        mind = self.stateOfMind()
+        mind = self.stateOfMind(self)
 
         #update state of mind tocken
         if (mind == Sanity.SANE):
-            self.setSaneToken(self.getSaneTocken() + 1)
+            self.setSaneToken(self,self.getSaneTocken(self) + 1)
         else:
-            self.setInsaneTocken(self.getInsaneTocken() + 1)
+            self.setInsaneTocken(self,self.getInsaneTocken(self) + 1)
 
-    def play(cardPos,effectMind):
+    def play(self,cardPos,effectMind):
         #the card that is played
-        card = self.getHand()[cardPos]
+        card = self.getHand(self)[cardPos]
 
         #check if the player can apply an insane effect
         #and if the card has an insane effect
         if(effectMind == Sanity.INSANE):
 
             #get the current state of mind
-            mind = self.stateOfMind()
+            mind = self.stateOfMind(self)
 
-            cardInsane = card.hasInsane()
+            cardInsane = card.hasInsane(self)
 
             #if playing an insane effect is impossible
             #force to apply the sane one
@@ -53,34 +53,34 @@ class Player:
                 effectMind = Sanity.Sane
 
         #apply the effect of the card
-        card.effect(effectMind)
+        card.effect(self,effectMind)
 
         #move the card in the discard pile
-        newDiscard = self.getDiscard().push(card)
-        self.setDiscard(newDiscard)
-        newHand = self.getHand().remove(card)
-        self.setHand(newHand)
+        newDiscard = self.getDiscard(self).push(card)
+        self.setDiscard(self,newDiscard)
+        newHand = self.getHand(self).remove(card)
+        self.setHand(self,newHand)
 
-    def getHand():
+    def getHand(self):
         return self.hand
 
-    def setHand(hand):
+    def setHand(self,hand):
         self.hand = hand
 
-    def getDiscard():
+    def getDiscard(self):
         return self.discard
 
-    def setDiscard(discard):
+    def setDiscard(self,discard):
         self.discard = discard
 
-    def getSaneTocken():
+    def getSaneTocken(self):
         return self.saneToken
 
-    def setSaneTocken(saneToken):
+    def setSaneTocken(self,saneToken):
         self.saneToken = saneToken
 
-    def getInsaneTocken():
+    def getInsaneTocken(self):
         return self.insaneTocken
 
-    def setInsaneTocken(insaneToken):
+    def setInsaneTocken(self,insaneToken):
         self.insaneToken = insaneToken
