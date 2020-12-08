@@ -1,0 +1,5 @@
+# folder for local test
+local
+
+# Python exec files
+*__pycache__*
