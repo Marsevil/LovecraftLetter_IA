@@ -1,4 +1,4 @@
-from abc import ABC
+from abc import ABC, abstractmethod
 
 
 """@package cad
@@ -12,6 +12,7 @@ class Card(ABC):
         self._description = description
         self._value = value
 
+    
     @property
     def name(self):
         ...
