@@ -1,11 +1,17 @@
 from abc import ABC, abstractmethod
 
 
-"""@package cad
-Card abstract class for IA41 LoveCraftLetter
+"""@package card
+Card abstract class for IA41 LoveCraftLetter.
+General eprensentation of a game card.
 """
 class Card(ABC):
     
+    """
+    @name Name of the card
+    @description Description of what the card does
+    @value Number of the card, used to determine game winner.
+    """
     @abstractmethod
     def __init__(self,name,description,value):
         self._name = name
