@@ -1,4 +1,5 @@
-from card import Card, Sanity
+from card import Card
+from card import Sanity
 
 class Player:
 
@@ -18,8 +19,8 @@ class Player:
         mind = Sanity.SANE
         
         #browse the discard pile
-        for card in self.getDiscard:
-            if (card.hasInsane(self)):
+        for card in self.getDiscard(card):
+            if (card.hasInsane(card)):
                 mind = Sanity.INSANE
     
         return mind
@@ -45,7 +46,7 @@ class Player:
             #get the current state of mind
             mind = self.stateOfMind(self)
 
-            cardInsane = card.hasInsane(self)
+            cardInsane = card.hasInsane(card)
 
             #if playing an insane effect is impossible
             #force to apply the sane one
@@ -53,7 +54,7 @@ class Player:
                 effectMind = Sanity.Sane
 
         #apply the effect of the card
-        card.effect(self,effectMind)
+        card.effect(card,effectMind)
 
         #move the card in the discard pile
         newDiscard = self.getDiscard(self).push(card)
