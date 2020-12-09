@@ -16,21 +16,32 @@ class Player:
         #true if the player is immuned to card effect of other players for the current round
         self.immune = immune
 
+    def nbInsaneCardDiscarded(self):
+        #seach the number of insane card in the discard pile
+        nbInsane = 0
+
+        #browse the discard pile
+        for card in self.getDiscard():
+            if (card.hasInsane()):
+                nbInsane += 1
+
+        return nbInsane
+
     def stateOfMind(self):
         #search the current state of mind of the player
         mind = Sanity.SANE
         
-        #browse the discard pile
-        for card in self.getDiscard():
-            if (card.hasInsane()):
-                mind = Sanity.INSANE
+        nbInsane = self.stateOfMind()
+
+        if (nbInsane != 0):
+            mind = Sanity.INSANE
     
         return mind
 
     def updateTocken(self):
         #get the current state of mind
         mind = self.stateOfMind()
-
+         
         #update state of mind tocken
         if (mind == Sanity.SANE):
             self.setSaneToken(self.getSaneTocken() + 1)
@@ -47,7 +58,7 @@ class Player:
 
             #get the current state of mind
             mind = self.stateOfMind()
-
+         
             cardInsane = card.hasInsane()
 
             #if playing an insane effect is impossible
