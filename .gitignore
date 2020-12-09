@@ -1,2 +1,8 @@
 #macOs hidden files
 *.DS_Store*
+
+# folder for local test
+local
+
+# Python exec files
+*__pycache__*
