@@ -16,39 +16,54 @@ class Player:
         #true if the player is immuned to card effect of other players for the current round
         self.immune = immune
 
+    def nbInsaneCardDiscarded(self):
+        #seach the number of insane card in the discard pile
+        nbInsane = 0
+
+        #browse the discard pile
+        for card in self.getDiscard():
+            if (card.hasInsane()):
+                nbInsane += 1
+
+        return nbInsane
+
     def stateOfMind(self):
         #search the current state of mind of the player
         mind = Sanity.SANE
         
-        #browse the discard pile
-        for card in self.getDiscard(card):
-            if (card.hasInsane(card)):
-                mind = Sanity.INSANE
+        nbInsane = self.stateOfMind()
+
+        if (nbInsane != 0):
+            mind = Sanity.INSANE
     
         return mind
 
     def updateTocken(self):
         #get the current state of mind
-        mind = self.stateOfMind(self)
-
+        mind = self.stateOfMind()
+         
         #update state of mind tocken
         if (mind == Sanity.SANE):
-            self.setSaneToken(self,self.getSaneTocken(self) + 1)
+            self.setSaneToken(self.getSaneTocken() + 1)
         else:
-            self.setInsaneTocken(self,self.getInsaneTocken(self) + 1)
+            self.setInsaneTocken(self.getInsaneTocken() + 1)
 
     def play(self,cardPos,effectMind):
+        #delete the immunity of the player if he was immune in the last round
+        if(self.getImmune):
+            self.setImmune(False)
+
         #the card that is played
-        card = self.getHand(self)[cardPos]
+        card = self.getHand()[cardPos]
 
         #check if the player can apply an insane effect
         #and if the card has an insane effect
         if(effectMind == Sanity.INSANE):
 
             #get the current state of mind
-            mind = self.stateOfMind(self)
-
-            cardInsane = card.hasInsane(card)
+            mind = self.stateOfMind()
+         
+            cardInsane = card.hasInsane()
 
             #if playing an insane effect is impossible
             #force to apply the sane one
@@ -56,13 +71,13 @@ class Player:
                 effectMind = Sanity.Sane
 
         #apply the effect of the card
-        card.effect(card,effectMind)
+        card.effect(effectMind)
 
         #move the card in the discard pile
-        newDiscard = self.getDiscard(self).push(card)
-        self.setDiscard(self,newDiscard)
-        newHand = self.getHand(self).remove(card)
-        self.setHand(self,newHand)
+        newDiscard = self.getDiscard().push(card)
+        self.setDiscard(newDiscard)
+        newHand = self.getHand().remove(card)
+        self.setHand(newHand)
 
     def getHand(self):
         return self.hand
