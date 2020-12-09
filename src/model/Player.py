@@ -49,6 +49,10 @@ class Player:
             self.setInsaneTocken(self.getInsaneTocken() + 1)
 
     def play(self,cardPos,effectMind):
+        #delete the immunity of the player if he was immune in the last round
+        if(self.getImmune):
+            self.setImmune(False)
+
         #the card that is played
         card = self.getHand()[cardPos]
 
