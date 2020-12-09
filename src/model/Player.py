@@ -1,14 +1,14 @@
-from card import Card
-from card import Sanity
+from card.Card import Card
+from card.Sanity import Sanity
 
 class Player:
 
     ##Constructor
-    def __init__(self, saneToken, insaneTocken, hand, discard, knockedOut, immune):
-        #number of sane tocken
+    def __init__(self, saneToken, insaneToken, hand, discard, knockedOut, immune):
+        #number of sane token
         self.saneToken = saneToken
-        #number of insane tocken
-        self.insaneTocken = insaneTocken
+        #number of insane token
+        self.insaneToken = insaneToken
         self.hand = hand
         self.discard = discard
         #true if the player is knocked out of the current round
@@ -38,15 +38,15 @@ class Player:
     
         return mind
 
-    def updateTocken(self):
+    def updateToken(self):
         #get the current state of mind
         mind = self.stateOfMind()
          
-        #update state of mind tocken
+        #update state of mind token
         if (mind == Sanity.SANE):
-            self.setSaneToken(self.getSaneTocken() + 1)
+            self.setSaneToken(self.getSaneToken() + 1)
         else:
-            self.setInsaneTocken(self.getInsaneTocken() + 1)
+            self.setInsaneToken(self.getInsaneToken() + 1)
 
     def play(self,cardPos,effectMind):
         #delete the immunity of the player if he was immune in the last round
@@ -68,7 +68,7 @@ class Player:
             #if playing an insane effect is impossible
             #force to apply the sane one
             if((mind != Sanity.INSANE) or (not cardInsane)):
-                effectMind = Sanity.Sane
+                effectMind = Sanity.SANE
 
         #apply the effect of the card
         card.effect(effectMind)
@@ -91,16 +91,16 @@ class Player:
     def setDiscard(self,discard):
         self.discard = discard
 
-    def getSaneTocken(self):
+    def getSaneToken(self):
         return self.saneToken
 
-    def setSaneTocken(self,saneToken):
+    def setSaneToken(self,saneToken):
         self.saneToken = saneToken
 
-    def getInsaneTocken(self):
-        return self.insaneTocken
+    def getInsaneToken(self):
+        return self.insaneToken
 
-    def setInsaneTocken(self,insaneToken):
+    def setInsaneToken(self,insaneToken):
         self.insaneToken = insaneToken
 
     def getKnockedOut(self):
