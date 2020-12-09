@@ -46,6 +46,7 @@ class GameManager:
 
         return -1 # -1 if no player end the game.
 
+    ## Start a new round.
     def startNewRound(self) :
         self.currentPlayer = 0
         self.roundNumber += 1
@@ -58,3 +59,43 @@ class GameManager:
         # Give some cards to players
         for player in self.players :
             player.setHand(self.buildHand())
+            player.setKnockedOut(False)
+
+    ## Call play function of the current player & pass to the next player.
+    def play(self, cardNumber) :
+        self.players[self.currentPlayer].play(cardNumber)
+
+        # Switch to the next player.
+        self.currentPlayer = self.currentPlayer + 1 if self.currentPlayer < len(self.players) else 0
+
+        if self.deck :
+            # Pick up a card
+            self.players[self.currentPlayer].pickUp(self.deck.pop())
+
+    ## Check if the round is ended.
+    def isRoundEnd(self) :
+        # All players are knocked out.
+        winner = -1
+        for player in range(len(self.players)) :
+            if self.players[player].getKnockedOut() :
+                if winner == -1 :
+                    winner = player
+            
+        # Le deck est vide : chaque joueur joue la carte qu'il a en main et celui qui a la plus grosse gagne.
+        if not self.players and winner == -1 :
+            greaterValue = -1
+            for player in range(len(self.players)) :
+                value = self.players[player].getHand()[-1].getValue()
+                if value > greaterValue :
+                    greaterValue = value
+                    winner = player
+                elif value == greaterValue :
+                    # Si plusieurs on le même ils sont éliminés.
+                    self.players[player].setKnockedOut(True)
+                    self.players[winner].setKnockedOut(True)
+                    winner = self.isRoundEnd()
+
+            if winner == -1 :
+                winner = -2
+
+        return winner
