@@ -1,1 +1,0 @@
-from InsaneCard import InsaneCard
