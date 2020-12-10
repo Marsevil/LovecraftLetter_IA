@@ -48,7 +48,7 @@ class Player:
         else:
             self.setInsaneToken(self.getInsaneToken() + 1)
 
-    def play(self,cardPos,effectMind):
+    def play(self,cardPos,effectSanity):
         #delete the immunity of the player if he was immune in the last round
         if(self.getImmune):
             self.setImmune(False)
@@ -56,22 +56,8 @@ class Player:
         #the card that is played
         card = self.getHand()[cardPos]
 
-        #check if the player can apply an insane effect
-        #and if the card has an insane effect
-        if(effectMind == Sanity.INSANE):
-
-            #get the current state of mind
-            mind = self.stateOfMind()
-         
-            cardInsane = card.hasInsane()
-
-            #if playing an insane effect is impossible
-            #force to apply the sane one
-            if((mind != Sanity.INSANE) or (not cardInsane)):
-                effectMind = Sanity.SANE
-
         #apply the effect of the card
-        card.effect(effectMind)
+        card.effect(effectSanity)
 
         #move the card in the discard pile
         newDiscard = self.getDiscard().push(card)
