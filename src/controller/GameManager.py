@@ -1,7 +1,9 @@
 from ..model.Player import Player
+from ..model.card.Sanity import Sanity
 
 class GameManager:
-    def __init__(self, nbPlayer) :
+    def __init__(self, view, nbPlayer) :
+        self.view = view
         # players indice to the player currently playing.
         self.currentPlayer = 0
         # Count round from the beginning, negative number means that the game isn't started.
@@ -11,7 +13,7 @@ class GameManager:
         self.players = []
 
         # Instantiate as many players as nbPlayer defines.
-        for i in range(nbPlayer) :
+        for _i in range(nbPlayer) :
             self.players.append(Player(0, 0, [], [], False, False))
 
         self.startNewRound()
@@ -64,9 +66,29 @@ class GameManager:
             player.setHand(self.buildHand())
             player.setKnockedOut(False)
 
-    ## Call play function of the current player & pass to the next player.
+    ## Apply effect of the card choosen by the player.
+    ## @params cardNumber index of card in the hand of currentPlayer.
     def play(self, cardNumber) :
-        self.players[self.currentPlayer].play(cardNumber)
+        currentPlayer = self.players[self.currentPlayer]
+
+        #the card that is played
+        card = currentPlayer.getCardFromHand(cardNumber)
+
+        # If insane card, user can choose which effect will be used.
+        if card.hasInsanity() :
+            card.sanity(self.view.askInsanity())
+        else :
+            card.sanity(Sanity.SANE)
+
+        # Apply card effect
+        card.effect(self)
+
+        # Push on the discard stack.
+        currentPlayer.addDiscardedCard(card)
+
+        #delete the immunity of the player if he was immune in the last round
+        if(currentPlayer.getImmune()):
+            currentPlayer.setImmune(False)
 
         # Switch to the next player.
         self.currentPlayer = self.currentPlayer + 1 if self.currentPlayer < len(self.players) else 0
@@ -102,3 +124,18 @@ class GameManager:
                 winner = -2
 
         return winner
+
+    ## @return the player who is playing.
+    def getCurrentPlayer(self) :
+        return self.players[self.currentPlayer]
+
+    ## @params nbPlayer number of player to ask.
+    ## @return targets choose by the current player.
+    def chooseTargetPlayer(self, nbPlayer) :
+        notImmunePlayers = []
+        for player in self.players :
+            if not player.getImmune() :
+                notImmunePlayers.append(player)
+
+        return self.view.chooseTargetPlayer(nbPlayer, notImmunePlayers)
+

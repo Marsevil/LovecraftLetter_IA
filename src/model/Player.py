@@ -48,23 +48,6 @@ class Player:
         else:
             self.setInsaneToken(self.getInsaneToken() + 1)
 
-    def play(self,cardPos,effectSanity):
-        #delete the immunity of the player if he was immune in the last round
-        if(self.getImmune):
-            self.setImmune(False)
-
-        #the card that is played
-        card = self.getHand()[cardPos]
-
-        #apply the effect of the card
-        card.effect(effectSanity)
-
-        #move the card in the discard pile
-        newDiscard = self.getDiscard().push(card)
-        self.setDiscard(newDiscard)
-        newHand = self.getHand().remove(card)
-        self.setHand(newHand)
-
     def getHand(self):
         return self.hand
 
@@ -100,3 +83,9 @@ class Player:
 
     def setImmune(self,immune):
         self.immune = immune
+
+    def getCardFromHand(self, cardNumber) :
+        return self.hand.pop(cardNumber)
+
+    def addDiscardedCard(self, card) :
+        self.discard.append(card)

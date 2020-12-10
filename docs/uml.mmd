@@ -65,10 +65,13 @@ classDiagram
         + getSaneToken() int
         + getInsaneToken() int
         + roundWon() : void
+        + getCardFromHand(int : cardNumber) : Card
+        + addDiscardedCard(Card : card) : void
     }
 
     class Application {
         + Application()
+        + chooseTargerPlayer(int : nbPlayer, List<Player> players) : List<Player>
     }
 
     Card <|.. SaneCard
