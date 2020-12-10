@@ -55,5 +55,5 @@ class ProfessorHenryArmitage (SaneCard):
             #If the deck is empty he draws the first card 
             #that was removed at the start of the round
             else:
-                chosenOne.pickUp(gameManager.removeCards.pop())
+                chosenOne.pickUp(gameManager.removedCards.pop())
 
