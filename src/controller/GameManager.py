@@ -11,6 +11,8 @@ class GameManager:
         # List of card defining deck.
         self.deck = []
         self.players = []
+        # List of cards that are removed at the beginnig of a round
+        self.removedCards = []
 
         # Instantiate as many players as nbPlayer defines.
         for _i in range(nbPlayer) :
@@ -57,9 +59,13 @@ class GameManager:
         self.roundNumber += 1
         self.deck = GameManager.buildDeck()
 
-        # If 2 players game throw 5 cards.
+        # Remove the top card of the deck.
+        self.removedCards.append(self.deck.pop())
+
+        # If 2 players game remove 5 other cards.
         if len(self.players) <= 2 :
-            del self.deck[-5:]
+            for i in range(5) :
+                self.removedCards.append(self.deck.pop())
 
         # Give some cards to players
         for player in self.players :
@@ -130,11 +136,12 @@ class GameManager:
         return self.players[self.currentPlayer]
 
     ## @params nbPlayer number of player to ask.
+    ## @params allowCurrentPlayer if the current player could targets imself or not.
     ## @return targets choose by the current player.
-    def chooseTargetPlayer(self, nbPlayer) :
+    def chooseTargetPlayer(self, nbPlayer, allowCurrentPlayer) :
         notImmunePlayers = []
         for player in self.players :
-            if not player.getImmune() :
+            if (not player.getImmune()) and ((player != self.currentPlayer) or (allowCurrentPlayer)):
                 notImmunePlayers.append(player)
 
         return self.view.chooseTargetPlayer(nbPlayer, notImmunePlayers)
