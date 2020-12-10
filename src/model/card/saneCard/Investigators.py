@@ -27,12 +27,12 @@ class Investigators (SaneCard):
 
 
     def effect(self, gameManager):
-        
+
         #Demande à viser un joueur
         chosenOne = gameManager.chooseTargetPlayer(1)
 
         #Vérifie qu'un joueur non immunisé a pu être choisi
-        if not chosenOne:
+        if(len(chosenOne) != 0):
 
             #Demande à choisir un nombre supérieur à 1
             chosenCard = gameManager.chooseNumber()

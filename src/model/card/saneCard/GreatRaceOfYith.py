@@ -30,7 +30,7 @@ class GreatRaceOfYith (SaneCard):
         chosenOne = gameManager.chooseTargetPlayer(1)
 
         #Vérifie qu'un joueur non immunisé a pu être choisi
-        if not chosenOne:
+        if(len(chosenOne) != 0):
 
             #Cherche qui a la plus petite carte pour l'éjecter, sinon rien
             player = gameManager.getCurrentPlayer()
