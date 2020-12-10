@@ -10,5 +10,6 @@ class InsaneCard(SaneCard):
         super().__init__(_name, _description, _value)
 
     ## @inherit
+    @staticmethod
     def hasInsane():
         return True

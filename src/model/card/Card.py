@@ -71,6 +71,7 @@ class Card(ABC):
     def getSanity(self):
         ...
         
+    @staticmethod
     @abstractmethod
     def hasInsane(self):
         ...

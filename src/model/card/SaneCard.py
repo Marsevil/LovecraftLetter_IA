@@ -12,6 +12,6 @@ class SaneCard (Card):
     def __init__(self, _name, _description, _value):
         super().__init__(_name, _description, _value)
 
-
+    @staticmethod
     def hasInsane():
         return False

@@ -45,6 +45,14 @@ classDiagram
 
         + GameManager(nbPlayer : int)
         + isGameEnd() : int
+        + nextRound() : void
+        + play() : void
+        + chooseTargetPlayer(int : nbPlayer) : List<Player>
+        + sanityCheck() : void
+        + isGameEnd() : int
+        + isRoundEnd() : int
+        + startNewRound() : void
+        + getCurrentPlayer() : Player
     }
 
     class Player {
