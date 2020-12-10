@@ -1,4 +1,5 @@
 from ..SaneCard import SaneCard
+
 class Investigators (SaneCard):
 
     def __init__(self):
@@ -26,14 +27,17 @@ class Investigators (SaneCard):
 
 
     def effect(self, gameManager):
-        #Demande à viser 1 joueur
+        
+        #Demande à viser un joueur
         chosenOne = gameManager.chooseTargetPlayer(1)
 
-        #Demande à choisir un nombre supérieur à 1
-        chosenCard = gameManager.chooseNumber()
+        #Vérifie qu'un joueur non immunisé a pu être choisi
+        if not chosenOne:
 
-        #Éjecte le joueur désigné s'il possède la carte choisie
-        hand = chosenOne.getHand()
-        for(i in range (hand)):
-            if (hand[i] == chosenCard):
+            #Demande à choisir un nombre supérieur à 1
+            chosenCard = gameManager.chooseNumber()
+
+            #Éjecte le joueur désigné s'il possède la carte choisie
+            targetHand = chosenOne.getHand()
+            if (targetHand[0] == chosenCard):
                 chosenOne.knockedOut = True
