@@ -27,4 +27,33 @@ class ProfessorHenryArmitage (SaneCard):
 
 
     def effect(self, gameManager):
-        pass
+        #Choose a player (including itself)
+        chosenOne = gameManager.chooseTargetPlayer(1, True)
+
+        #Check if a not immuned player could has been chosen
+        if(len(chosenOne) != 0):
+
+            #Discard the hand of the target player
+            targetHand = chosenOne.getHand()
+            for card in targetHand:
+
+                #Only apply the effect if the card is The Necromicon
+                if (card.getName() == "The Necromicon"):
+                    card.effect(gameManager)
+                #or cthulhu, but this time ask the view for the saniy of its effect
+                elif (card.getName() == "Cthulhu"):
+                    effectSanity = gameManager.view.askInsanity()
+                    card.sanity(effectSanity)
+                    card.effect(gameManager)
+
+                chosenOne.addDiscardedCard(card)
+
+            #The target player draws a new card 
+            if self.deck :
+                #Draw a card
+                chosenOne.pickUp(gameManager.deck.pop())
+            #If the deck is empty he draws the first card 
+            #that was removed at the start of the round
+            else:
+                chosenOne.pickUp(gameManager.removeCards.pop())
+
