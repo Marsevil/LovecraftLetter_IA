@@ -23,4 +23,16 @@ class RandolphCarter (SaneCard):
 
 
     def effect(self, gameManager):
-        pass
+        #Demande à viser un joueur
+        chosenOne = gameManager.chooseTargetPlayer(1)
+
+        #Vérifie qu'un joueur non immunisé a pu être choisi
+        if(len(chosenOne) != 0):
+
+            #Échange la main avec le joueur
+            playerHand = gameManager.getCurrentPlayer().getHand()
+            targetHand = chosenOne.getHand()
+
+            temp = playerHand[0]
+            playerHand[0] = targetHand[0]
+            targetHand[0] = temp[0]
