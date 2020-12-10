@@ -40,4 +40,4 @@ class Investigators (SaneCard):
             #Éjecte le joueur désigné s'il possède la carte choisie
             targetHand = chosenOne.getHand()
             if (targetHand[0] == chosenCard):
-                chosenOne.knockedOut = True
+                chosenOne.setKnockedOut(True)
