@@ -1,5 +1,5 @@
-from card.Card import Card
-from card.Sanity import Sanity
+#from card.Card import Card
+#from card.Sanity import Sanity
 
 class Player:
 

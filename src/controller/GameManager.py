@@ -8,11 +8,11 @@ class GameManager:
         self.roundNumber = -1
         # List of card defining deck.
         self.deck = []
+        self.players = []
 
         # Instantiate as many players as nbPlayer defines.
         for i in range(nbPlayer) :
-            self.players = []
-            self.players[i] = Player(0, 0, [], [], False)
+            self.players.append(Player(0, 0, [], [], False, False))
 
         self.startNewRound()
 
@@ -25,13 +25,16 @@ class GameManager:
         print('Not implemented yet : model.Player.buildDeck()')
         deck = []
         for i in range(30) :
-            deck.append('card' + i)
+            deck.append('card' + str(i))
+
         return deck
 
     ## Builds a hand by drawing
     def buildHand(self) :
         hand = []
         hand.append(self.deck.pop())
+
+        return hand
 
     ## Determines if the game is finished.
     def isGameEnd(self) :

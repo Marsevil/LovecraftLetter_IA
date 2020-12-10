@@ -1,4 +1,4 @@
-from SaneCard import SaneCard
+from .SaneCard import SaneCard
 from abc import ABC, abstractmethod
 
 ## Describe AbstractInsaneCard

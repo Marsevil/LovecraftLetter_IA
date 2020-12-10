@@ -1,4 +1,4 @@
-from Card import Card
+from .Card import Card
 from abc import ABC, abstractmethod
 
 
