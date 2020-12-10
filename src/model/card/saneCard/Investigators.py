@@ -11,5 +11,29 @@ class Investigators (SaneCard):
                             "Liber Ivonis), this card is discarded without" +
                             "effect." , 1)
 
-    def effect(self) :
-        print('Not implemented yet')
+    @property
+    def sanity(self):
+        return self._sanity
+
+
+    @sanity.setter
+    def sanity(self, newvalue):
+        self._sanity = newvalue
+
+
+    def getSanity(self):
+        return self._sanity
+
+
+    def effect(self, gameManager):
+        #Demande à viser 1 joueur
+        chosenOne = gameManager.chooseTargetPlayer(1)
+
+        #Demande à choisir un nombre supérieur à 1
+        chosenCard = gameManager.chooseNumber()
+
+        #Éjecte le joueur désigné s'il possède la carte choisie
+        hand = chosenOne.getHand()
+        for(i in range (hand)):
+            if (hand[i] == chosenCard):
+                chosenOne.knockedOut = True
