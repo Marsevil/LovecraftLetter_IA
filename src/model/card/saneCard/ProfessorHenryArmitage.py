@@ -46,7 +46,7 @@ class ProfessorHenryArmitage (SaneCard):
                     card.sanity(effectSanity)
                     card.effect(gameManager)
                 else:
-                chosenOne.addDiscardedCard(card)
+                    chosenOne.addDiscardedCard(card)
 
                     #The target player draws a new card
                     if self.deck :
