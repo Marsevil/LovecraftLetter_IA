@@ -35,7 +35,7 @@ class Investigators (SaneCard):
             #Demande à choisir un nombre supérieur à 1
             chosenCard = gameManager.chooseNumber()
 
-            #Éjecte le joueur désigné s'il possède la carte choisie
+            #Éjecte le joueur désigné s'il possède la carte choisie et qu'il peut être éjecté
             targetHand = chosenOne.getHand()
-            if (targetHand[0] == chosenCard):
+            if ((targetHand[0] == chosenCard) and chosenOne.isKnockableOut()):
                 chosenOne.setKnockedOut(True)

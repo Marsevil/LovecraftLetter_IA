@@ -38,6 +38,8 @@ class GreatRaceOfYith (SaneCard):
             targetHand = chosenOne.getHand()
 
             if(playerHand[0].getValue() < targetHand[0].getvalue()):
-                player.setKnockedOut(True)
+                if(player.isKnockableOut()):
+                    player.setKnockedOut(True)
             elif(playerHand[0].getValue() > targetHand[0].getvalue()):
-                chosenOne.setKnockedOut(True)
+                if(chosenOne.isKnockableOut()):
+                    chosenOne.setKnockedOut(True)
