@@ -24,8 +24,20 @@ class CatsOfUlthar(SaneCard):
     def getSanity(self):
         return self._sanity
 
+    """
+    @params gameManager, gameManager entity
+    
+    Choose a player and add his hand in the player KnownCards
+    """
     def effect(self,gameManager):
-        pass
+        player = gameManager.getCurrentPlayer()
+        chosenPlayer = gameManager.chooseTargetPlayer(1, False)
 
-chat = CatsOfUlthar()
-print(chat.value)
+        #Check if a player is returned
+        if(len(chosenPlayer) != 0):
+            chosenPlayerHand = chosenPlayer.getHand()
+            
+            #TODO Delete print
+            print(chosenPlayerHand)
+            
+            player.addKnownCards(chosenPlayerHand)
