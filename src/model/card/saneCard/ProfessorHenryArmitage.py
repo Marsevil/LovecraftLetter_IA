@@ -45,15 +45,14 @@ class ProfessorHenryArmitage (SaneCard):
                     effectSanity = gameManager.view.askInsanity()
                     card.sanity(effectSanity)
                     card.effect(gameManager)
-
+                else:
                 chosenOne.addDiscardedCard(card)
 
-            #The target player draws a new card 
-            if self.deck :
-                #Draw a card
-                chosenOne.pickUp(gameManager.deck.pop())
-            #If the deck is empty he draws the first card 
-            #that was removed at the start of the round
-            else:
-                chosenOne.pickUp(gameManager.removedCards.pop())
-
+                    #The target player draws a new card
+                    if self.deck :
+                        #Draw a card
+                        chosenOne.pickUp(gameManager.deck.pop())
+                    #If the deck is empty he draws the first card
+                    #that was removed at the start of the round
+                    else:
+                        chosenOne.pickUp(gameManager.removedCards.pop())

@@ -4,9 +4,9 @@ class ElderSign (SaneCard):
 
     def __init__(self):
         super().__init__("Elder Sign", "The most plausible theory is that" +
-                            "this is a weapon made to fight the Great Old Ones." +
-                            "It is a symbol carved into stone, and can be" +
-                            "used as a repellent against their servitors.", 1)
+                            "this is a weapon made to fight the Great Old" +
+                            "Ones. It is a symbol carved into stone, and can" +
+                            "be used as a repellent against their servitors.",1)
 
     @property
     def sanity(self):
