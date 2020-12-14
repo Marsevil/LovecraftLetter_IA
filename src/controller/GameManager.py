@@ -81,7 +81,7 @@ class GameManager:
         card = currentPlayer.getCardFromHand(cardNumber)
 
         #the card that is played
-        while (self.checkPlayableCard()) :
+        while (self.checkPlayableCard(card)) :
             currentPlayer.pickUp(card)
 
             card = currentPlayer.getCardFromHand(self.view.cardCantBePlayed())
@@ -111,11 +111,16 @@ class GameManager:
 
     ## Check if the round is ended.
     def isRoundEnd(self) :
+        winner = self.findWinnerWthSpecialEffect()
+
         # All players are knocked out.
-        winner = -1
-        for player in range(len(self.players)) :
-            if self.players[player].getKnockedOut() :
-                if winner == -1 :
+        if (winner == -1) :
+            for player in range(len(self.players)) :
+                if not self.players[player].getKnockedOut() :
+                    if winner != -1 :
+                        winner = -1
+                        break
+
                     winner = player
             
         # Le deck est vide : chaque joueur joue la carte qu'il a en main et celui qui a la plus grosse gagne.
@@ -155,11 +160,22 @@ class GameManager:
     def getPlayers(self) :
         return self.players
 
-    def checkPlayableCard(self) :
+    def checkPlayableCard(self, card) :
         otherCard = self.getCurrentPlayer().getHand()[0]
 
-        if (isinstance(otherCard, SilverKey) or isinstance(otherCard, TheShiningTrapezohedron)) :
+        if ((isinstance(otherCard, SilverKey) or isinstance(otherCard, TheShiningTrapezohedron)) and card.getValue() > 4) :
             return False
         else :
             return True
 
+    ## Detect if card like The shining trapezohedron was played.
+    ## @returs -1 if no card end the game. A value that point to the player who won.
+    def findWinnerWthSpecialEffect(self) :
+        winner = -1
+
+        lastCardPlayed = self.getPlayers()[self.currentPlayer - 1].getHand()[-1]
+
+        if (isinstance(lastCardPlayed, TheShiningTrapezohedron) and lastCardPlayed.sanity == Sanity.INSANE) :
+            winner = self.currentPlayer - 1 if self.currentPlayer - 1 > 0 else len(self.players) - 1
+
+        return winner
