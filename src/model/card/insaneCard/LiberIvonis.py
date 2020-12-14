@@ -19,7 +19,7 @@ class LiberIvonis(InsaneCard):
                         "Having a lower number when chosen by someone discarding Great" +
                         "Race of Yith or Hound of Tindalos (Sane effect). \n" +
                         "Discarding The Necronomicon, or Cthulhu during your turn (Sane effect). \n" +
-                        "Discarding Mi-Go Braincase during your turn (Sane and Insane effect).", 2)
+                        "Discarding Mi-Go Braincase during your turn (Sane and Insane effect).", 4)
 
     @property
     def sanity(self):
