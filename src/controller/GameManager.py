@@ -64,7 +64,7 @@ class GameManager:
 
         # If 2 players game remove 5 other cards.
         if len(self.players) <= 2 :
-            for i in range(5) :
+            for _i in range(5) :
                 self.removedCards.append(self.deck.pop())
 
         # Give some cards to players
@@ -77,8 +77,14 @@ class GameManager:
     def play(self, cardNumber) :
         currentPlayer = self.players[self.currentPlayer]
 
-        #the card that is played
+        # The card that the player want to play.
         card = currentPlayer.getCardFromHand(cardNumber)
+
+        #the card that is played
+        while (self.checkPlayableCard()) :
+            currentPlayer.pickUp(card)
+
+            card = currentPlayer.getCardFromHand(self.view.cardCantBePlayed())
 
         # If insane card, user can choose which effect will be used.
         if card.hasInsanity() :
@@ -145,4 +151,15 @@ class GameManager:
                 notImmunePlayers.append(player)
 
         return self.view.chooseTargetPlayer(nbPlayer, notImmunePlayers)
+
+    def getPlayers(self) :
+        return self.players
+
+    def checkPlayableCard(self) :
+        otherCard = self.getCurrentPlayer().getHand()[0]
+
+        if (isinstance(otherCard, SilverKey) or isinstance(otherCard, TheShiningTrapezohedron)) :
+            return False
+        else :
+            return True
 
