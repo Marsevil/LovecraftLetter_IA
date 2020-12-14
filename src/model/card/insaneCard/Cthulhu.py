@@ -35,6 +35,6 @@ class Cthulhu(InsaneCard):
         if self.sanity == Sanity.INSANE:
             player = gameManager.getCurrentPlayer()
             #check if the player have played less than 2 insane cards and could be knock out he is knocked out
-            if(player.nbInsaneCardDiscarded() < 2 and player.isKnockableOut()){
+            if(player.nbInsaneCardDiscarded() < 2 and player.isKnockableOut()):
                 player.setKnockedOut(True)
-            }
+                
