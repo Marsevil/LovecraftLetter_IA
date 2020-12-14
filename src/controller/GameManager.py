@@ -48,8 +48,6 @@ class GameManager:
                 return i
             if player.getInsaneToken() >= 3 :
                 return i
-            if player.getDiscard[-1].getName() == "Chtulhu" :
-                return i
 
         return -1 # -1 if no player end the game.
 
@@ -87,7 +85,7 @@ class GameManager:
             card = currentPlayer.getCardFromHand(self.view.cardCantBePlayed())
 
         # If insane card, user can choose which effect will be used.
-        if card.hasInsanity() :
+        if card.hasInsanity() and currentPlayer.stateOfMind == Sanity.INSANE :
             card.sanity(self.view.askInsanity())
         else :
             card.sanity(Sanity.SANE)
@@ -173,9 +171,26 @@ class GameManager:
     def findWinnerWthSpecialEffect(self) :
         winner = -1
 
-        lastCardPlayed = self.getPlayers()[self.currentPlayer - 1].getHand()[-1]
+        if not self.players[self.currentPlayer - 1].getKnockedOut() :
 
-        if (isinstance(lastCardPlayed, TheShiningTrapezohedron) and lastCardPlayed.sanity == Sanity.INSANE) :
-            winner = self.currentPlayer - 1 if self.currentPlayer - 1 > 0 else len(self.players) - 1
+            lastCardPlayed = self.getPlayers()[self.currentPlayer - 1].getHand()[-1]
+
+            if (isinstance(lastCardPlayed, TheShiningTrapezohedron) and lastCardPlayed.sanity == Sanity.INSANE) :
+                winner = self.currentPlayer - 1 if self.currentPlayer - 1 > 0 else len(self.players) - 1
+
+            if (isinstance(lastCardPlayed, Chtulu) and lastCardPlayed.sanity == Sanity.INSANE) :
+                winner = self.currentPlayer - 1 if self.currentPlayer - 1 > 0 else len(self.players) -1
 
         return winner
+
+    def sanityCheck(self, player) :
+        for _i in range(player.nbInsaneCardDiscarded()) :
+            if not self.deck :
+                break
+
+            card = self.deck.pop()
+            self.removedCards.append(card)
+
+            if card.hasInsanity() :
+                player.setKnockedOut(True)
+                break
