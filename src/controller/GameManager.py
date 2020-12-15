@@ -194,3 +194,16 @@ class GameManager:
             if card.hasInsanity() :
                 player.setKnockedOut(True)
                 break
+
+    ## Redistribute cards to the people according to the user choice.
+    def redistribute(self) :
+        inGameCards = []
+
+        for player in self.players :
+            inGameCards.extend(player.getHand())
+            player.getHand().clear()
+
+        redistributedCards = view.redistribute(inGameCards)
+
+        for ip in range(len(self.players)) :
+            self.players[ip].getHand().extend(redistributedCards[ip])

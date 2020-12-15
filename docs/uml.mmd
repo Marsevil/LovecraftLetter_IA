@@ -54,7 +54,8 @@ classDiagram
         + findWinnerWthSpecialEffect() : void
         + startNewRound() : void
         + getCurrentPlayer() : Player
-        + checkPlayableCard(Card : card) : Boolean 
+        + checkPlayableCard(Card : card) : Boolean
+        + redistribute() : void
     }
 
     class Player {
@@ -76,6 +77,7 @@ classDiagram
         + chooseTargerPlayer(int : nbPlayer, List<Player> players) : List<Player>
         + cardCantBePlayer() : card : int
         + askInsanity() : sanity : Sanity
+        + redistribute(List<Card> : inGameCards) : List<List<Card>>
     }
 
     Card <|.. SaneCard
