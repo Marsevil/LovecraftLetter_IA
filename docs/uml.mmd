@@ -48,11 +48,13 @@ classDiagram
         + nextRound() : void
         + play() : void
         + chooseTargetPlayer(int : nbPlayer) : List<Player>
-        + sanityCheck() : void
+        + sanityCheck(Player : player) : void
         + isGameEnd() : int
         + isRoundEnd() : int
+        + findWinnerWthSpecialEffect() : void
         + startNewRound() : void
         + getCurrentPlayer() : Player
+        + checkPlayableCard(Card : card) : Boolean 
     }
 
     class Player {
@@ -69,9 +71,11 @@ classDiagram
         + addDiscardedCard(Card : card) : void
     }
 
-    class Application {
-        + Application()
+    class View {
+        + View()
         + chooseTargerPlayer(int : nbPlayer, List<Player> players) : List<Player>
+        + cardCantBePlayer() : card : int
+        + askInsanity() : sanity : Sanity
     }
 
     Card <|.. SaneCard
