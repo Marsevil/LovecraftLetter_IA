@@ -1,5 +1,9 @@
+import random
+
 from ..model.Player import Player
 from ..model.card.Sanity import Sanity
+from ..model.card.saneCard import *
+from ..model.card.insaneCard import *
 
 class GameManager:
     def __init__(self, view, nbPlayer) :
@@ -23,13 +27,37 @@ class GameManager:
     ## Builds deck by creating card list & shuffles it.
     @staticmethod
     def buildDeck() :
-        # Fill the liste
-        # Shuffle
-        # Suppress the first
-        print('Not implemented yet : model.Player.buildDeck()')
         deck = []
-        for i in range(30) :
-            deck.append('card' + str(i))
+        # Fill the liste
+        # Sane Cards
+        # Once in the deck
+        deck.append(TheNecronomicon())
+        deck.append(TheSilverKey())
+        deck.append(RandolphCarter())
+        # Twice in the deck
+        for _i in range(2) :
+            deck.append(ProfessorHenryArmitage())
+            deck.append(ElderSign())
+            deck.append(GreatRaceOfYith())
+            deck.append(CatsOfUlthar())
+        # Five times in the deck
+        for _i in range(5) :
+            deck.append(Investigators())
+
+        # Insane cards
+        # once in the deck
+        deck.append(Cthulhu())
+        deck.append(TheShiningTrapezohedron())
+        deck.append(Nyarlathotep())
+        deck.append(MiGo())
+        deck.append(LiberIvonis())
+        deck.append(HoundOfTindalos())
+        deck.append(GoldenMead())
+        deck.append(DeepOnes())
+        
+        # Shuffle
+        for _i in range(1) :
+            random.shuffle(deck)
 
         return deck
 
@@ -57,9 +85,10 @@ class GameManager:
         self.roundNumber += 1
         self.deck = GameManager.buildDeck()
 
+        # Add Mi-Go Braincase to general discarded cards
+        self.removedCards.append(MiGoBraincase())
         # Remove the top card of the deck.
         self.removedCards.append(self.deck.pop())
-
         # If 2 players game remove 5 other cards.
         if len(self.players) <= 2 :
             for _i in range(5) :
@@ -161,7 +190,7 @@ class GameManager:
     def checkPlayableCard(self, card) :
         otherCard = self.getCurrentPlayer().getHand()[0]
 
-        if ((isinstance(otherCard, SilverKey) or isinstance(otherCard, TheShiningTrapezohedron)) and card.getValue() > 4) :
+        if ((isinstance(otherCard, TheSilverKey) or isinstance(otherCard, TheShiningTrapezohedron)) and card.getValue() > 4) :
             return False
         else :
             return True
@@ -178,7 +207,7 @@ class GameManager:
             if (isinstance(lastCardPlayed, TheShiningTrapezohedron) and lastCardPlayed.sanity == Sanity.INSANE) :
                 winner = self.currentPlayer - 1 if self.currentPlayer - 1 > 0 else len(self.players) - 1
 
-            if (isinstance(lastCardPlayed, Chtulu) and lastCardPlayed.sanity == Sanity.INSANE) :
+            if (isinstance(lastCardPlayed, Cthulhu) and lastCardPlayed.sanity == Sanity.INSANE) :
                 winner = self.currentPlayer - 1 if self.currentPlayer - 1 > 0 else len(self.players) -1
 
         return winner
@@ -203,7 +232,7 @@ class GameManager:
             inGameCards.extend(player.getHand())
             player.getHand().clear()
 
-        redistributedCards = view.redistribute(inGameCards)
+        redistributedCards = self.view.redistribute(inGameCards)
 
         for ip in range(len(self.players)) :
-            self.players[ip].getHand().extend(redistributedCards[ip])
+            self.players[ip].setHand(redistributedCards[ip])
