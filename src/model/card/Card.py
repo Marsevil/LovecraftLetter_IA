@@ -21,42 +21,40 @@ class Card(ABC):
     
     @property
     def name(self):
-        ...
+        return self._name
         
     @name.setter
-    @abstractmethod
     def name(self, newvalue):
-        ...
+        self._name = newvalue
         
-    @abstractmethod
     def getName(self):
-        ...
+        return self._name
 
     @property
     def description(self):
-        ...
-        
+        return self._description
+
+
     @description.setter
-    @abstractmethod
     def description(self, newvalue):
-        ...
-        
-    @abstractmethod
+        self._description = newvalue
+
+
     def getDescription(self):
-        ...
-        
+        return self._description
+
     @property
     def value(self):
-        ...
-        
+        return self._value
+
+
     @value.setter
-    @abstractmethod
     def value(self, newvalue):
-        ...
-        
-    @abstractmethod
+        self._value = newvalue
+
+
     def getValue(self):
-        ...
+        return self._value
 
     @property
     def sanity(self):
