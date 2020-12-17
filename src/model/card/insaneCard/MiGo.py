@@ -1,6 +1,6 @@
 from ..InsaneCard import InsaneCard
 from ..Sanity import Sanity
-from MiGoBraincase import MiGoBraincase
+from .MiGoBraincase import MiGoBraincase
 
 class MiGo (InsaneCard):
 
@@ -59,7 +59,7 @@ class MiGo (InsaneCard):
                         chosenOne.addDiscardedCard(card)
 
                         #The target player draws a new card
-                        if self.deck :
+                        if gameManager.deck :
                             #Draw a card
                             chosenOne.pickUp(gameManager.deck.pop())
                             #If the deck is empty he draws the first card

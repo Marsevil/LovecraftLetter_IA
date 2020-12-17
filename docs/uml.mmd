@@ -46,7 +46,7 @@ classDiagram
         + GameManager(nbPlayer : int)
         + isGameEnd() : int
         + nextRound() : void
-        + play() : void
+        + play(int : cardNumber) : void
         + chooseTargetPlayer(int : nbPlayer) : List<Player>
         + sanityCheck(Player : player) : void
         + isGameEnd() : int
@@ -74,10 +74,11 @@ classDiagram
 
     class View {
         + View()
-        + chooseTargerPlayer(int : nbPlayer, List<Player> players) : List<Player>
+        + chooseTargetPlayer(int : nbPlayer, List<Player> players) : List<Player>
         + cardCantBePlayer() : card : int
         + askInsanity() : sanity : Sanity
         + redistribute(List<Card> : inGameCards) : List<List<Card>>
+        + chooseNumber() : int
     }
 
     Card <|.. SaneCard

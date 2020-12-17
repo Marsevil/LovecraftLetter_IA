@@ -6,3 +6,6 @@ local
 
 # Python exec files
 *__pycache__*
+
+# IDE Files
+.vscode
