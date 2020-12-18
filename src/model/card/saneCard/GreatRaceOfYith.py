@@ -35,11 +35,11 @@ class GreatRaceOfYith (SaneCard):
             #Cherche qui a la plus petite carte pour l'éjecter, sinon rien
             player = gameManager.getCurrentPlayer()
             playerHand = player.getHand()
-            targetHand = chosenOne.getHand()
+            targetHand = chosenOne[0].getHand()
 
-            if(playerHand[0].getValue() < targetHand[0].getvalue()):
+            if(playerHand[0].getValue() < targetHand[0].getValue()):
                 if(player.isKnockableOut()):
                     player.setKnockedOut(True)
-            elif(playerHand[0].getValue() > targetHand[0].getvalue()):
+            elif(playerHand[0].getValue() > targetHand[0].getValue()):
                 if(chosenOne.isKnockableOut()):
                     chosenOne.setKnockedOut(True)

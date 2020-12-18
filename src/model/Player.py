@@ -13,7 +13,7 @@ class Player:
         self.discard = discard
         #true if the player is knocked out of the current round
         self.knockedOut = knockedOut
-        self.isKnockableOut = knockableOut
+        self.knockableOut = knockableOut
         #true if the player is immuned to card effect of other players for the current round
         self.immune = immune
 

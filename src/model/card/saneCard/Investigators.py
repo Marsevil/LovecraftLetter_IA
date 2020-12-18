@@ -36,6 +36,6 @@ class Investigators (SaneCard):
             chosenCardNumber = gameManager.chooseNumber()
     
             #Éjecte le joueur désigné s'il possède la carte choisie et qu'il peut être éjecté
-            targetHand = chosenOne.getHand()
-            if ((targetHand[0].value == chosenCardNumber) and chosenOne.isKnockableOut()):
-                chosenOne.setKnockedOut(True)
+            targetHand = chosenOne[0].getHand()
+            if ((targetHand[0].value == chosenCardNumber) and chosenOne[0].isKnockableOut()):
+                chosenOne[0].setKnockedOut(True)

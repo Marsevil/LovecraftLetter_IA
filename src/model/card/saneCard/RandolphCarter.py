@@ -31,7 +31,7 @@ class RandolphCarter (SaneCard):
 
             #Échange la main avec le joueur
             playerHand = gameManager.getCurrentPlayer().getHand()
-            targetHand = chosenOne.getHand()
+            targetHand = chosenOne[0].getHand()
 
             temp = playerHand[0]
             playerHand[0] = targetHand[0]

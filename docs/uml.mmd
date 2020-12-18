@@ -44,6 +44,7 @@ classDiagram
         - roundNumber : int
 
         + GameManager(nbPlayer : int)
+        + run() : void
         + isGameEnd() : int
         + nextRound() : void
         + play(int : cardNumber) : void
@@ -56,6 +57,7 @@ classDiagram
         + getCurrentPlayer() : Player
         + checkPlayableCard(Card : card) : Boolean
         + redistribute() : void
+        + showHandToCurrent(List<Card> : cards) : void
     }
 
     class Player {
@@ -79,6 +81,7 @@ classDiagram
         + askInsanity() : sanity : Sanity
         + redistribute(List<Card> : inGameCards) : List<List<Card>>
         + chooseNumber() : int
+        + showCards(List<Card> : cards) : void
     }
 
     Card <|.. SaneCard

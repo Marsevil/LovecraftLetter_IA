@@ -113,11 +113,8 @@ class GameManager:
 
             card = currentPlayer.getCardFromHand(self.view.cardCantBePlayed())
 
-        # If insane card, user can choose which effect will be used.
-        if card.hasInsane() and currentPlayer.stateOfMind() == Sanity.INSANE :
-            card.sanity(self.view.askInsanity())
-        else :
-            card.sanity = Sanity.SANE
+        card.sanity = self.askInsanity(card)
+
         # Apply card effect
         card.effect(self)
 
@@ -245,3 +242,13 @@ class GameManager:
                 break
 
         return number
+
+    def showHandToCurrent(self, hand) :
+        self.view.showCards(hand)
+
+    def askInsanity(self, card) :
+        # If insane card, user can choose which effect will be used.
+        if card.hasInsane() and self.getCurrentPlayer().stateOfMind() == Sanity.INSANE :
+            return self.view.askInsanity()
+        else :
+            return Sanity.SANE
