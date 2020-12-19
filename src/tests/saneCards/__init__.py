@@ -3,3 +3,6 @@ from .TestElderSign import TestElderSign
 from .TestGreatRaceOfYith import TestGreatRaceOfYith
 from .TestInvestigators import Investigators
 from .TestProfessorHenryArmitage import TestProfessorHenryArmitage
+from .TestRandolphCarter import TestRandolphCarter
+from .TestTheNecronomicon import TestTheNecronomicon
+from .TestTheSilverKey import TheSilverKey
