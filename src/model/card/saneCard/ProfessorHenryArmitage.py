@@ -42,7 +42,7 @@ class ProfessorHenryArmitage (SaneCard):
                 card = targetHand.pop()
 
                 #Only apply the effect if the card is The Necromicon
-                if (card.getName() == "The Necromicon"):
+                if isinstance(card, TheNecronomicon):
                     card.effect(gameManager)
                 #or cthulhu, but this time ask the view for the saniy of its effect
                 elif isinstance(card, Cthulhu) :

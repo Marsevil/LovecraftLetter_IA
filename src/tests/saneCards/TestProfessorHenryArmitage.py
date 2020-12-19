@@ -45,7 +45,6 @@ class TestProfessorHenryArmitage(unittest.TestCase) :
 
     def test_withChtulhu(self) :
         # When Chtulhu is in the hand of the other player the effect should be applied.
-
         gm = GameManager(FakeView(None), 2)
         gm.players[0].hand = []
         gm.players[0].pickUp(GreatRaceOfYith())
@@ -57,3 +56,18 @@ class TestProfessorHenryArmitage(unittest.TestCase) :
         gm.play(1)
 
         self.assertTrue(gm.players[1].knockedOut)
+
+    def test_withNecronomicon(self) :
+        # When TheNecronomicon is in the hand of the other player the effect should be applied.
+        gm = GameManager(FakeView(None), 2)
+        gm.players[0].hand = []
+        gm.players[0].pickUp(GreatRaceOfYith())
+        gm.players[0].pickUp(ProfessorHenryArmitage())
+
+        gm.players[1].hand = []
+        gm.players[1].pickUp(TheNecronomicon())
+
+        gm.play(1)
+
+        self.assertTrue(gm.players[1].knockedOut)
+        
