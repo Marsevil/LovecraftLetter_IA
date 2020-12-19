@@ -50,6 +50,7 @@ class Player:
             self.setInsaneToken(self.getInsaneToken() + 1)
 
     def pickUp(self, card) :
+        card.setOwner(self)
         self.hand.append(card)
 
     def getHand(self):

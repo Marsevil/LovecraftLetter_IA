@@ -10,8 +10,13 @@ class TestGreatRaceOfYith(unittest.TestCase) :
     def test_otherGreaterThanCurrent(self) :
         gm = GameManager(FakeView(None), 2)
         # Using current player < other player.
-        gm.players[0].hand = [ElderSign(), GreatRaceOfYith()]
-        gm.players[1].hand = [TheNecronomicon()]
+        gm.players[0].hand = []
+        gm.players[0].pickUp(ElderSign())
+        gm.players[0].pickUp(GreatRaceOfYith())
+
+        gm.players[1].hand = []
+        gm.players[1].pickUp(TheNecronomicon())
+
         gm.play(1)
 
         # Current player should be knocked out
@@ -21,8 +26,13 @@ class TestGreatRaceOfYith(unittest.TestCase) :
     def test_currentGreaterThanOther(self) :
         # Using current player > other player.
         gm = GameManager(FakeView(None), 2)
-        gm.players[0].hand = [TheNecronomicon(), GreatRaceOfYith()]
-        gm.players[1].hand = [ElderSign()]
+        gm.players[0].hand = []
+        gm.players[0].pickUp(TheNecronomicon())
+        gm.players[0].pickUp(GreatRaceOfYith())
+
+        gm.players[1].hand = []
+        gm.players[1].pickUp(ElderSign())
+        
         gm.play(1)
 
         # Other player should be knocked out.

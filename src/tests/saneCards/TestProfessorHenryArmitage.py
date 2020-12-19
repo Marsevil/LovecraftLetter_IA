@@ -13,8 +13,13 @@ class TestProfessorHenryArmitage(unittest.TestCase) :
     def test_commonCase(self) :
         # Test common case.
         gm = GameManager(FakeView(None), 2)
-        gm.players[0].hand = [GreatRaceOfYith(), ProfessorHenryArmitage()]
-        gm.players[1].hand = [GreatRaceOfYith()]
+        gm.players[0].hand = []
+        gm.players[0].pickUp(GreatRaceOfYith())
+        gm.players[0].pickUp(ProfessorHenryArmitage())
+
+        gm.players[1].hand = []
+        gm.players[1].pickUp(GreatRaceOfYith())
+
         gm.deck.append(RandolphCarter())
 
         gm.play(1)
@@ -25,8 +30,13 @@ class TestProfessorHenryArmitage(unittest.TestCase) :
         # When the deck is empty other player should pick up MiGoBraincase.
 
         gm = GameManager(FakeView(None), 2)
-        gm.players[0].hand = [GreatRaceOfYith(), ProfessorHenryArmitage()]
-        gm.players[1].hand = [GreatRaceOfYith()]
+        gm.players[0].hand = []
+        gm.players[0].pickUp(GreatRaceOfYith())
+        gm.players[0].pickUp(ProfessorHenryArmitage())
+
+        gm.players[1].hand = []
+        gm.players[1].pickUp(GreatRaceOfYith())
+
         gm.deck = []
 
         gm.play(1)
@@ -37,10 +47,13 @@ class TestProfessorHenryArmitage(unittest.TestCase) :
         # When Chtulhu is in the hand of the other player the effect should be applied.
 
         gm = GameManager(FakeView(None), 2)
-        gm.players[0].hand = [GreatRaceOfYith(), ProfessorHenryArmitage()]
-        gm.players[1].hand = [Cthulhu()]
+        gm.players[0].hand = []
+        gm.players[0].pickUp(GreatRaceOfYith())
+        gm.players[0].pickUp(ProfessorHenryArmitage())
+
+        gm.players[1].hand = []
+        gm.players[1].pickUp(Cthulhu())
 
         gm.play(1)
 
-        # La carte chtulhu s'applique sur le current player.
         self.assertTrue(gm.players[1].knockedOut)
