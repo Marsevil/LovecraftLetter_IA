@@ -104,6 +104,10 @@ class GameManager:
     def play(self, cardNumber) :
         currentPlayer = self.players[self.currentPlayer]
 
+        #delete the immunity of the player if he was immune in the last round
+        if(currentPlayer.getImmune()):
+            currentPlayer.setImmune(False)
+
         # The card that the player want to play.
         card = currentPlayer.getCardFromHand(cardNumber)
 
@@ -120,10 +124,6 @@ class GameManager:
 
         # Push on the discard stack.
         currentPlayer.addDiscardedCard(card)
-
-        #delete the immunity of the player if he was immune in the last round
-        if(currentPlayer.getImmune()):
-            currentPlayer.setImmune(False)
 
         # Switch to the next player.
         self.currentPlayer = self.currentPlayer + 1 if self.currentPlayer < len(self.players) else 0

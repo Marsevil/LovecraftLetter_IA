@@ -1,0 +1,5 @@
+from .TestCatsOfUlthar import TestCatsOfUlthar
+from .TestElderSign import TestElderSign
+from .TestGreatRaceOfYith import TestGreatRaceOfYith
+from .TestInvestigators import Investigators
+from .TestProfessorHenryArmitage import TestProfessorHenryArmitage

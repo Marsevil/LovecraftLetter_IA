@@ -86,7 +86,7 @@ class Player:
         return self.isKnockableOut
 
     def setKnockableOut(self, knockableOut) :
-        self.isKnockableOut = knockableOut
+        self.knockableOut = knockableOut
 
     def getImmune(self):
         return self.immune
