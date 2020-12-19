@@ -22,6 +22,3 @@ class FakeView :
         newI = int(input(">"))
 
         return newI
-
-    def askInsanity(self) :
-        return Sanity.INSANE

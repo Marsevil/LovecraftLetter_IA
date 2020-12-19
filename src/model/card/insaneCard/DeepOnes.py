@@ -54,12 +54,12 @@ class DeepOnes (InsaneCard):
     
             #Vérifie qu'un joueur non immunisé a pu être choisi
             if(len(chosenOne) != 0):
-                targetHand = chosenOne.getHand()
+                targetHand = chosenOne[0].getHand()
                 
                 if (targetHand[0].value == 1):
-                    if chosenOne.isKnockableOut():
-                        chosenOne.setKnockedOut(True)
+                    if chosenOne[0].isKnockableOut():
+                        chosenOne[0].setKnockedOut(True)
                 else:
                     chosenCardNumber = gameManager.chooseNumber()
-                    if ((targetHand[0].value == chosenCardNumber) and chosenOne.isKnockableOut()):
-                        chosenOne.setKnockedOut(True)
+                    if ((targetHand[0].value == chosenCardNumber) and chosenOne[0].isKnockableOut()):
+                        chosenOne[0].setKnockedOut(True)
