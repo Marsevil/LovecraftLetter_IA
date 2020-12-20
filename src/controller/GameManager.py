@@ -20,7 +20,7 @@ class GameManager:
 
         # Instantiate as many players as nbPlayer defines.
         for _i in range(nbPlayer) :
-            self.players.append(Player(0, 0, [], [], False, False, False))
+            self.players.append(Player(0, 0, [], [], False, True, False))
 
         self.startNewRound()
 

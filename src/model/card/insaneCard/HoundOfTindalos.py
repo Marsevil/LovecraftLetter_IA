@@ -40,7 +40,7 @@ class HoundOfTindalos (InsaneCard):
             if(len(chosenOne) != 0):
     
                 #Cherche qui a la plus petite carte pour l'éjecter, sinon rien
-                player = gameManager.getCurrentPlayer()
+                player = self.getOwner()
                 playerHand = player.getHand()
                 targetHand = chosenOne[0].getHand()
     
@@ -48,14 +48,13 @@ class HoundOfTindalos (InsaneCard):
                     if(player.isKnockableOut()):
                         player.setKnockedOut(True)
                 elif(playerHand[0].getValue() > targetHand[0].getValue()):
-                    if(chosenOne.isKnockableOut()):
-                        chosenOne.setKnockedOut(True)
+                    if(chosenOne[0].isKnockableOut()):
+                        chosenOne[0].setKnockedOut(True)
                         
         if self.sanity == Sanity.INSANE:
             chosenOne = gameManager.chooseTargetPlayer(1, False)
             
-            
             if(len(chosenOne) != 0):
-                if chosenOne.isKnockableOut() and chosenOne.stateOfMind() != Sanity.INSANE:
-                    chosenOne.setKnockedOut(True)
+                if chosenOne[0].knockableOut and (chosenOne[0].stateOfMind() != Sanity.INSANE):
+                    chosenOne[0].setKnockedOut(True)
             
