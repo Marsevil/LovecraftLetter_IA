@@ -43,7 +43,7 @@ class TestHoundOfTindalos(unittest.TestCase) :
         self.assertTrue(gm.players[1].knockedOut)
         self.assertFalse(gm.players[0].knockedOut)
     
-    def test_OtherKnockableHasNotInsane(self) :
+    def test_OtherKnockableHasNotInsane(self) : #NOT FONCTIONAL YET
         # Other player could be knock out and hasn't an insane state of mind
         gm = GameManager(FakeViewInsane(None), 2)
         gm.players[0].hand = []
