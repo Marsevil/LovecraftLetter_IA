@@ -22,3 +22,6 @@ class FakeView :
         newI = int(input(">"))
 
         return newI
+
+    def playerDiscard(self, player, nbCard) :
+        return [0]

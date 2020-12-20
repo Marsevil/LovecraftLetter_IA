@@ -58,6 +58,8 @@ classDiagram
         + checkPlayableCard(Card : card) : Boolean
         + redistribute() : void
         + showHandToCurrent(List<Card> : cards) : void
+        + playerDraw(player : Player, nbCard : int) : void
+        + playerDiscard(player : Player, nbCard : int) : void
     }
 
     class Player {
@@ -82,6 +84,7 @@ classDiagram
         + redistribute(List<Card> : inGameCards) : List<List<Card>>
         + chooseNumber() : int
         + showCards(List<Card> : cards) : void
+        + playerDiscard(player : Player, nbCard : int) : List<int>
     }
 
     Card <|.. SaneCard

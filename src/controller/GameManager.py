@@ -243,12 +243,33 @@ class GameManager:
 
         return number
 
+    ## Send hand to the view to be shown
+    ## @params hand is a list of cards
     def showHandToCurrent(self, hand) :
         self.view.showCards(hand)
 
+    ## @params card is a Card.
+    ## @return Sanity.SANE if its the only one possibility else ask to the view.
     def askInsanity(self, card) :
         # If insane card, user can choose which effect will be used.
         if card.hasInsane() and self.getCurrentPlayer().stateOfMind() == Sanity.INSANE :
             return self.view.askInsanity()
         else :
             return Sanity.SANE
+
+    ## Draw nbCard for the player
+    ## @params player who cards will be given.
+    ## @params nbCard number of card which have to be given to the player.
+    def playerDraw(self, player, nbCard) :
+        for _i in range(nbCard) :
+            if self.deck :
+                player.pickUp(self.deck.pop())
+
+    ## Discard nbCard from the hand of player.
+    ## @params player who discard the cards.
+    ## @params nbCard number of cards which must be discarded.
+    def playerDiscard(self, player, nbCard) :
+        discardedCard = self.view.playerDiscard(player, nbCard)
+
+        for i in discardedCard :
+            player.addDiscardedCard(player.getCardFromHand(i))
