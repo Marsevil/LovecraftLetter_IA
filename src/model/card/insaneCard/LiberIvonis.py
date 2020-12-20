@@ -5,7 +5,7 @@ class LiberIvonis(InsaneCard):
 
     def __init__(self):
         super().__init__("Liber Ivonis",
-                        "Sane : When you discard Elder Sign during your turn, you are" +
+                        "Sane : When you discard Liber Ivonis during your turn, you are" +
                         "immune to card effects of other players until the start of your" +
                         "next turn. If all players still in the round other than the" +
                         "player whose turn it is are immune, that player must choose" +
