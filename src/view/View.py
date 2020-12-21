@@ -3,9 +3,12 @@ from model.card.Sanity import Sanity
 
 class View():
 
-    #+chooseTargetPlayer(int : nbPlayer, List<Player> players)
-    #ask for a player number
-    #return a player object
+    """
+    Ask for a number and return the player at this number from the list of players
+    @params nbPlayer, number of players
+    @params players, list of players
+    @return selected player object
+    """
     def chooseTargetPlayer(self,nbPlayer, players):
         nbPlayerStr = "There are " + str(nbPlayer) + " players in game, please choose a target"
         print(nbPlayerStr)
@@ -14,11 +17,16 @@ class View():
             return players[playerNb-1]
     
     
-    #????
+    """
+    Wrong action display function
+    """
     def cardCantBePlayed(self):
         print("This action cannot be done, please choose another")
     
-    #Player choose between sane and insane
+    """
+    Choose between Sane and Insane
+    @return SANE or INSANE enum value (None in case of error)
+    """
     def askInsanity(self):
         infoStr = "Your card can be played as Sane (1) or Insane (2) "
         print(infoStr)
@@ -42,7 +50,12 @@ class View():
         print(inGameCardsStr)
 
 
-    #Choose an int number in range(min,max)
+
+    """
+    @params minNb, min value
+    @params maxNb, max value
+    @return number between min and max
+    """
     def chooseNumber(self,minNb,maxNb):
         infoStr = "Choose a number between " + str(minNb) + " and " + str(maxNb) + " : "
         nbInput = None
@@ -67,6 +80,8 @@ class View():
         cardsStr = cardsStr[:-2]
         print(cardsStr)
     
-    #clear screen function
+    """
+    Clear screen function
+    """
     def cls(self):
         os.system('cls' if os.name=='nt' else 'clear')
