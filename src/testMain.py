@@ -8,7 +8,6 @@ if __name__ == '__main__':
     p = Player(0, 0, [], [], False, False)
     LP=View()
     gameManager = GameManager(LP,2)
-    LP.setGameManager(gameManager)
     LP.cls()
 #    LP.chooseTargetPlayer(8,None)
 #    print(LP.chooseNumber(1,10))

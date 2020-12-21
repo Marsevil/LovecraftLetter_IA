@@ -3,12 +3,6 @@ from model.card.Sanity import Sanity
 
 class View():
 
-    def setGameManager(self,gameManager):
-        self.gameManager = gameManager
-        
-    def getGameManager(self):
-        return self.gameManager
-
     #+chooseTargetPlayer(int : nbPlayer, List<Player> players)
     #ask for a player number
     #return a player object
