@@ -1,9 +1,15 @@
 import random
 
-from ..model.Player import Player
-from ..model.card.Sanity import Sanity
-from ..model.card.saneCard import *
-from ..model.card.insaneCard import *
+
+#import when running testMain.py in src
+from model.Player import Player
+#from ..model.Player import Player
+from model.card.Sanity import Sanity
+#from ..model.card.Sanity import Sanity
+from model.card.saneCard import *
+#from ..model.card.saneCard import *
+from model.card.insaneCard import *
+#from ..model.card.insaneCard import *
 
 class GameManager:
     def __init__(self, view, nbPlayer) :
