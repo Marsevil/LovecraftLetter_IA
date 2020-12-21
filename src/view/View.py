@@ -10,6 +10,7 @@ class View():
     @return selected player object
     """
     def chooseTargetPlayer(self,nbPlayer, players):
+        self.cls()
         nbPlayerStr = "There are " + str(nbPlayer) + " players in game, please choose a target"
         print(nbPlayerStr)
         playerNb = self.chooseNumber(1,nbPlayer)
@@ -28,6 +29,7 @@ class View():
     @return SANE or INSANE enum value (None in case of error)
     """
     def askInsanity(self):
+        self.cls()
         infoStr = "Your card can be played as Sane (1) or Insane (2) "
         print(infoStr)
         choosenState = self.chooseNumber(1,2)
@@ -39,17 +41,44 @@ class View():
             else:
                 return None
     
-    #?? Beginnnig of a new turn ?
+    """
+    Re order a list of card
+    @params inGameCards, list of card who need to be reordered
+    @return list of card reordered
+    """
     def redistribute(self,inGameCards):
         self.cls()
-        print("In Game Cards : ")
-        inGameCardsStr = ""
+        cardsStr = "Cards : "
         for card in inGameCards:
-            inGameCardsStr += card.name + ", "
-        inGameCardsStr = inGameCardsStr[:-2]
-        print(inGameCardsStr)
+            cardsStr += card.name + ", "
+        cardsStr = cardsStr[:-2]
+        cardsStr += " need to be redistribute to each player "
+        print(cardsStr)
+        
+        nbPlayers = len(inGameCards)
+        newCardsOrder = inGameCards.copy()
+        playerNbAvailable = []
+        for i in range(1,nbPlayers+1):
+            playerNbAvailable.append(i)
+        
+        while len(inGameCards) > 0:
+            #retrieve last card from list
+            currentCard = inGameCards.pop()
+            print("Distribute '" + currentCard.name + "' to a player (number) in this list : " + str(playerNbAvailable))
+            nbInput = None
+            while True:
+                try:
+                    nbInput = int(input())
+                    if nbInput in playerNbAvailable:
+                        break
+                    else:
+                        print("Wrong number please retry")
+                except Exception as e:
+                    print(e)
+            newCardsOrder[nbInput-1] = currentCard
+            playerNbAvailable.remove(nbInput)
 
-
+        return newCardsOrder
 
     """
     @params minNb, min value
@@ -71,8 +100,12 @@ class View():
         return nbInput
 
     
-    #???
+    """
+    Display a list of cards
+    @params cards, list of cards
+    """
     def showCards(self,cards):
+        self.cls()
         print("Cards : ")
         cardsStr = ""
         for card in cards:

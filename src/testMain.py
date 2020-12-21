@@ -11,8 +11,12 @@ if __name__ == '__main__':
     LP.cls()
 #    LP.chooseTargetPlayer(8,None)
 #    print(LP.chooseNumber(1,10))
-    print(LP.askInsanity())
+#    print(LP.askInsanity())
     
     
-    listCards = [DeepOnes(),GoldenMead()]
-    LP.showCards(listCards)
+    listCards = [DeepOnes(),GoldenMead(),LiberIvonis()]
+    newList = LP.redistribute(listCards)
+    strT = ""
+    for c in newList:
+        strT += c.name
+    print(strT)
