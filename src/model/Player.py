@@ -4,7 +4,7 @@ from .card.Sanity import Sanity
 class Player:
 
     ##Constructor
-    def __init__(self, saneToken, insaneToken, hand, discard, knockedOut, immune):
+    def __init__(self, saneToken, insaneToken, hand, discard, knockedOut, knockableOut, immune):
         #number of sane token
         self.saneToken = saneToken
         #number of insane token
@@ -13,6 +13,7 @@ class Player:
         self.discard = discard
         #true if the player is knocked out of the current round
         self.knockedOut = knockedOut
+        self.knockableOut = knockableOut
         #true if the player is immuned to card effect of other players for the current round
         self.immune = immune
 
@@ -31,7 +32,7 @@ class Player:
         #search the current state of mind of the player
         mind = Sanity.SANE
         
-        nbInsane = self.stateOfMind()
+        nbInsane = self.nbInsaneCardDiscarded()
 
         if (nbInsane != 0):
             mind = Sanity.INSANE
@@ -47,6 +48,9 @@ class Player:
             self.setSaneToken(self.getSaneToken() + 1)
         else:
             self.setInsaneToken(self.getInsaneToken() + 1)
+
+    def pickUp(self, card) :
+        self.hand.append(card)
 
     def getHand(self):
         return self.hand
@@ -77,6 +81,12 @@ class Player:
 
     def setKnockedOut(self,knockedOut):
         self.knockedOut = knockedOut
+
+    def isKnockableOut(self) :
+        return self.isKnockableOut
+
+    def setKnockableOut(self, knockableOut) :
+        self.isKnockableOut = knockableOut
 
     def getImmune(self):
         return self.immune

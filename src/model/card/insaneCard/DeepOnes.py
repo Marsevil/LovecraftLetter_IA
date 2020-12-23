@@ -44,7 +44,7 @@ class DeepOnes (InsaneCard):
                 chosenCardNumber = gameManager.chooseNumber()
     
                 #Éjecte le joueur désigné s'il possède la carte choisie et qu'il peut être éjecté
-                targetHand = chosenOne.getHand()
+                targetHand = chosenOne[0].getHand()
                 if ((targetHand[0].value == chosenCardNumber) and chosenOne.isKnockableOut()):
                     chosenOne.setKnockedOut(True)
 

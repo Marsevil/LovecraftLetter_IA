@@ -1,4 +1,5 @@
 from abc import ABC, abstractmethod
+from .Sanity import Sanity
 
 
 """@package card
@@ -17,6 +18,7 @@ class Card(ABC):
         self._name = name
         self._description = description
         self._value = value
+        self._sanity = Sanity.NEUTRAL
 
     
     @property

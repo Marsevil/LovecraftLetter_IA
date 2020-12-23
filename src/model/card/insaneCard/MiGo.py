@@ -1,6 +1,10 @@
 from ..InsaneCard import InsaneCard
 from ..Sanity import Sanity
-
+<<<<<<< HEAD
+from .MiGoBraincase import MiGoBraincase
+=======
+from .MiGoBraincase import MiGoBraincase
+>>>>>>> main
 
 class MiGo (InsaneCard):
 
@@ -44,7 +48,7 @@ class MiGo (InsaneCard):
             if(len(chosenOne) != 0):
 
                 #Discard the hand of the target player
-                targetHand = chosenOne.getHand()
+                targetHand = chosenOne[0].getHand()
                 for card in targetHand:
 
                     #Only apply the effect if the card is The Necromicon
@@ -52,20 +56,20 @@ class MiGo (InsaneCard):
                         card.effect(gameManager)
                     #or cthulhu, but this time ask the view for the saniy of its effect
                     elif (card.getName() == "Cthulhu"):
-                        effectSanity = gameManager.view.askInsanity()
-                        card.sanity(effectSanity)
+                        effectSanity = gameManager.askInsanity(card)
+                        card.sanity = (effectSanity)
                         card.effect(gameManager)
                     else:
-                        chosenOne.addDiscardedCard(card)
+                        chosenOne[0].addDiscardedCard(card)
 
                         #The target player draws a new card
-                        if self.deck :
+                        if gameManager.deck :
                             #Draw a card
-                            chosenOne.pickUp(gameManager.deck.pop())
+                            chosenOne[0].pickUp(gameManager.deck.pop())
                             #If the deck is empty he draws the first card
                             #that was removed at the start of the round
                         else:
-                            chosenOne.pickUp(gameManager.removedCards.pop())
+                            chosenOne[0].pickUp(gameManager.removedCards.pop())
 
         if self.sanity == Sanity.INSANE:
             

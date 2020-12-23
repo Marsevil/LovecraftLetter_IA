@@ -26,7 +26,7 @@ class GameManager:
 
         # Instantiate as many players as nbPlayer defines.
         for _i in range(nbPlayer) :
-            self.players.append(Player(0, 0, [], [], False, False))
+            self.players.append(Player(0, 0, [], [], False, False, False))
 
         self.startNewRound()
 
@@ -114,16 +114,12 @@ class GameManager:
         card = currentPlayer.getCardFromHand(cardNumber)
 
         #the card that is played
-        while (self.checkPlayableCard(card)) :
+        while (not self.checkPlayableCard(card)) :
             currentPlayer.pickUp(card)
 
             card = currentPlayer.getCardFromHand(self.view.cardCantBePlayed())
 
-        # If insane card, user can choose which effect will be used.
-        if card.hasInsanity() and currentPlayer.stateOfMind == Sanity.INSANE :
-            card.sanity(self.view.askInsanity())
-        else :
-            card.sanity(Sanity.SANE)
+        card.sanity = self.askInsanity(card)
 
         # Apply card effect
         card.effect(self)
@@ -242,3 +238,23 @@ class GameManager:
 
         for ip in range(len(self.players)) :
             self.players[ip].setHand(redistributedCards[ip])
+
+    ## Ask to the view a number > 1
+    def chooseNumber(self) :
+        while True :
+            number = self.view.chooseNumber()
+
+            if number > 1 :
+                break
+
+        return number
+
+    def showHandToCurrent(self, hand) :
+        self.view.showCards(hand)
+
+    def askInsanity(self, card) :
+        # If insane card, user can choose which effect will be used.
+        if card.hasInsane() and self.getCurrentPlayer().stateOfMind() == Sanity.INSANE :
+            return self.view.askInsanity()
+        else :
+            return Sanity.SANE
