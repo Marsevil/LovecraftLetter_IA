@@ -5,7 +5,7 @@ from model.card.insaneCard import *
 
 if __name__ == '__main__':
     print("test")
-    p = Player(0, 0, [], [], False, False)
+    p = Player(0, 0, [], [], False, False,False)
     LP=View()
     gameManager = GameManager(LP,2)
     LP.cls()
