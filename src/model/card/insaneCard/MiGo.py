@@ -1,10 +1,8 @@
 from ..InsaneCard import InsaneCard
 from ..Sanity import Sanity
-<<<<<<< HEAD
+
 from .MiGoBraincase import MiGoBraincase
-=======
-from .MiGoBraincase import MiGoBraincase
->>>>>>> main
+
 
 class MiGo (InsaneCard):
 
