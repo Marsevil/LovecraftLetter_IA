@@ -25,3 +25,10 @@ class FakeView :
 
     def playerDiscard(self, player, nbCard) :
         return [0]
+
+    def redistribute(self, inGameCards) :
+        redistributedCards = []
+        while inGameCards :
+            redistributedCards.append([inGameCards.pop()])
+
+        return redistributedCards

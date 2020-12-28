@@ -229,15 +229,18 @@ class GameManager:
     ## Redistribute cards to the people according to the user choice.
     def redistribute(self) :
         inGameCards = []
+        currentPlayer = self.getCurrentPlayer()
 
         for player in self.players :
-            inGameCards.extend(player.getHand())
-            player.getHand().clear()
+            if player != currentPlayer :
+                inGameCards.extend(player.getHand())
+                player.getHand().clear()
 
         redistributedCards = self.view.redistribute(inGameCards)
 
-        for ip in range(len(self.players)) :
-            self.players[ip].setHand(redistributedCards[ip])
+        for player in self.players :
+            if player != currentPlayer :
+                player.setHand(redistributedCards.pop(0))
 
     ## Ask to the view a number > 1
     def chooseNumber(self) :
