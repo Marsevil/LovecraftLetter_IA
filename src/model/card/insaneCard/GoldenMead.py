@@ -4,8 +4,8 @@ from ..Sanity import Sanity
 class GoldenMead(InsaneCard):
 
     def __init__(self):
-        super(GoldenMead,self).__init__("GoldenMead",
-                       "Sane : When you discard Cats of Ulthar during your turn, choose another"
+        super(GoldenMead,self).__init__("Golden Mead",
+                       "Sane : When you discard Golden Mead during your turn, choose another"
                        +"player and look at their hand. Do not reveal it to any other players."
                        +"If all other players still in the round cannot be chosen (e.g due to Elder Sign"
                        +"or Liber Ivonis), this card is discarded without effect. \n"
