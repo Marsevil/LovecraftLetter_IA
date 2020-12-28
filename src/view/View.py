@@ -42,7 +42,7 @@ class View():
         print(cardStr)
         cardNb = self.chooseNumber(1,2)
         if cardNb:
-            return cardNb
+            return cardNb-1
         return None
     
     
