@@ -2,7 +2,7 @@ import os
 from model.card.Sanity import Sanity
 
 class View():
-
+    
     """
     Ask for a number and return the player at this number from the list of players
     @params nbPlayer, number of players to choose
@@ -10,7 +10,7 @@ class View():
     @return selected player object
     """
     def chooseTargetPlayer(self,nbPlayer, players):
-        self.cls()
+        self._displayNewAction()
         playersAvailable = []
         for i in range(len(players)):
             playersAvailable.append(i+1)
@@ -37,15 +37,17 @@ class View():
     @çeturn card object
     """
     def cardToPlay(self,playerHand):
-        self.cls()
-        cardStr = "You can play " + playerHand[0].name + "(1) or " + playerHand[1].name + "(2)"
+        self._displayNewAction()
+        cardStr = "You can play " + playerHand[0].name + "(1) or " + playerHand[1].name + "(2) (You can also view cards info with 3)"
         print(cardStr)
-        cardNb = self.chooseNumber(1,2)
-        if cardNb:
-            return cardNb-1
-        return None
-    
-    
+        cardNb = self.chooseNumber(1,3)
+        #Display cards info
+        if cardNb == 3:
+            self.showCards(playerHand)
+            cardNb = self.chooseNumber(1,2)
+#        if cardNb:
+        return cardNb-1
+#        return None
     
     
     """
@@ -59,7 +61,7 @@ class View():
     @return SANE or INSANE enum value (None in case of error)
     """
     def askInsanity(self):
-        self.cls()
+        self._displayNewAction()
         infoStr = "Your card can be played as Sane (1) or Insane (2) "
         print(infoStr)
         choosenState = self.chooseNumber(1,2)
@@ -77,7 +79,7 @@ class View():
     @return list of card reordered
     """
     def redistribute(self,inGameCards):
-        self.cls()
+        self._displayNewAction()
         cardsStr = "Cards : "
         for card in inGameCards:
             cardsStr += card.name + ", "
@@ -135,13 +137,13 @@ class View():
     @params cards, list of cards
     """
     def showCards(self,cards):
-        self.cls()
+        self._displayNewAction()
         print("Cards : ")
-        cardsStr = ""
         for card in cards:
-            cardsStr += card.name + ", "
-        cardsStr = cardsStr[:-2]
-        print(cardsStr)
+            print("\t Name : " + card.name)
+            print("\t Value : " + str(card.value))
+            print("\t Effect : \n\t\t" + card.description)
+            print("")
     
     """
     Discard hand function
@@ -149,7 +151,7 @@ class View():
     """
     def playerDiscard(self,player,nbCard):
         returnList = []
-        returnList.append(self.cardToPlay(player.hand)-1)
+        returnList.append(self.cardToPlay(player.hand))
         return returnList
 #        hand = player.hand
 #        handStr = ""
@@ -157,7 +159,30 @@ class View():
 #            handStr += str(card.name) + ", "
 #        handStr = handStr[:-2]
 #        discardStr = "You need to discard " + str(nbCard) + " cards from "+ handStr
-        
+    
+    
+    
+    """
+    Display Turn and Round info
+    """
+    def displayNewTurn(self,gameManager):
+        self.cls()
+        currentPlayer = gameManager.currentPlayer
+        roundNumber = gameManager.roundNumber
+        infoStr = "========================"
+        infoStr1 = "Round number "+ str(roundNumber)
+        infoStr2 = "Player number " + str(currentPlayer) + " playing"
+        print(infoStr)
+        print(infoStr1)
+        print(infoStr2)
+        print(infoStr)
+    
+    
+    """
+    Display new action
+    """
+    def _displayNewAction(self):
+        print("----------------------------------------------------------")
     
     """
     Clear screen function
