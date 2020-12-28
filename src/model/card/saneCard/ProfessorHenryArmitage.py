@@ -1,4 +1,6 @@
 from ..SaneCard import SaneCard
+from ..insaneCard.Cthulhu import Cthulhu
+from ..saneCard.TheNecronomicon import TheNecronomicon
 
 class ProfessorHenryArmitage (SaneCard):
 
@@ -35,19 +37,19 @@ class ProfessorHenryArmitage (SaneCard):
 
             #Discard the hand of the target player
             targetHand = chosenOne[0].getHand()
-            for card in targetHand:
+            for _i in range(len(targetHand)):
+
+                card = targetHand.pop()
 
                 #Only apply the effect if the card is The Necromicon
-                if (card.getName() == "The Necromicon"):
+                if isinstance(card, TheNecronomicon):
                     card.effect(gameManager)
                 #or cthulhu, but this time ask the view for the saniy of its effect
-                elif (card.getName() == "Cthulhu"):
+                elif isinstance(card, Cthulhu) :
                     effectSanity = gameManager.askInsanity(card)
                     card.sanity = effectSanity
                     card.effect(gameManager)
                 else:
-                    chosenOne[0].addDiscardedCard(card)
-
                     #The target player draws a new card
                     if gameManager.deck :
                         #Draw a card
@@ -55,4 +57,6 @@ class ProfessorHenryArmitage (SaneCard):
                     #If the deck is empty he draws the first card
                     #that was removed at the start of the round
                     else:
-                        chosenOne.pickUp(gameManager.removedCards.pop())
+                        chosenOne[0].pickUp(gameManager.removedCards.pop(0))
+
+                chosenOne[0].addDiscardedCard(card)

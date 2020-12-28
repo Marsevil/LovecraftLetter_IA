@@ -33,7 +33,7 @@ class GreatRaceOfYith (SaneCard):
         if(len(chosenOne) != 0):
 
             #Cherche qui a la plus petite carte pour l'éjecter, sinon rien
-            player = gameManager.getCurrentPlayer()
+            player = self.getOwner()
             playerHand = player.getHand()
             targetHand = chosenOne[0].getHand()
 
@@ -41,5 +41,5 @@ class GreatRaceOfYith (SaneCard):
                 if(player.isKnockableOut()):
                     player.setKnockedOut(True)
             elif(playerHand[0].getValue() > targetHand[0].getValue()):
-                if(chosenOne.isKnockableOut()):
-                    chosenOne.setKnockedOut(True)
+                if(chosenOne[0].isKnockableOut()):
+                    chosenOne[0].setKnockedOut(True)

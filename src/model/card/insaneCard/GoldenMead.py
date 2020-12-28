@@ -55,14 +55,9 @@ class GoldenMead(InsaneCard):
     
             #Check if a player is returned
             if(len(chosenPlayer) != 0):
-                chosenPlayerHand = chosenPlayer.getHand()
+                chosenPlayerHand = chosenPlayer[0].getHand()
                 
-                #TODO Delete print
-                print(chosenPlayerHand)
+                gameManager.showHandToCurrent(chosenPlayerHand)
                 
-                player.addKnownCards(chosenPlayerHand)
-                
-                #TODO Implement gameManager, "player" draw "x" card
                 gameManager.playerDraw(player,1)
-                #TODO Implement gameManager, "player" discard "x" card
                 gameManager.playerDiscard(player,1)
