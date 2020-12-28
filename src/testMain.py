@@ -22,4 +22,10 @@ if __name__ == '__main__':
     print(strT)
     
     hand = [DeepOnes(),GoldenMead()]
-    print(LP.cardToPlay(hand).name)
+    p.hand = hand
+    print(LP.cardToPlay(hand))
+    
+    listP = [p,p,p]
+    print(LP.chooseTargetPlayer(2,listP))
+    
+    print(LP.playerDiscard(p,1))

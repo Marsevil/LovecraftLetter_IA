@@ -5,18 +5,31 @@ class View():
 
     """
     Ask for a number and return the player at this number from the list of players
-    @params nbPlayer, number of players
+    @params nbPlayer, number of players to choose
     @params players, list of players
     @return selected player object
     """
     def chooseTargetPlayer(self,nbPlayer, players):
         self.cls()
-        nbPlayerStr = "There are " + str(nbPlayer) + " players in game, please choose a target"
-        print(nbPlayerStr)
-        playerNb = self.chooseNumber(1,nbPlayer)
-        if playerNb:
-            return players[playerNb-1]
-        return None
+        playersAvailable = []
+        for i in range(len(players)):
+            playersAvailable.append(i+1)
+        choosenPlayersList =[]
+        while len(choosenPlayersList) < nbPlayer:
+            print("Please choose a target (number) in this list : " + str(playersAvailable))
+            nbInput = None
+            while True:
+                try:
+                    nbInput = int(input())
+                    if nbInput in playersAvailable:
+                        break
+                    else:
+                        print("Wrong number please retry")
+                except Exception as e:
+                    print(e)
+            choosenPlayersList.append(players.pop(nbInput-1-len(choosenPlayersList)))
+            playersAvailable.remove(nbInput)
+        return choosenPlayersList
     
     """
     Ask for which card to play
@@ -29,8 +42,10 @@ class View():
         print(cardStr)
         cardNb = self.chooseNumber(1,2)
         if cardNb:
-            return playerHand[cardNb-1]
+            return cardNb
         return None
+    
+    
     
     
     """
@@ -127,6 +142,22 @@ class View():
             cardsStr += card.name + ", "
         cardsStr = cardsStr[:-2]
         print(cardsStr)
+    
+    """
+    Discard hand function
+    
+    """
+    def playerDiscard(self,player,nbCard):
+        returnList = []
+        returnList.append(self.cardToPlay(player.hand))
+        return returnList
+#        hand = player.hand
+#        handStr = ""
+#        for card in hand:
+#            handStr += str(card.name) + ", "
+#        handStr = handStr[:-2]
+#        discardStr = "You need to discard " + str(nbCard) + " cards from "+ handStr
+        
     
     """
     Clear screen function
