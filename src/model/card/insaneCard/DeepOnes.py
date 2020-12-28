@@ -5,7 +5,7 @@ from ..Sanity import Sanity
 class DeepOnes (InsaneCard):
 
     def __init__(self):
-        super(DeepOnes,self).__init__("Deep Ones", "Sane : When you discard Investigators" +
+        super(DeepOnes,self).__init__("Deep Ones", "Sane : When you discard Deep Ones" +
         " during your turn, choose another player and name a number (other" +
         " than 1). If that player has that number in their hand, they are" +
         " knocked out of the round. If all other players still in the round" +
