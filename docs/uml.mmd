@@ -79,12 +79,13 @@ classDiagram
     class View {
         + View()
         + chooseTargetPlayer(int : nbPlayer, List<Player> players) : List<Player>
-        + cardCantBePlayer() : card : int
+        + cardCantBePlayed() : int
         + askInsanity() : sanity : Sanity
         + redistribute(List<Card> : inGameCards) : List<List<Card>>
         + chooseNumber() : int
         + showCards(List<Card> : cards) : void
         + playerDiscard(player : Player, nbCard : int) : List<int>
+        + cardToPlay(List<Card> : playerCard) : int
     }
 
     Card <|.. SaneCard
