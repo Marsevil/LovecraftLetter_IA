@@ -16,6 +16,21 @@ class View():
         playerNb = self.chooseNumber(1,nbPlayer)
         if playerNb:
             return players[playerNb-1]
+        return None
+    
+    """
+    Ask for which card to play
+    @params playerHand, playable cards
+    @çeturn card object
+    """
+    def cardToPlay(self,playerHand):
+        self.cls()
+        cardStr = "You can play " + playerHand[0].name + "(1) or " + playerHand[1].name + "(2)"
+        print(cardStr)
+        cardNb = self.chooseNumber(1,2)
+        if cardNb:
+            return playerHand[cardNb-1]
+        return None
     
     
     """
