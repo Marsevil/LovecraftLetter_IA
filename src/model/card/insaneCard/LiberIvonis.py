@@ -36,10 +36,8 @@ class LiberIvonis(InsaneCard):
         
         if self.sanity == Sanity.SANE:
             #the current player is immune until his next turn
-            player = self.getOwner()
-            player.setImmune(True)
+            self.getOwner().setImmune(True)
 
         if self.sanity == Sanity.INSANE:
             #the current player can't be knocked out until his next turn
-            player = self.getOwner()
-            player.setKnockableOut(False)
+            self.getOwner().setKnockableOut(False)
