@@ -144,6 +144,7 @@ class View():
             print("\t Value : " + str(card.value))
             print("\t Effect : \n\t\t" + card.description)
             print("")
+        input("continue (c) : ")
     
     """
     Discard hand function
