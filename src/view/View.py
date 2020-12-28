@@ -149,7 +149,7 @@ class View():
     """
     def playerDiscard(self,player,nbCard):
         returnList = []
-        returnList.append(self.cardToPlay(player.hand))
+        returnList.append(self.cardToPlay(player.hand)-1)
         return returnList
 #        hand = player.hand
 #        handStr = ""
