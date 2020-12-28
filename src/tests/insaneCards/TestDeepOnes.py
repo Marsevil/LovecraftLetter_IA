@@ -1,14 +1,14 @@
 import unittest
 
-from ..FakeView import FakeView
-from ..FakeViewInsane import FakeViewInsane
-from ...controller.GameManager import GameManager
-from ...model.card.insaneCard.DeepOnes import DeepOnes
-from ...model.card.insaneCard.GoldenMead import GoldenMead
-from ...model.card.insaneCard.HoundOfTindalos import HoundOfTindalos
-from ...model.card.saneCard.Investigators import Investigators
-from ...model.card.saneCard.ProfessorHenryArmitage import ProfessorHenryArmitage
-from ...model.card.saneCard.GreatRaceOfYith import GreatRaceOfYith
+from tests.FakeView import FakeView
+from tests.FakeViewInsane import FakeViewInsane
+from controller.GameManager import GameManager
+from model.card.insaneCard.DeepOnes import DeepOnes
+from model.card.insaneCard.GoldenMead import GoldenMead
+from model.card.insaneCard.HoundOfTindalos import HoundOfTindalos
+from model.card.saneCard.Investigators import Investigators
+from model.card.saneCard.ProfessorHenryArmitage import ProfessorHenryArmitage
+from model.card.saneCard.GreatRaceOfYith import GreatRaceOfYith
 
 class TestDeepOnes(unittest.TestCase) :
     def test_value3Sane(self) :

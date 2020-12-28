@@ -1,5 +1,5 @@
 from .FakeView import FakeView
-from ..model.card.Sanity import Sanity
+from model.card.Sanity import Sanity
 
 class FakeViewInsane(FakeView) :
     def __init__(self, gameManager) :

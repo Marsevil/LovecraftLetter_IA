@@ -1,8 +1,8 @@
 import unittest
 
 from ..FakeView import FakeView
-from ...model.card.saneCard.ElderSign import ElderSign
-from ...controller.GameManager import GameManager
+from model.card.saneCard.ElderSign import ElderSign
+from controller.GameManager import GameManager
 
 class TestElderSign(unittest.TestCase) :
     def test_ElderSign(self) :

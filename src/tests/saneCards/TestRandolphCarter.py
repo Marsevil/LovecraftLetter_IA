@@ -1,10 +1,10 @@
 import unittest
 
-from ..FakeView import FakeView
-from ...controller.GameManager import GameManager
-from ...model.card.saneCard.RandolphCarter import RandolphCarter
-from ...model.card.saneCard.CatsOfUlthar import CatsOfUlthar
-from ...model.card.saneCard.ElderSign import ElderSign
+from tests.FakeView import FakeView
+from controller.GameManager import GameManager
+from model.card.saneCard.RandolphCarter import RandolphCarter
+from model.card.saneCard.CatsOfUlthar import CatsOfUlthar
+from model.card.saneCard.ElderSign import ElderSign
 
 class TestRandolphCarter(unittest.TestCase) :
     def test_trade(self) :

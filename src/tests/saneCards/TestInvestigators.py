@@ -1,10 +1,10 @@
 import unittest
 
-from ..FakeView import FakeView
-from ...controller.GameManager import GameManager
-from ...model.card.saneCard.Investigators import Investigators
-from ...model.card.saneCard.GreatRaceOfYith import GreatRaceOfYith
-from ...model.card.saneCard.ProfessorHenryArmitage import ProfessorHenryArmitage
+from tests.FakeView import FakeView
+from controller.GameManager import GameManager
+from model.card.saneCard.Investigators import Investigators
+from model.card.saneCard.GreatRaceOfYith import GreatRaceOfYith
+from model.card.saneCard.ProfessorHenryArmitage import ProfessorHenryArmitage
 
 class TestInvestigators(unittest.TestCase) :
     def test_value3(self) :

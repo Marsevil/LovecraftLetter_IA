@@ -1,4 +1,4 @@
-from src.model.card.Sanity import Sanity
+from model.card.Sanity import Sanity
 
 class FakeView :
     def __init__(self, gameManager) :

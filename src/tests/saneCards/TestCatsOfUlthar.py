@@ -1,8 +1,8 @@
 import unittest
 
 from ..FakeView import FakeView
-from ...model.card.saneCard.CatsOfUlthar import CatsOfUlthar
-from ...controller.GameManager import GameManager
+from model.card.saneCard.CatsOfUlthar import CatsOfUlthar
+from controller.GameManager import GameManager
 
 class TestCatsOfUlthar(unittest.TestCase) :
     def test_CatsOfUlthar(self) :

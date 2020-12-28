@@ -1,13 +1,13 @@
 import unittest
 
-from ..FakeView import FakeView
-from ...controller.GameManager import GameManager
-from ...model.card.saneCard.ProfessorHenryArmitage import ProfessorHenryArmitage
-from ...model.card.saneCard.RandolphCarter import RandolphCarter
-from ...model.card.saneCard.GreatRaceOfYith import GreatRaceOfYith
-from ...model.card.insaneCard.MiGoBraincase import MiGoBraincase
-from ...model.card.insaneCard.Cthulhu import Cthulhu
-from ...model.card.saneCard.TheNecronomicon import TheNecronomicon
+from tests.FakeView import FakeView
+from controller.GameManager import GameManager
+from model.card.saneCard.ProfessorHenryArmitage import ProfessorHenryArmitage
+from model.card.saneCard.RandolphCarter import RandolphCarter
+from model.card.saneCard.GreatRaceOfYith import GreatRaceOfYith
+from model.card.insaneCard.MiGoBraincase import MiGoBraincase
+from model.card.insaneCard.Cthulhu import Cthulhu
+from model.card.saneCard.TheNecronomicon import TheNecronomicon
 
 class TestProfessorHenryArmitage(unittest.TestCase) :
     def test_commonCase(self) :

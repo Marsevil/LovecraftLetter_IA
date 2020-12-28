@@ -1,10 +1,10 @@
 import unittest
 
-from ..FakeView import FakeView
-from ...controller.GameManager import GameManager
-from ...model.card.saneCard.GreatRaceOfYith import GreatRaceOfYith
-from ...model.card.saneCard.ElderSign import ElderSign
-from ...model.card.saneCard.TheNecronomicon import TheNecronomicon
+from tests.FakeView import FakeView
+from controller.GameManager import GameManager
+from model.card.saneCard.GreatRaceOfYith import GreatRaceOfYith
+from model.card.saneCard.ElderSign import ElderSign
+from model.card.saneCard.TheNecronomicon import TheNecronomicon
 
 class TestGreatRaceOfYith(unittest.TestCase) :
     def test_otherGreaterThanCurrent(self) :
