@@ -1,6 +1,8 @@
 from ..InsaneCard import InsaneCard
 from ..Sanity import Sanity
+
 from .MiGoBraincase import MiGoBraincase
+
 
 class MiGo (InsaneCard):
 

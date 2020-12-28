@@ -1,18 +1,19 @@
 import unittest
 
-from ..FakeView import FakeView
-from ...controller.GameManager import GameManager
-from ...model.card.saneCard.ProfessorHenryArmitage import ProfessorHenryArmitage
-from ...model.card.saneCard.RandolphCarter import RandolphCarter
-from ...model.card.saneCard.GreatRaceOfYith import GreatRaceOfYith
-from ...model.card.insaneCard.MiGoBraincase import MiGoBraincase
-from ...model.card.insaneCard.Cthulhu import Cthulhu
-from ...model.card.saneCard.TheNecronomicon import TheNecronomicon
+from tests.FakeView import FakeView
+from controller.GameManager import GameManager
+from model.card.saneCard.ProfessorHenryArmitage import ProfessorHenryArmitage
+from model.card.saneCard.RandolphCarter import RandolphCarter
+from model.card.saneCard.GreatRaceOfYith import GreatRaceOfYith
+from model.card.insaneCard.MiGoBraincase import MiGoBraincase
+from model.card.insaneCard.Cthulhu import Cthulhu
+from model.card.saneCard.TheNecronomicon import TheNecronomicon
 
 class TestProfessorHenryArmitage(unittest.TestCase) :
     def test_commonCase(self) :
         # Test common case.
         gm = GameManager(FakeView(None), 2)
+        gm.startNewRound()
         gm.players[0].hand = []
         gm.players[0].pickUp(GreatRaceOfYith())
         gm.players[0].pickUp(ProfessorHenryArmitage())
@@ -30,6 +31,7 @@ class TestProfessorHenryArmitage(unittest.TestCase) :
         # When the deck is empty other player should pick up MiGoBraincase.
 
         gm = GameManager(FakeView(None), 2)
+        gm.startNewRound()
         gm.players[0].hand = []
         gm.players[0].pickUp(GreatRaceOfYith())
         gm.players[0].pickUp(ProfessorHenryArmitage())
@@ -46,6 +48,7 @@ class TestProfessorHenryArmitage(unittest.TestCase) :
     def test_withChtulhu(self) :
         # When Chtulhu is in the hand of the other player the effect should be applied.
         gm = GameManager(FakeView(None), 2)
+        gm.startNewRound()
         gm.players[0].hand = []
         gm.players[0].pickUp(GreatRaceOfYith())
         gm.players[0].pickUp(ProfessorHenryArmitage())
@@ -60,6 +63,7 @@ class TestProfessorHenryArmitage(unittest.TestCase) :
     def test_withNecronomicon(self) :
         # When TheNecronomicon is in the hand of the other player the effect should be applied.
         gm = GameManager(FakeView(None), 2)
+        gm.startNewRound()
         gm.players[0].hand = []
         gm.players[0].pickUp(GreatRaceOfYith())
         gm.players[0].pickUp(ProfessorHenryArmitage())

@@ -1,16 +1,17 @@
 import unittest
 
-from ..FakeViewInsane import FakeViewInsane
-from ..FakeView import FakeView
-from ...controller.GameManager import GameManager
-from ...model.card.insaneCard.Cthulhu import Cthulhu
-from ...model.card.insaneCard.DeepOnes import DeepOnes
-from ...model.card.insaneCard.GoldenMead import GoldenMead
-from ...model.card.insaneCard.LiberIvonis import LiberIvonis
+from tests.FakeViewInsane import FakeViewInsane
+from tests.FakeView import FakeView
+from controller.GameManager import GameManager
+from model.card.insaneCard.Cthulhu import Cthulhu
+from model.card.insaneCard.DeepOnes import DeepOnes
+from model.card.insaneCard.GoldenMead import GoldenMead
+from model.card.insaneCard.LiberIvonis import LiberIvonis
 
 class TestChtulhu(unittest.TestCase) :
     def test_knockedOutSane(self) :
         gm = GameManager(FakeView(None), 2)
+        gm.startNewRound()
 
         gm.players[0].hand = []
         gm.players[0].pickUp(DeepOnes())

@@ -1,9 +1,15 @@
 import random
 
-from ..model.Player import Player
-from ..model.card.Sanity import Sanity
-from ..model.card.saneCard import *
-from ..model.card.insaneCard import *
+
+#import when running testMain.py in src
+from model.Player import Player
+#from ..model.Player import Player
+from model.card.Sanity import Sanity
+#from ..model.card.Sanity import Sanity
+from model.card.saneCard import *
+#from ..model.card.saneCard import *
+from model.card.insaneCard import *
+#from ..model.card.insaneCard import *
 
 class GameManager:
     def __init__(self, view, nbPlayer) :
@@ -21,8 +27,6 @@ class GameManager:
         # Instantiate as many players as nbPlayer defines.
         for _i in range(nbPlayer) :
             self.players.append(Player(0, 0, [], [], False, True, False))
-
-        self.startNewRound()
 
     ## Builds deck by creating card list & shuffles it.
     @staticmethod
@@ -124,13 +128,6 @@ class GameManager:
 
         # Push on the discard stack.
         currentPlayer.addDiscardedCard(card)
-
-        # Switch to the next player.
-        self.currentPlayer = self.currentPlayer + 1 if self.currentPlayer < len(self.players) else 0
-
-        if self.deck :
-            # Pick up a card
-            self.players[self.currentPlayer].pickUp(self.deck.pop())
 
     ## Check if the round is ended.
     def isRoundEnd(self) :
@@ -273,3 +270,31 @@ class GameManager:
 
         for i in discardedCard :
             player.addDiscardedCard(player.getCardFromHand(i))
+
+    ## Loop for each round.
+    def run(self) :
+        gameWinner = -1
+
+        # Game loop
+        while True :
+
+            self.startNewRound()
+            roundWinner = -1
+
+            # Round loop
+            while True :
+                # Player draw a card
+                self.playerDraw(self.getCurrentPlayer(), 1)
+                # Choose a card to play & apply effect.
+                self.play(self.view.cardToPlay(self.getCurrentPlayer().getHand()))
+                # Switch to the next player
+                self.currentPlayer = self.currentPlayer + 1 if self.currentPlayer < len(self.players) else 0
+
+                # Check if the round is not end.
+                roundWinner = self.isRoundEnd()
+                if roundWinner != -1 :
+                    break
+
+            gameWinner = self.isGameEnd()
+            if gameWinner != -1 :
+                break

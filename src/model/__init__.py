@@ -1,2 +1,1 @@
-from .card import *
-from .Player import Player
+__all__ = ["Player", "card"]

@@ -1,14 +1,15 @@
 import unittest
 
-from ..FakeView import FakeView
-from ...controller.GameManager import GameManager
-from ...model.card.saneCard.RandolphCarter import RandolphCarter
-from ...model.card.saneCard.CatsOfUlthar import CatsOfUlthar
-from ...model.card.saneCard.ElderSign import ElderSign
+from tests.FakeView import FakeView
+from controller.GameManager import GameManager
+from model.card.saneCard.RandolphCarter import RandolphCarter
+from model.card.saneCard.CatsOfUlthar import CatsOfUlthar
+from model.card.saneCard.ElderSign import ElderSign
 
 class TestRandolphCarter(unittest.TestCase) :
     def test_trade(self) :
         gm = GameManager(FakeView(None), 2)
+        gm.startNewRound()
         gm.players[0].hand = []
         gm.players[0].pickUp(CatsOfUlthar())
         gm.players[0].pickUp(RandolphCarter())
