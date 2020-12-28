@@ -193,15 +193,24 @@ class GameManager:
     def findWinnerWthSpecialEffect(self) :
         winner = -1
 
-        if not self.players[self.currentPlayer - 1].getKnockedOut() :
+        for i in range(len(self.players)) :
+            player = self.players[i]
 
-            lastCardPlayed = self.getPlayers()[self.currentPlayer - 1].getHand()[-1]
+            if not player.getKnockedOut() and player.hand :
 
-            if (isinstance(lastCardPlayed, TheShiningTrapezohedron) and lastCardPlayed.sanity == Sanity.INSANE) :
-                winner = self.currentPlayer - 1 if self.currentPlayer - 1 > 0 else len(self.players) - 1
+                lastCardPlayed = player.getDiscard()[-1]
 
-            if (isinstance(lastCardPlayed, Cthulhu) and lastCardPlayed.sanity == Sanity.INSANE) :
-                winner = self.currentPlayer - 1 if self.currentPlayer - 1 > 0 else len(self.players) -1
+                if (
+                    isinstance(lastCardPlayed, TheShiningTrapezohedron)
+                    and lastCardPlayed.sanity == Sanity.INSANE
+                    and player.getHand()[0].getValue() > 4
+                ) :
+                    winner = i
+                    break
+
+                if (isinstance(lastCardPlayed, Cthulhu) and lastCardPlayed.sanity == Sanity.INSANE) :
+                    winner = i
+                    break
 
         return winner
 
