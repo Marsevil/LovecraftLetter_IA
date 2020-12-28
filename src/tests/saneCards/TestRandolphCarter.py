@@ -9,6 +9,7 @@ from model.card.saneCard.ElderSign import ElderSign
 class TestRandolphCarter(unittest.TestCase) :
     def test_trade(self) :
         gm = GameManager(FakeView(None), 2)
+        gm.startNewRound()
         gm.players[0].hand = []
         gm.players[0].pickUp(CatsOfUlthar())
         gm.players[0].pickUp(RandolphCarter())

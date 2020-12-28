@@ -9,6 +9,7 @@ from model.card.saneCard.ProfessorHenryArmitage import ProfessorHenryArmitage
 class TestInvestigators(unittest.TestCase) :
     def test_value3(self) :
         gm = GameManager(FakeView(None), 2)
+        gm.startNewRound()
         gm.players[0].pickUp(Investigators())
         # The FakeView automatically respond 3 so I place Great Race Of Yith (value 3).
         gm.players[1].hand = [GreatRaceOfYith()]

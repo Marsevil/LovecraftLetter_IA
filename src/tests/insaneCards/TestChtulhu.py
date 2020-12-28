@@ -11,6 +11,7 @@ from model.card.insaneCard.LiberIvonis import LiberIvonis
 class TestChtulhu(unittest.TestCase) :
     def test_knockedOutSane(self) :
         gm = GameManager(FakeView(None), 2)
+        gm.startNewRound()
 
         gm.players[0].hand = []
         gm.players[0].pickUp(DeepOnes())

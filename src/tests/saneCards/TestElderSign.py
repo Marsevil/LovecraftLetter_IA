@@ -1,12 +1,13 @@
 import unittest
 
-from ..FakeView import FakeView
+from tests.FakeView import FakeView
 from model.card.saneCard.ElderSign import ElderSign
 from controller.GameManager import GameManager
 
 class TestElderSign(unittest.TestCase) :
     def test_ElderSign(self) :
         gm = GameManager(FakeView(None), 2)
+        gm.startNewRound()
         gm.players[0].pickUp(ElderSign())
         gm.play(1)
 

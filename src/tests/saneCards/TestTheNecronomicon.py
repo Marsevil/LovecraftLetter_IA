@@ -8,6 +8,7 @@ from model.card.saneCard.CatsOfUlthar import CatsOfUlthar
 class TestTheNecronomicon(unittest.TestCase) :
     def test_knockedOut(self) :
         gm = GameManager(FakeView(None), 2)
+        gm.startNewRound()
         gm.players[0].hand = []
         gm.players[0].pickUp(CatsOfUlthar())
         gm.players[0].pickUp(TheNecronomicon())

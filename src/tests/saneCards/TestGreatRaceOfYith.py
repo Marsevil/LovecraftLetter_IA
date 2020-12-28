@@ -9,6 +9,7 @@ from model.card.saneCard.TheNecronomicon import TheNecronomicon
 class TestGreatRaceOfYith(unittest.TestCase) :
     def test_otherGreaterThanCurrent(self) :
         gm = GameManager(FakeView(None), 2)
+        gm.startNewRound()
         # Using current player < other player.
         gm.players[0].hand = []
         gm.players[0].pickUp(ElderSign())

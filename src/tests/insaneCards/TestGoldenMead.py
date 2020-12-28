@@ -10,6 +10,7 @@ from model.card.saneCard.Investigators import Investigators
 class TestGoldenMead(unittest.TestCase) :
     def test_showHand(self) :
         gm = GameManager(FakeView(None), 2)
+        gm.startNewRound()
         gm.players[0].hand = []
         gm.players[0].pickUp(DeepOnes())
         gm.players[0].pickUp(GoldenMead())

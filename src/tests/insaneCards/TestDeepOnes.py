@@ -13,6 +13,8 @@ from model.card.saneCard.GreatRaceOfYith import GreatRaceOfYith
 class TestDeepOnes(unittest.TestCase) :
     def test_value3Sane(self) :
         gm = GameManager(FakeView(None), 2)
+        gm.startNewRound()
+        
         gm.players[0].pickUp(Investigators())
         # The FakeView automatically respond 3 so I place Great Race Of Yith (value 3).
         gm.players[1].hand = [GreatRaceOfYith()]
@@ -24,6 +26,8 @@ class TestDeepOnes(unittest.TestCase) :
 
     def test_noValue3Sane(self) :
         gm = GameManager(FakeView(None), 2)
+        gm.startNewRound()
+
         gm.players[0].pickUp(Investigators())
         # Is the other player doesn't have any card with value 3.
         gm.players[1].hand = [ProfessorHenryArmitage()]
@@ -34,6 +38,7 @@ class TestDeepOnes(unittest.TestCase) :
 
     def test_value1(self) :
         gm = GameManager(FakeViewInsane(None), 2)
+        gm.startNewRound()
 
         gm.players[0].hand = []
         gm.players[0].pickUp(GoldenMead())
@@ -50,6 +55,7 @@ class TestDeepOnes(unittest.TestCase) :
 
     def test_value3Insane(self) :
         gm = GameManager(FakeViewInsane(None), 2)
+        gm.startNewRound()
 
         gm.players[0].hand = []
         gm.players[0].pickUp(GoldenMead())
@@ -65,6 +71,7 @@ class TestDeepOnes(unittest.TestCase) :
 
     def test_noValue3Insane(self) :
         gm = GameManager(FakeViewInsane(None), 2)
+        gm.startNewRound()
 
         gm.players[0].hand = []
         gm.players[0].pickUp(GoldenMead())
