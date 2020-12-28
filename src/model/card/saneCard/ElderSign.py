@@ -22,5 +22,4 @@ class ElderSign (SaneCard):
 
     def effect(self, gameManager):
         #the current player is immune until his next turn
-        player = gameManager.getCurrentPlayer()
-        player.setImmune(True)
+        self.getOwner().setImmune(True)

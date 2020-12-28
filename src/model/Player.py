@@ -50,6 +50,7 @@ class Player:
             self.setInsaneToken(self.getInsaneToken() + 1)
 
     def pickUp(self, card) :
+        card.setOwner(self)
         self.hand.append(card)
 
     def getHand(self):
@@ -86,7 +87,7 @@ class Player:
         return self.isKnockableOut
 
     def setKnockableOut(self, knockableOut) :
-        self.isKnockableOut = knockableOut
+        self.knockableOut = knockableOut
 
     def getImmune(self):
         return self.immune

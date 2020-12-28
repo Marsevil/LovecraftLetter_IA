@@ -30,7 +30,6 @@ class CatsOfUlthar(SaneCard):
     Choose a player and add his hand in the player KnownCards
     """
     def effect(self,gameManager):
-        player = gameManager.getCurrentPlayer()
         chosenPlayer = gameManager.chooseTargetPlayer(1, False)
 
         #Check if a player is returned

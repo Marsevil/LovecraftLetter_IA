@@ -19,6 +19,7 @@ class Card(ABC):
         self._description = description
         self._value = value
         self._sanity = Sanity.NEUTRAL
+        self._owner = None
 
     
     @property
@@ -57,6 +58,12 @@ class Card(ABC):
 
     def getValue(self):
         return self._value
+
+    def getOwner(self) :
+        return self._owner
+
+    def setOwner(self, owner) :
+        self._owner = owner
 
     @property
     def sanity(self):

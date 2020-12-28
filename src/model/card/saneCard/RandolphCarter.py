@@ -30,9 +30,9 @@ class RandolphCarter (SaneCard):
         if(len(chosenOne) != 0):
 
             #Échange la main avec le joueur
-            playerHand = gameManager.getCurrentPlayer().getHand()
-            targetHand = chosenOne[0].getHand()
+            player = self.getOwner()
+            targetPlayer = chosenOne[0]
 
-            temp = playerHand[0]
-            playerHand[0] = targetHand[0]
-            targetHand[0] = temp[0]
+            temp = player.getCardFromHand(0)
+            player.pickUp(targetPlayer.getCardFromHand(0))
+            targetPlayer.pickUp(temp)

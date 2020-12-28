@@ -29,11 +29,11 @@ class Cthulhu(InsaneCard):
         
         if self.sanity == Sanity.SANE:
             # You are knocked out if the round if you discard Cthulhu if the player could be knocked out
-            if(gameManager.getCurrentPlayer().isKnockableOut()):
-                gameManager.getCurrentPlayer().setKnockedOut(True)
+            if(self.getOwner().isKnockableOut()):
+                self.getOwner().setKnockedOut(True)
 
         if self.sanity == Sanity.INSANE:
-            player = gameManager.getCurrentPlayer()
+            player = self.getOwner()
             #check if the player have played less than 2 insane cards and could be knock out he is knocked out
             if(player.nbInsaneCardDiscarded() < 2 and player.isKnockableOut()):
                 player.setKnockedOut(True)
