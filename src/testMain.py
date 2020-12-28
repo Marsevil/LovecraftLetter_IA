@@ -20,3 +20,6 @@ if __name__ == '__main__':
     for c in newList:
         strT += c.name
     print(strT)
+    
+    hand = [DeepOnes(),GoldenMead()]
+    print(LP.cardToPlay(hand).name)
