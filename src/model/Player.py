@@ -58,6 +58,8 @@ class Player:
 
     def setHand(self,hand):
         self.hand = hand
+        for card in self.hand :
+            card.setOwner(self)
 
     def getDiscard(self):
         return self.discard

@@ -119,7 +119,8 @@ class GameManager:
         while (not self.checkPlayableCard(card)) :
             currentPlayer.pickUp(card)
 
-            card = currentPlayer.getCardFromHand(self.view.cardCantBePlayed())
+            self.view.cardCantBePlayed()
+            card = currentPlayer.getCardFromHand(self.view.cardToPlay(currentPlayer.getHand()))
 
         card.sanity = self.askInsanity(card)
 
@@ -140,6 +141,8 @@ class GameManager:
                     if winner != -1 :
                         winner = -1
                         break
+                    else :
+                        winner = player
 
                     winner = player
             
@@ -172,7 +175,7 @@ class GameManager:
     def chooseTargetPlayer(self, nbPlayer, allowCurrentPlayer) :
         notImmunePlayers = []
         for player in self.players :
-            if (not player.getImmune()) and ((player != self.currentPlayer) or (allowCurrentPlayer)):
+            if (not player.getImmune()) and ((player != self.getCurrentPlayer()) or (allowCurrentPlayer)):
                 notImmunePlayers.append(player)
 
         return self.view.chooseTargetPlayer(nbPlayer, notImmunePlayers)
@@ -233,7 +236,7 @@ class GameManager:
     ## Ask to the view a number > 1
     def chooseNumber(self) :
         while True :
-            number = self.view.chooseNumber()
+            number = self.view.chooseNumber(2, 8)
 
             if number > 1 :
                 break
@@ -283,12 +286,13 @@ class GameManager:
 
             # Round loop
             while True :
+                self.view.displayNewTurn(self)
                 # Player draw a card
                 self.playerDraw(self.getCurrentPlayer(), 1)
                 # Choose a card to play & apply effect.
                 self.play(self.view.cardToPlay(self.getCurrentPlayer().getHand()))
                 # Switch to the next player
-                self.currentPlayer = self.currentPlayer + 1 if self.currentPlayer < len(self.players) else 0
+                self.currentPlayer = (self.currentPlayer + 1) % len(self.players)
 
                 # Check if the round is not end.
                 roundWinner = self.isRoundEnd()

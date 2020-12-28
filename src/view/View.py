@@ -170,8 +170,8 @@ class View():
         currentPlayer = gameManager.currentPlayer
         roundNumber = gameManager.roundNumber
         infoStr = "========================"
-        infoStr1 = "Round number "+ str(roundNumber)
-        infoStr2 = "Player number " + str(currentPlayer) + " playing"
+        infoStr1 = "Round number "+ str(roundNumber + 1)
+        infoStr2 = "Player number " + str(currentPlayer + 1) + " playing"
         print(infoStr)
         print(infoStr1)
         print(infoStr2)
