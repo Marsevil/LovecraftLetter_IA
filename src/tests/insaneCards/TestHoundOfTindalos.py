@@ -56,9 +56,9 @@ class TestHoundOfTindalos(unittest.TestCase) :
         gm.players[1].pickUp(TheNecronomicon())
 
         print("HasNotInsane")
-        print(gm.players[1].knockableOut)
+        print(gm.players[1].isKnockableOut())
         print(gm.players[1].stateOfMind())
-        if gm.players[1].knockableOut and (gm.players[1].stateOfMind() != Sanity.INSANE):
+        if gm.players[1].isKnockableOut() and (gm.players[1].stateOfMind() != Sanity.INSANE):
             print("Test")
 
         self.assertFalse(gm.players[0].knockedOut)

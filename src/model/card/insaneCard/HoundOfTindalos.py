@@ -55,6 +55,7 @@ class HoundOfTindalos (InsaneCard):
             chosenOne = gameManager.chooseTargetPlayer(1, False)
             
             if(len(chosenOne) != 0):
-                if chosenOne[0].knockableOut and (chosenOne[0].stateOfMind() != Sanity.INSANE):
+
+                if chosenOne[0].isKnockableOut() and (chosenOne[0].stateOfMind() != Sanity.INSANE):
                     chosenOne[0].setKnockedOut(True)
             
