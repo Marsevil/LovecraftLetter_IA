@@ -2,13 +2,15 @@ from ..InsaneCard import InsaneCard
 from ..Sanity import Sanity
 
 from .MiGoBraincase import MiGoBraincase
+from .Cthulhu import Cthulhu
+from ..saneCard.TheNecronomicon import TheNecronomicon
 
 
 class MiGo (InsaneCard):
 
     def __init__(self):
         super(MiGo,self).__init__("Mi-Go", "Sane : When you discard" +
-        " Professor Henry Armitage during your turn, choose a player" +
+        " Mi-Go during your turn, choose a player" +
         " (including yourself). That player discards their hand (but doesn’t" +
         " apply its effects, unless it is the The Necronomicon or Cthulhu)" +
         " and draws a new card. If the player cannot draw a card due to the" +
@@ -47,31 +49,33 @@ class MiGo (InsaneCard):
 
                 #Discard the hand of the target player
                 targetHand = chosenOne[0].getHand()
-                for card in targetHand:
+                for _i in range(len(targetHand)):
+
+                    card = targetHand.pop()
 
                     #Only apply the effect if the card is The Necromicon
-                    if (card.getName() == "The Necromicon"):
+                    if isinstance(card, TheNecronomicon):
                         card.effect(gameManager)
                     #or cthulhu, but this time ask the view for the saniy of its effect
-                    elif (card.getName() == "Cthulhu"):
+                    elif isinstance(card, Cthulhu) :
                         effectSanity = gameManager.askInsanity(card)
-                        card.sanity = (effectSanity)
+                        card.sanity = effectSanity
                         card.effect(gameManager)
                     else:
-                        chosenOne[0].addDiscardedCard(card)
-
                         #The target player draws a new card
                         if gameManager.deck :
                             #Draw a card
                             chosenOne[0].pickUp(gameManager.deck.pop())
-                            #If the deck is empty he draws the first card
-                            #that was removed at the start of the round
+                        #If the deck is empty he draws the first card
+                        #that was removed at the start of the round
                         else:
-                            chosenOne[0].pickUp(gameManager.removedCards.pop())
+                            chosenOne[0].pickUp(gameManager.removedCards.pop(0))
+
+                    chosenOne[0].addDiscardedCard(card)
 
         if self.sanity == Sanity.INSANE:
             
-            player = gameManager.getCurrentPlayer()
+            player = self.getOwner()
             
             #Choose a player (including itself)
             chosenOne = gameManager.chooseTargetPlayer(1, True)
@@ -80,11 +84,11 @@ class MiGo (InsaneCard):
             if(len(chosenOne) != 0):
 
                 #Discard the hand of the target player
-                targetHand = chosenOne.getHand()
-                player.pickUp(targetHand[0])
+                player.pickUp(chosenOne[0].getCardFromHand(0))
                 
                 #TODO Implement gameManager, "player" discard "x" card
                 gameManager.playerDiscard(player,1)
                 
-                chosenOne.pickUp(MiGoBraincase())
+                #Mi-Go Braincase is the 1st removed card
+                chosenOne[0].pickUp(gameManager.removedCards.pop(0))
                 
