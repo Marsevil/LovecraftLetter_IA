@@ -144,6 +144,7 @@ class View():
             print("\t Value : " + str(card.value))
             print("\t Effect : \n\t\t" + card.description)
             print("")
+        input("continue (c) : ")
     
     """
     Discard hand function
@@ -160,7 +161,19 @@ class View():
 #        handStr = handStr[:-2]
 #        discardStr = "You need to discard " + str(nbCard) + " cards from "+ handStr
     
-    
+    """
+    Display winner of round
+    """
+    def displayRoundWinner(self,playerIndex,sanity):
+        self.cls()
+        sanityStr = "NEUTRAL"
+        if sanity == Sanity.INSANE:
+            sanityStr = "INSANE"
+        if sanity == Sanity.SANE:
+            sanityStr = "SANE"
+            
+        print("Player " + str(playerIndex+1) + " win the round with a " + sanityStr + " sanity")
+        input("continue (c) : ")
     
     """
     Display Turn and Round info
@@ -171,10 +184,12 @@ class View():
         roundNumber = gameManager.roundNumber
         infoStr = "========================"
         infoStr1 = "Round number "+ str(roundNumber + 1)
-        infoStr2 = "Player number " + str(currentPlayer + 1) + " playing"
+        infoStr2 = "Player " + str(currentPlayer + 1) + " is playing"
+        infoStr3 = str(currentPlayer.saneToken) + " sane token \t"+ str(currentPlayer.insaneToken) + " insane token"
         print(infoStr)
         print(infoStr1)
         print(infoStr2)
+        print(infoStr3)
         print(infoStr)
     
     
