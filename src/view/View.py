@@ -185,7 +185,7 @@ class View():
         infoStr = "========================"
         infoStr1 = "Round number "+ str(roundNumber + 1)
         infoStr2 = "Player " + str(currentPlayer + 1) + " is playing"
-        infoStr3 = str(currentPlayer.saneToken) + " sane token \t"+ str(currentPlayer.insaneToken) + " insane token"
+        infoStr3 = str(gameManager.getCurrentPlayer().saneToken) + " sane token \t"+ str(gameManager.getCurrentPlayer().insaneToken) + " insane token"
         print(infoStr)
         print(infoStr1)
         print(infoStr2)

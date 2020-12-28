@@ -178,7 +178,8 @@ class GameManager:
             if (not player.getImmune()) and ((player != self.getCurrentPlayer()) or (allowCurrentPlayer)):
                 notImmunePlayers.append(player)
 
-        return self.view.chooseTargetPlayer(nbPlayer, notImmunePlayers)
+        #TODO Ajouter un feedback si aucun joueur ne peut être target.
+        return self.view.chooseTargetPlayer(nbPlayer, notImmunePlayers) if notImmunePlayers else []
 
     def getPlayers(self) :
         return self.players
@@ -286,18 +287,32 @@ class GameManager:
 
             # Round loop
             while True :
+                currentPlayer = self.getCurrentPlayer()
+
                 self.view.displayNewTurn(self)
-                # Player draw a card
-                self.playerDraw(self.getCurrentPlayer(), 1)
-                # Choose a card to play & apply effect.
-                self.play(self.view.cardToPlay(self.getCurrentPlayer().getHand()))
-                # Switch to the next player
-                self.currentPlayer = (self.currentPlayer + 1) % len(self.players)
+
+                if not currentPlayer.getKnockedOut() :
+                    #Sanity check
+                    #TODO : afficher le sanity avec le nombre de carte à piocher
+                    #TODO : afficher chaque carte
+                    self.sanityCheck(currentPlayer)
+
+                if not currentPlayer.getKnockedOut() :
+                    # Player draw a card
+                    self.playerDraw(currentPlayer, 1)
+                    # Choose a card to play & apply effect.
+                    self.play(self.view.cardToPlay(currentPlayer.getHand()))
 
                 # Check if the round is not end.
                 roundWinner = self.isRoundEnd()
                 if roundWinner != -1 :
                     break
+
+                # Switch to the next player
+                self.currentPlayer = (self.currentPlayer + 1) % len(self.players)
+
+            self.view.displayRoundWinner(roundWinner, Sanity.NEUTRAL)
+            self.players[roundWinner].updateToken()
 
             gameWinner = self.isGameEnd()
             if gameWinner != -1 :
