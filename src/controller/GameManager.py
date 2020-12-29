@@ -200,7 +200,7 @@ class GameManager:
         for i in range(len(self.players)) :
             player = self.players[i]
 
-            if not player.getKnockedOut() and player.hand :
+            if not player.getKnockedOut() and player.discard :
 
                 lastCardPlayed = player.getDiscard()[-1]
 
@@ -226,7 +226,7 @@ class GameManager:
             card = self.deck.pop()
             self.removedCards.append(card)
 
-            if card.hasInsanity() :
+            if card.hasInsane() and player.isKnockableOut() :
                 player.setKnockedOut(True)
                 break
 
@@ -329,3 +329,5 @@ class GameManager:
             gameWinner = self.isGameEnd()
             if gameWinner != -1 :
                 break
+
+        return gameWinner
