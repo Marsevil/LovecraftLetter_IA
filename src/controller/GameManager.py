@@ -488,7 +488,7 @@ class GameManager:
     def playerDiscard(self, player, nbCard) :
         discardedCard = []
         if isinstance(self.getCurrentPlayer(),Agent):
-            discardedCard.append(random.choice.self.getCurrentPlayer().hand)
+            discardedCard.append(random.randint(0,1))
         else:
             discardedCard = self.view.playerDiscard(player, nbCard)
 
@@ -539,7 +539,7 @@ class GameManager:
                 # Switch to the next player
                 self.currentPlayer = (self.currentPlayer + 1) % len(self.players)
 
-            allAI = False
+            allAI = True
             for player in self.players:
                 #Human playing
                 if not isinstance(player,Agent):
