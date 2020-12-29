@@ -197,15 +197,24 @@ class GameManager:
     def findWinnerWthSpecialEffect(self) :
         winner = -1
 
-        if not self.players[self.currentPlayer - 1].getKnockedOut() :
+        for i in range(len(self.players)) :
+            player = self.players[i]
 
-            lastCardPlayed = self.getPlayers()[self.currentPlayer - 1].getHand()[-1]
+            if not player.getKnockedOut() and player.hand :
 
-            if (isinstance(lastCardPlayed, TheShiningTrapezohedron) and lastCardPlayed.sanity == Sanity.INSANE) :
-                winner = self.currentPlayer - 1 if self.currentPlayer - 1 > 0 else len(self.players) - 1
+                lastCardPlayed = player.getDiscard()[-1]
 
-            if (isinstance(lastCardPlayed, Cthulhu) and lastCardPlayed.sanity == Sanity.INSANE) :
-                winner = self.currentPlayer - 1 if self.currentPlayer - 1 > 0 else len(self.players) -1
+                if (
+                    isinstance(lastCardPlayed, TheShiningTrapezohedron)
+                    and lastCardPlayed.sanity == Sanity.INSANE
+                    and player.getHand()[0].getValue() > 4
+                ) :
+                    winner = i
+                    break
+
+                if (isinstance(lastCardPlayed, Cthulhu) and lastCardPlayed.sanity == Sanity.INSANE) :
+                    winner = i
+                    break
 
         return winner
 
@@ -224,15 +233,18 @@ class GameManager:
     ## Redistribute cards to the people according to the user choice.
     def redistribute(self) :
         inGameCards = []
+        currentPlayer = self.getCurrentPlayer()
 
         for player in self.players :
-            inGameCards.extend(player.getHand())
-            player.getHand().clear()
+            if player != currentPlayer :
+                inGameCards.extend(player.getHand())
+                player.getHand().clear()
 
         redistributedCards = self.view.redistribute(inGameCards)
 
-        for ip in range(len(self.players)) :
-            self.players[ip].setHand(redistributedCards[ip])
+        for player in self.players :
+            if player != currentPlayer :
+                player.setHand(redistributedCards.pop(0))
 
     ## Ask to the view a number > 1
     def chooseNumber(self) :

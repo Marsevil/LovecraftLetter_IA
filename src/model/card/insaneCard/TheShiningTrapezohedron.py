@@ -6,11 +6,11 @@ class TheShiningTrapezohedron(InsaneCard):
     def __init__(self):
         super(TheShiningTrapezohedron,self).__init__("The Shining" +
         " Trapezohedron", "Sane : Unlike other cards, whose effects" +
-        " are applied when they are discarded, the text of The Silver Key" +
-        " only applies when it is in your hand. If you ever have The Silver" +
-        " Key and another card that has a number higher than 4 in your hand," +
-        " you must discard The Silver Key. Of course, you can always decide" +
-        " to discard The Silver Key when that is not the case, to play mind" +
+        " are applied when they are discarded, the text of The Shining Trapezohedron" +
+        " only applies when it is in your hand. If you ever have The Shining" +
+        " Trapezohedron and another card that has a number higher than 4 in your hand," +
+        " you must discard The Shining Trapezohedron. Of course, you can always decide" +
+        " to discard The Shining Trapezohedron when that is not the case, to play mind" +
         " games with the other players...\n Insane : Unlike other cards," +
         " whose effects are applied when they are discarded, the text of The" +
         " Shining Trapezohedron only applies when it is in your hand. If you" +

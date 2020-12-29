@@ -5,7 +5,7 @@ class LiberIvonis(InsaneCard):
 
     def __init__(self):
         super().__init__("Liber Ivonis",
-                        "Sane : When you discard Elder Sign during your turn, you are" +
+                        "Sane : When you discard Liber Ivonis during your turn, you are" +
                         "immune to card effects of other players until the start of your" +
                         "next turn. If all players still in the round other than the" +
                         "player whose turn it is are immune, that player must choose" +
@@ -36,10 +36,8 @@ class LiberIvonis(InsaneCard):
         
         if self.sanity == Sanity.SANE:
             #the current player is immune until his next turn
-            player = gameManager.getCurrentPlayer()
-            player.setImmune(True)
+            self.getOwner().setImmune(True)
 
         if self.sanity == Sanity.INSANE:
             #the current player can't be knocked out until his next turn
-            player = gameManager.getCurrentPlayer()
-            player.setKnockableOut(False)
+            self.getOwner().setKnockableOut(False)

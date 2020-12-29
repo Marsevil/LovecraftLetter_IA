@@ -27,4 +27,4 @@ class MiGoBraincase(InsaneCard):
     def effect(self, gameManager):
         
         if self.sanity == Sanity.SANE or self.sanity == Sanity.INSANE:
-            gameManager.getCurrentPlayer().setKnockedOut(True)
+            self.getOwner().setKnockedOut(True)
