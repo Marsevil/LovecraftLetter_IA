@@ -1,5 +1,7 @@
 import os
 from model.card.Sanity import Sanity
+from model.Player import Player
+from model.ai.Agent import Agent
 
 class View():
     
@@ -184,7 +186,12 @@ class View():
         roundNumber = gameManager.roundNumber
         infoStr = "========================"
         infoStr1 = "Round number "+ str(roundNumber + 1)
-        infoStr2 = "Player " + str(currentPlayer + 1) + " is playing"
+        infoStr2 = ""
+        if isinstance(gameManager.getCurrentPlayer(),Agent):
+            infoStr2 = "AI "
+        else:
+            infoStr2 = "Player "
+        infoStr2 +=  str(currentPlayer + 1) + " is playing"
         infoStr3 = str(gameManager.getCurrentPlayer().saneToken) + " sane token \t"+ str(gameManager.getCurrentPlayer().insaneToken) + " insane token"
         print(infoStr)
         print(infoStr1)

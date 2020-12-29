@@ -27,8 +27,9 @@ class GameManager:
         self.removedCards = []
 
         # Instantiate as many players as nbPlayer defines.
-        for _i in range(nbPlayer-1) :
-            self.players.append(Player(0, 0, [], [], False, True, False))
+#        for _i in range(nbPlayer-1) :
+#            self.players.append(Player(0, 0, [], [], False, True, False))
+        self.players.append(Agent(0,0,[],[],False,True,False))
         self.players.append(Agent(0,0,[],[],False,True,False))
 
     ## Builds deck by creating card list & shuffles it.
@@ -340,7 +341,7 @@ class GameManager:
 
     ## @return the player who is playing.
     def getCurrentPlayer(self) :
-        print(self.currentPlayer)
+#        print(self.currentPlayer)
         return self.players[self.currentPlayer]
 
     ## @params nbPlayer number of player to ask.
@@ -351,7 +352,15 @@ class GameManager:
         for player in self.players :
             if (not player.getImmune()) and ((player != self.getCurrentPlayer()) or (allowCurrentPlayer)):
                 notImmunePlayers.append(player)
-
+                
+        
+        #AI playing
+        if isinstance(self.getCurrentPlayer(),Agent):
+            if notImmunePlayers:
+                return random.sample(notImmunePlayers,nbPlayer)
+            else:
+                return []
+            
         #TODO Ajouter un feedback si aucun joueur ne peut être target.
         return self.view.chooseTargetPlayer(nbPlayer, notImmunePlayers) if notImmunePlayers else []
 
@@ -413,8 +422,13 @@ class GameManager:
             if player != currentPlayer :
                 inGameCards.extend(player.getHand())
                 player.getHand().clear()
-
-        redistributedCards = self.view.redistribute(inGameCards)
+        
+        redistributedCards = []
+        if isinstance(self.getCurrentPlayer(),Agent):
+            redistributedCards = inGameCards
+            random.shuffle(redistributedCards)
+        else:
+            redistributedCards = self.view.redistribute(inGameCards)
 
         for player in self.players :
             if player != currentPlayer :
@@ -423,7 +437,13 @@ class GameManager:
     ## Ask to the view a number > 1
     def chooseNumber(self) :
         while True :
-            number = self.view.chooseNumber(2, 8)
+            number = None
+            #AI playing
+            if isinstance(self.getCurrentPlayer(),Agent):
+                number = random.randint(2,8)
+            #Human Playing
+            else:
+                number = self.view.chooseNumber(2, 8)
 
             if number > 1 :
                 break
@@ -433,7 +453,9 @@ class GameManager:
     ## Send hand to the view to be shown
     ## @params hand is a list of cards
     def showHandToCurrent(self, hand) :
-        self.view.showCards(hand)
+        #Human playing
+        if not isinstance(self.getCurrentPlayer(),Agent):
+            self.view.showCards(hand)
 
     ## @params card is a Card.
     ## @return Sanity.SANE if its the only one possibility else ask to the view.
@@ -505,11 +527,20 @@ class GameManager:
                 # Switch to the next player
                 self.currentPlayer = (self.currentPlayer + 1) % len(self.players)
 
-            self.view.displayRoundWinner(roundWinner, Sanity.NEUTRAL)
+            allAI = True
+            for player in self.players:
+                #Human playing
+                if not isinstance(player,Agent):
+                    allAI = False
+            if not allAI:
+                self.view.displayRoundWinner(roundWinner, Sanity.NEUTRAL)
             self.players[roundWinner].updateToken()
 
             gameWinner = self.isGameEnd()
             if gameWinner != -1 :
+                for player in self.players:
+                    if isinstance(player,Agent):
+                        player.printQ()
                 break
 
         return gameWinner

@@ -29,7 +29,7 @@ class Agent(Player):
         
     #Get Q value for a (state,action) key
     def getQ(self, state, action):
-        print("getQ : " + str(self.q.get((state, action), 0.0)))
+#        print("getQ : " + str(self.q.get((state, action), 0.0)))
         return self.q.get((state, action), 0.0)
 
 
@@ -44,6 +44,10 @@ class Agent(Player):
     
     #Epsilon-Greedy strategy, choose the best action (or random) for a state in a list of available actions        
     def chooseAction(self, state,actions):
+#        print("choose action : " + str(len(actions)))
+        if (len(actions) <= 0):
+            return None
+        
         if random.random() < self.epsilon:
             action = random.choice(actions)
         else:
@@ -59,20 +63,21 @@ class Agent(Player):
             action = actions[i]
         return action
     
-    def learn(self, state1, action1, reward, state2):
-        maxqnew = max([self.getQ(state2, a) for a in self.actions])
+    def learn(self, state1, action1, reward, state2,actions):
+        maxqnew = max([self.getQ(state2, a) for a in actions])
         self.learnQ(state1, action1, reward, reward + self.gamma*maxqnew)
 
     def printQ(self):
-        keys = self.q.keys()
-        states = list(set([a for a,b in keys]))
-        actions = list(set([b for a,b in keys]))
-        
-        dstates = ["".join([str(int(t)) for t in list(tup)]) for tup in states]
-        print (" "*4) + " ".join(["%8s" % ("("+s+")") for s in dstates])
-        for a in actions:
-            print ("%3d " % (a)) + \
-                " ".join(["%8.2f" % (self.getQ(s,a)) for s in states])
+        print(self.q)
+#        keys = self.q.keys()
+#        states = list(set([a for a,b in keys]))
+#        actions = list(set([b for a,b in keys]))
+#        
+#        dstates = ["".join([str(int(t)) for t in list(tup)]) for tup in states]
+#        print (" "*4) + " ".join(["%8s" % ("("+s+")") for s in dstates])
+#        for a in actions:
+#            print ("%3d " % (a)) + \
+#                " ".join(["%8.2f" % (self.getQ(s,a)) for s in states])
 
     def printV(self):
         keys = self.q.keys()
@@ -114,8 +119,8 @@ class Agent(Player):
         state = self.calcState()
         listOfActions = self._buildListOfActions(gameManager)
         action = self.chooseAction(state,listOfActions)
-        if self.lastAction is not None:
-            self.learn(self.lastState, self.lastAction, reward, state)
+        if self.lastAction is not None and action is not None:
+            self.learn(self.lastState, self.lastAction, reward, state,listOfActions)
         self.lastState = state
         self.lastAction = action
         #TODO complete
