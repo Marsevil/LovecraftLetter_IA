@@ -10,7 +10,7 @@ class FakeView :
 
         return choosen
 
-    def chooseNumber(self) :
+    def chooseNumber(self, min, max) :
         return 3
 
     def showCards(self, cards) :
