@@ -10,6 +10,8 @@ from model.card.saneCard import *
 #from ..model.card.saneCard import *
 from model.card.insaneCard import *
 #from ..model.card.insaneCard import *
+from model.ai.Agent import Agent
+from model.ai.AIActionsEnum import AIActionsEnum
 
 class GameManager:
     def __init__(self, view, nbPlayer) :
@@ -25,8 +27,9 @@ class GameManager:
         self.removedCards = []
 
         # Instantiate as many players as nbPlayer defines.
-        for _i in range(nbPlayer) :
+        for _i in range(nbPlayer-1) :
             self.players.append(Player(0, 0, [], [], False, True, False))
+        self.players.append(Agent(0,0,[],[],False,True,False))
 
     ## Builds deck by creating card list & shuffles it.
     @staticmethod
@@ -111,24 +114,193 @@ class GameManager:
         #delete the immunity of the player if he was immune in the last round
         if(currentPlayer.getImmune()):
             currentPlayer.setImmune(False)
-
+    
         # The card that the player want to play.
         card = currentPlayer.getCardFromHand(cardNumber)
-
+    
         #the card that is played
         while (not self.checkPlayableCard(card)) :
             currentPlayer.pickUp(card)
-
+    
             card = currentPlayer.getCardFromHand(self.view.cardCantBePlayed())
-
+    
         card.sanity = self.askInsanity(card)
-
+    
         # Apply card effect
         card.effect(self)
-
+    
         # Push on the discard stack.
         currentPlayer.addDiscardedCard(card)
 
+    #Apply effect of the card choosen by the Agent
+    def playAI(self,cardEffectValue):
+        currentPlayer = self.players[self.currentPlayer]
+        choosenCard = None
+        #TODO improve
+        if cardEffectValue == AIActionsEnum.CatsOfUltharSane.value:
+            for i in range(len(currentPlayer.hand)):
+                if isinstance(currentPlayer.hand[i],CatsOfUlthar):
+                    choosenCard = currentPlayer.getCardFromHand(i)
+                    choosenCard.sanity = Sanity.SANE
+                    break
+        if cardEffectValue == AIActionsEnum.ElderSignSane.value:
+            for i in range(len(currentPlayer.hand)):
+                if isinstance(currentPlayer.hand[i],ElderSign):
+                    choosenCard = currentPlayer.getCardFromHand(i)
+                    choosenCard.sanity = Sanity.SANE
+                    break
+        if cardEffectValue == AIActionsEnum.GreatRaceOfYithSane.value:
+            for i in range(len(currentPlayer.hand)):
+                if isinstance(currentPlayer.hand[i],GreatRaceOfYith):
+                    choosenCard = currentPlayer.getCardFromHand(i)
+                    choosenCard.sanity = Sanity.SANE
+                    break
+        if cardEffectValue == AIActionsEnum.InvestigatorSane.value:
+            for i in range(len(currentPlayer.hand)):
+                if isinstance(currentPlayer.hand[i],Investigators):
+                    choosenCard = currentPlayer.getCardFromHand(i)
+                    choosenCard.sanity = Sanity.SANE
+                    break
+        if cardEffectValue == AIActionsEnum.ProfessorHenryArmitageSane.value:
+            for i in range(len(currentPlayer.hand)):
+                if isinstance(currentPlayer.hand[i],ProfessorHenryArmitage):
+                    choosenCard = currentPlayer.getCardFromHand(i)
+                    choosenCard.sanity = Sanity.SANE
+                    break
+        if cardEffectValue == AIActionsEnum.RandolphCarterSane.value:
+            for i in range(len(currentPlayer.hand)):
+                if isinstance(currentPlayer.hand[i],RandolphCarter):
+                    choosenCard = currentPlayer.getCardFromHand(i)
+                    choosenCard.sanity = Sanity.SANE
+                    break
+        if cardEffectValue == AIActionsEnum.TheNecronomiconSane.value:
+            for i in range(len(currentPlayer.hand)):
+                if isinstance(currentPlayer.hand[i],TheNecronomicon):
+                    choosenCard = currentPlayer.getCardFromHand(i)
+                    choosenCard.sanity = Sanity.SANE
+                    break
+        if cardEffectValue == AIActionsEnum.TheSilverKeySane.value:
+            for i in range(len(currentPlayer.hand)):
+                if isinstance(currentPlayer.hand[i],TheSilverKey):
+                    choosenCard = currentPlayer.getCardFromHand(i)
+                    choosenCard.sanity = Sanity.SANE
+                    break
+        if cardEffectValue == AIActionsEnum.CthulhuInsane.value:
+            for i in range(len(currentPlayer.hand)):
+                if isinstance(currentPlayer.hand[i],Cthulhu):
+                    choosenCard = currentPlayer.getCardFromHand(i)
+                    choosenCard.sanity = Sanity.INSANE
+                    break
+        if cardEffectValue == AIActionsEnum.CthulhuSane.value:
+            for i in range(len(currentPlayer.hand)):
+                if isinstance(currentPlayer.hand[i],Cthulhu):
+                    choosenCard = currentPlayer.getCardFromHand(i)
+                    choosenCard.sanity = Sanity.SANE
+                    break
+        if cardEffectValue == AIActionsEnum.DeepOnesInsane.value:
+            for i in range(len(currentPlayer.hand)):
+                if isinstance(currentPlayer.hand[i],DeepOnes):
+                    choosenCard = currentPlayer.getCardFromHand(i)
+                    choosenCard.sanity = Sanity.INSANE
+                    break
+        if cardEffectValue == AIActionsEnum.DeepOnesSane.value:
+            for i in range(len(currentPlayer.hand)):
+                if isinstance(currentPlayer.hand[i],DeepOnes):
+                    choosenCard = currentPlayer.getCardFromHand(i)
+                    choosenCard.sanity = Sanity.SANE
+                    break
+        if cardEffectValue == AIActionsEnum.GoldenMeadInsane.value:
+            for i in range(len(currentPlayer.hand)):
+                if isinstance(currentPlayer.hand[i],GoldenMead):
+                    choosenCard = currentPlayer.getCardFromHand(i)
+                    choosenCard.sanity = Sanity.INSANE
+                    break
+        if cardEffectValue == AIActionsEnum.GoldenMeadSane.value:
+            for i in range(len(currentPlayer.hand)):
+                if isinstance(currentPlayer.hand[i],GoldenMead):
+                    choosenCard = currentPlayer.getCardFromHand(i)
+                    choosenCard.sanity = Sanity.SANE
+                    break
+        if cardEffectValue == AIActionsEnum.HoundOfTindalosInsane.value:
+            for i in range(len(currentPlayer.hand)):
+                if isinstance(currentPlayer.hand[i],HoundOfTindalos):
+                    choosenCard = currentPlayer.getCardFromHand(i)
+                    choosenCard.sanity = Sanity.INSANE
+                    break
+        if cardEffectValue == AIActionsEnum.HoundOfTindalosSane.value:
+            for i in range(len(currentPlayer.hand)):
+                if isinstance(currentPlayer.hand[i],HoundOfTindalos):
+                    choosenCard = currentPlayer.getCardFromHand(i)
+                    choosenCard.sanity = Sanity.SANE
+                    break
+        if cardEffectValue == AIActionsEnum.LiberIvonisInsane.value:
+            for i in range(len(currentPlayer.hand)):
+                if isinstance(currentPlayer.hand[i],LiberIvonis):
+                    choosenCard = currentPlayer.getCardFromHand(i)
+                    choosenCard.sanity = Sanity.INSANE
+                    break
+        if cardEffectValue == AIActionsEnum.LiberIvonisSane.value:
+            for i in range(len(currentPlayer.hand)):
+                if isinstance(currentPlayer.hand[i],LiberIvonis):
+                    choosenCard = currentPlayer.getCardFromHand(i)
+                    choosenCard.sanity = Sanity.SANE
+                    break
+        if cardEffectValue == AIActionsEnum.MiGoInsane.value:
+            for i in range(len(currentPlayer.hand)):
+                if isinstance(currentPlayer.hand[i],MiGo):
+                    choosenCard = currentPlayer.getCardFromHand(i)
+                    choosenCard.sanity = Sanity.INSANE
+                    break
+        if cardEffectValue == AIActionsEnum.MiGoSane.value:
+            for i in range(len(currentPlayer.hand)):
+                if isinstance(currentPlayer.hand[i],MiGo):
+                    choosenCard.sanity = Sanity.SANE
+                    choosenCard = currentPlayer.getCardFromHand(i)
+                    break
+        if cardEffectValue == AIActionsEnum.MiGoBrainCaseInsane.value:
+            for i in range(len(currentPlayer.hand)):
+                if isinstance(currentPlayer.hand[i],MiGoBraincase):
+                    choosenCard = currentPlayer.getCardFromHand(i)
+                    choosenCard.sanity = Sanity.INSANE
+                    break
+        if cardEffectValue == AIActionsEnum.MiGoBrainCaseSane.value:
+            for i in range(len(currentPlayer.hand)):
+                if isinstance(currentPlayer.hand[i],MiGoBraincase):
+                    choosenCard = currentPlayer.getCardFromHand(i)
+                    choosenCard.sanity = Sanity.SANE
+                    break
+        if cardEffectValue == AIActionsEnum.NyarlathotepInsane.value:
+            for i in range(len(currentPlayer.hand)):
+                if isinstance(currentPlayer.hand[i],Nyarlathotep):
+                    choosenCard = currentPlayer.getCardFromHand(i)
+                    choosenCard.sanity = Sanity.INSANE
+                    break
+        if cardEffectValue == AIActionsEnum.NyarlathotepSane.value:
+            for i in range(len(currentPlayer.hand)):
+                if isinstance(currentPlayer.hand[i],Nyarlathotep):
+                    choosenCard = currentPlayer.getCardFromHand(i)
+                    choosenCard.sanity = Sanity.SANE
+                    break
+        if cardEffectValue == AIActionsEnum.TheShiningTrapezohedronInsane.value:
+            for i in range(len(currentPlayer.hand)):
+                if isinstance(currentPlayer.hand[i],TheShiningTrapezohedron):
+                    choosenCard = currentPlayer.getCardFromHand(i)
+                    choosenCard.sanity = Sanity.INSANE
+                    break
+        if cardEffectValue == AIActionsEnum.TheShiningTrapezohedronSane.value:
+            for i in range(len(currentPlayer.hand)):
+                if isinstance(currentPlayer.hand[i],TheShiningTrapezohedron):
+                    choosenCard = currentPlayer.getCardFromHand(i)
+                    choosenCard.sanity = Sanity.SANE
+                    break
+                
+        if choosenCard is not None:
+            # Apply card effect
+            choosenCard.effect(self)
+    
+            # Push on the discard stack.
+            currentPlayer.addDiscardedCard(choosenCard)
+        
     ## Check if the round is ended.
     def isRoundEnd(self) :
         winner = self.findWinnerWthSpecialEffect()
@@ -164,6 +336,7 @@ class GameManager:
 
     ## @return the player who is playing.
     def getCurrentPlayer(self) :
+        print(self.currentPlayer)
         return self.players[self.currentPlayer]
 
     ## @params nbPlayer number of player to ask.
@@ -286,7 +459,13 @@ class GameManager:
                 # Player draw a card
                 self.playerDraw(self.getCurrentPlayer(), 1)
                 # Choose a card to play & apply effect.
-                self.play(self.view.cardToPlay(self.getCurrentPlayer().getHand()))
+                #AI playing
+                if isinstance(self.getCurrentPlayer(),Agent):
+                    self.playAI(self.getCurrentPlayer().update(self))
+                #Human playing
+                else:
+                    self.play(self.view.cardToPlay(self.getCurrentPlayer().getHand()))
+                
                 # Switch to the next player
                 self.currentPlayer = self.currentPlayer + 1 if self.currentPlayer < len(self.players) else 0
 
