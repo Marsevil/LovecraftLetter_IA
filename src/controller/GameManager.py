@@ -432,7 +432,9 @@ class GameManager:
 
         for player in self.players :
             if player != currentPlayer :
-                player.setHand(redistributedCards.pop(0))
+                newHand = []
+                newHand.append(redistributedCards.pop(0))
+                player.setHand(newHand)
 
     ## Ask to the view a number > 1
     def chooseNumber(self) :
