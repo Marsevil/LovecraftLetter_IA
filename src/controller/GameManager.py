@@ -121,9 +121,11 @@ class GameManager:
         #the card that is played
         while (not self.checkPlayableCard(card)) :
             currentPlayer.pickUp(card)
-    
-            card = currentPlayer.getCardFromHand(self.view.cardCantBePlayed())
-    
+
+            self.view.cardCantBePlayed()
+            card = currentPlayer.getCardFromHand(self.view.cardToPlay(currentPlayer.getHand()))
+
+
         card.sanity = self.askInsanity(card)
     
         # Apply card effect
@@ -312,6 +314,8 @@ class GameManager:
                     if winner != -1 :
                         winner = -1
                         break
+                    else :
+                        winner = player
 
                     winner = player
             
@@ -345,10 +349,11 @@ class GameManager:
     def chooseTargetPlayer(self, nbPlayer, allowCurrentPlayer) :
         notImmunePlayers = []
         for player in self.players :
-            if (not player.getImmune()) and ((player != self.currentPlayer) or (allowCurrentPlayer)):
+            if (not player.getImmune()) and ((player != self.getCurrentPlayer()) or (allowCurrentPlayer)):
                 notImmunePlayers.append(player)
 
-        return self.view.chooseTargetPlayer(nbPlayer, notImmunePlayers)
+        #TODO Ajouter un feedback si aucun joueur ne peut être target.
+        return self.view.chooseTargetPlayer(nbPlayer, notImmunePlayers) if notImmunePlayers else []
 
     def getPlayers(self) :
         return self.players
@@ -366,15 +371,24 @@ class GameManager:
     def findWinnerWthSpecialEffect(self) :
         winner = -1
 
-        if not self.players[self.currentPlayer - 1].getKnockedOut() :
+        for i in range(len(self.players)) :
+            player = self.players[i]
 
-            lastCardPlayed = self.getPlayers()[self.currentPlayer - 1].getHand()[-1]
+            if not player.getKnockedOut() and player.discard :
 
-            if (isinstance(lastCardPlayed, TheShiningTrapezohedron) and lastCardPlayed.sanity == Sanity.INSANE) :
-                winner = self.currentPlayer - 1 if self.currentPlayer - 1 > 0 else len(self.players) - 1
+                lastCardPlayed = player.getDiscard()[-1]
 
-            if (isinstance(lastCardPlayed, Cthulhu) and lastCardPlayed.sanity == Sanity.INSANE) :
-                winner = self.currentPlayer - 1 if self.currentPlayer - 1 > 0 else len(self.players) -1
+                if (
+                    isinstance(lastCardPlayed, TheShiningTrapezohedron)
+                    and lastCardPlayed.sanity == Sanity.INSANE
+                    and player.getHand()[0].getValue() > 4
+                ) :
+                    winner = i
+                    break
+
+                if (isinstance(lastCardPlayed, Cthulhu) and lastCardPlayed.sanity == Sanity.INSANE) :
+                    winner = i
+                    break
 
         return winner
 
@@ -386,27 +400,30 @@ class GameManager:
             card = self.deck.pop()
             self.removedCards.append(card)
 
-            if card.hasInsanity() :
+            if card.hasInsane() and player.isKnockableOut() :
                 player.setKnockedOut(True)
                 break
 
     ## Redistribute cards to the people according to the user choice.
     def redistribute(self) :
         inGameCards = []
+        currentPlayer = self.getCurrentPlayer()
 
         for player in self.players :
-            inGameCards.extend(player.getHand())
-            player.getHand().clear()
+            if player != currentPlayer :
+                inGameCards.extend(player.getHand())
+                player.getHand().clear()
 
         redistributedCards = self.view.redistribute(inGameCards)
 
-        for ip in range(len(self.players)) :
-            self.players[ip].setHand(redistributedCards[ip])
+        for player in self.players :
+            if player != currentPlayer :
+                player.setHand(redistributedCards.pop(0))
 
     ## Ask to the view a number > 1
     def chooseNumber(self) :
         while True :
-            number = self.view.chooseNumber()
+            number = self.view.chooseNumber(2, 8)
 
             if number > 1 :
                 break
@@ -456,24 +473,43 @@ class GameManager:
 
             # Round loop
             while True :
-                # Player draw a card
-                self.playerDraw(self.getCurrentPlayer(), 1)
-                # Choose a card to play & apply effect.
-                #AI playing
-                if isinstance(self.getCurrentPlayer(),Agent):
-                    self.playAI(self.getCurrentPlayer().update(self))
-                #Human playing
-                else:
-                    self.play(self.view.cardToPlay(self.getCurrentPlayer().getHand()))
                 
-                # Switch to the next player
-                self.currentPlayer = self.currentPlayer + 1 if self.currentPlayer < len(self.players) else 0
+                currentPlayer = self.getCurrentPlayer()
+                
+                #Human playing
+                if not isinstance(currentPlayer,Agent):
+                    self.view.displayNewTurn(self)
+                
+                if not currentPlayer.getKnockedOut() :
+                    #Sanity check
+                    #TODO : afficher le sanity avec le nombre de carte à piocher
+                    #TODO : afficher chaque carte
+                    self.sanityCheck(currentPlayer)
+
+                if not currentPlayer.getKnockedOut() :
+                    # Player draw a card
+                    self.playerDraw(currentPlayer, 1)
+                    # Choose a card to play & apply effect.
+                    #AI playing
+                    if isinstance(currentPlayer,Agent):
+                        self.playAI(currentPlayer.update(self))
+                    #Human playing
+                    else:
+                        self.play(self.view.cardToPlay(currentPlayer.getHand()))
 
                 # Check if the round is not end.
                 roundWinner = self.isRoundEnd()
                 if roundWinner != -1 :
                     break
 
+                # Switch to the next player
+                self.currentPlayer = (self.currentPlayer + 1) % len(self.players)
+
+            self.view.displayRoundWinner(roundWinner, Sanity.NEUTRAL)
+            self.players[roundWinner].updateToken()
+
             gameWinner = self.isGameEnd()
             if gameWinner != -1 :
                 break
+
+        return gameWinner

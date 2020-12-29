@@ -58,6 +58,8 @@ class Player:
 
     def setHand(self,hand):
         self.hand = hand
+        for card in self.hand :
+            card.setOwner(self)
 
     def getDiscard(self):
         return self.discard
@@ -84,7 +86,7 @@ class Player:
         self.knockedOut = knockedOut
 
     def isKnockableOut(self) :
-        return self.isKnockableOut
+        return self.knockableOut
 
     def setKnockableOut(self, knockableOut) :
         self.knockableOut = knockableOut

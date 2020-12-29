@@ -10,7 +10,7 @@ class FakeView :
 
         return choosen
 
-    def chooseNumber(self) :
+    def chooseNumber(self, min, max) :
         return 3
 
     def showCards(self, cards) :
@@ -25,3 +25,10 @@ class FakeView :
 
     def playerDiscard(self, player, nbCard) :
         return [0]
+
+    def redistribute(self, inGameCards) :
+        redistributedCards = []
+        while inGameCards :
+            redistributedCards.append([inGameCards.pop()])
+
+        return redistributedCards

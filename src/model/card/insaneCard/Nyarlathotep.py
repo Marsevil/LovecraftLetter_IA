@@ -5,7 +5,7 @@ class Nyarlathotep(InsaneCard):
 
     def __init__(self):
         super(Nyarlathotep,self).__init__("Nyarlathotep", "Sane :" +
-        " When you discard Randolph Carter" +
+        " When you discard Nyarlathotep" +
         " during your turn, choose another player and trade your hand with" +
         " them. You cannot trade with a player who has been knocked out of" +
         " the round.\n Insane : When you discard Nyarlathotep during your" +
