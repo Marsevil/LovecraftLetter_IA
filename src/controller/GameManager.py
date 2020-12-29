@@ -139,6 +139,12 @@ class GameManager:
     def playAI(self,cardEffectValue):
         currentPlayer = self.players[self.currentPlayer]
         choosenCard = None
+        
+        #delete the immunity of the player if he was immune in the last round
+        if(currentPlayer.getImmune()):
+            currentPlayer.setImmune(False)
+            
+            
         #TODO improve
         if cardEffectValue == AIActionsEnum.CatsOfUltharSane.value:
             for i in range(len(currentPlayer.hand)):
@@ -480,7 +486,11 @@ class GameManager:
     ## @params player who discard the cards.
     ## @params nbCard number of cards which must be discarded.
     def playerDiscard(self, player, nbCard) :
-        discardedCard = self.view.playerDiscard(player, nbCard)
+        discardedCard = []
+        if isinstance(self.getCurrentPlayer(),Agent):
+            discardedCard.append(random.choice.self.getCurrentPlayer().hand)
+        else:
+            discardedCard = self.view.playerDiscard(player, nbCard)
 
         for i in discardedCard :
             player.addDiscardedCard(player.getCardFromHand(i))
@@ -529,7 +539,7 @@ class GameManager:
                 # Switch to the next player
                 self.currentPlayer = (self.currentPlayer + 1) % len(self.players)
 
-            allAI = True
+            allAI = False
             for player in self.players:
                 #Human playing
                 if not isinstance(player,Agent):
