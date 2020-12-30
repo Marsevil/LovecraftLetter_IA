@@ -205,6 +205,16 @@ class View():
     """
     def _displayNewAction(self):
         print("----------------------------------------------------------")
+
+    def displayBeginSanityCheck(self) :
+        self.cls()
+        print("Sanity check begin.")
+        input("continue (c) : ")
+
+    def displayStepSanityCheck(self, card) :
+        print("Name : ", card.getName())
+        print("Sanity : ", card.hasInsane())
+        input("continue (c) : ")
     
     """
     Clear screen function

@@ -14,7 +14,7 @@ from model.ai.Agent import Agent
 from model.ai.AIActionsEnum import AIActionsEnum
 
 class GameManager:
-    def __init__(self, view, nbPlayer) :
+    def __init__(self, view, nbPlayer, nbAI = 0) :
         self.view = view
         # players indice to the player currently playing.
         self.currentPlayer = 0
@@ -27,10 +27,10 @@ class GameManager:
         self.removedCards = []
 
         # Instantiate as many players as nbPlayer defines.
-#        for _i in range(nbPlayer-1) :
-#            self.players.append(Player(0, 0, [], [], False, True, False))
-        self.players.append(Agent(0,0,[],[],False,True,False))
-        self.players.append(Agent(0,0,[],[],False,True,False))
+        for _i in range(nbPlayer) :
+            self.players.append(Player(0, 0, [], [], False, True, False))
+        for _i in range(nbAI) :
+            self.players.append(Agent(0, 0, [], [], False, True, False))
 
     ## Builds deck by creating card list & shuffles it.
     @staticmethod
@@ -78,7 +78,6 @@ class GameManager:
 
     ## Determines if the game is finished.
     def isGameEnd(self) :
-#        print("isGameEnd : ")
         for i in range(len(self.players)) :
             player = self.players[i]
 
@@ -156,7 +155,6 @@ class GameManager:
         if(currentPlayer.getImmune()):
             currentPlayer.setImmune(False)
             
-        print("cardd effect value " + str(cardEffectValue))            
         #TODO improve
         if cardEffectValue == AIActionsEnum.CatsOfUltharSane.value:
             for i in range(len(currentPlayer.hand)):
@@ -359,7 +357,6 @@ class GameManager:
 
     ## @return the player who is playing.
     def getCurrentPlayer(self) :
-#        print(self.currentPlayer)
         return self.players[self.currentPlayer]
 
     ## @params nbPlayer number of player to ask.
@@ -420,12 +417,17 @@ class GameManager:
         return winner
 
     def sanityCheck(self, player) :
+        if player.nbInsaneCardDiscarded() != 0 :
+            self.view.displayBeginSanityCheck()
+
         for _i in range(player.nbInsaneCardDiscarded()) :
             if not self.deck :
                 break
 
             card = self.deck.pop()
             self.removedCards.append(card)
+
+            self.view.displayStepSanityCheck(card)
 
             if card.hasInsane() and player.isKnockableOut() :
                 player.setKnockedOut(True)
@@ -517,9 +519,7 @@ class GameManager:
         else:
             discardedCard = self.view.playerDiscard(player, nbCard)
 
-        print("playerDiscard : hand length " + str(len(player.hand)))
         for i in discardedCard :
-            print(i)
             player.addDiscardedCard(player.getCardFromHand(i))
 
     def printAIQtable(self):
