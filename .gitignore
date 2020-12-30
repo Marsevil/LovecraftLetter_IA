@@ -9,3 +9,6 @@ local
 
 # IDE Files
 .vscode
+
+# AI Memory
+AIQtable.txt

@@ -526,6 +526,8 @@ class GameManager:
         for player in self.players:
             if isinstance(player,Agent):
                 player.printQ()
+                player._writeJsonQTable(player.q)
+                break
 
 
     def printGameState(self):

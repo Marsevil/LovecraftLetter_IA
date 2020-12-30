@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
-from model.Player import Player
 import random
-import math
+import json
+
+from model.Player import Player
 from model.card.Sanity import Sanity
 from model.card.saneCard import *
 from model.card.insaneCard import *
@@ -14,7 +15,7 @@ class Agent(Player):
         super().__init__(saneToken, insaneToken, hand, discard, knockedOut, knockableOut, immune)
 
         #python dictionnary / Q table
-        self.q = {}
+        self.q = self._readJsonQTable()
 
         self.epsilon = epsilon
         self.alpha = alpha
@@ -100,7 +101,7 @@ class Agent(Player):
         state = self.calcState()
         listOfActions = self._buildListOfActions(gameManager)
         if len(listOfActions) <= 0:
-            gameManager.printGameState()
+            raise ValueError("List of actions length null or less than 0.")
         action = self.chooseAction(state,listOfActions)
         if self.lastAction is not None and action is not None:
             self.learn(self.lastState, self.lastAction, reward, state,listOfActions)
@@ -119,7 +120,6 @@ class Agent(Player):
             print("card : " + card.name)
             #Check if the card in the hand is playable
             if gameManager.checkPlayableCard(card):
-                print("playable")
                 #Check if the card can be played with INSANE effect
                 if card.hasInsane():
                     if self.stateOfMind() == Sanity.INSANE :
@@ -206,3 +206,22 @@ class Agent(Player):
                         listOfActions.append(AIActionsEnum.TheSilverKeySane.value)
                         
         return listOfActions
+
+    @staticmethod
+    def _readJsonQTable() :
+        data = {}
+        try :
+            with open("AIQtable.txt") as f :
+                dic = ""
+                for i in f.readlines() :
+                    dic += i
+                data = eval(dic)
+        except FileNotFoundError :
+            pass
+
+        return data
+
+    @staticmethod
+    def _writeJsonQTable(data) :
+        with open("AIQtable.txt", 'w') as f :
+            f.write(str(data))

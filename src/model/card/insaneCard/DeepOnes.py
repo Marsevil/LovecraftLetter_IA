@@ -46,8 +46,8 @@ class DeepOnes (InsaneCard):
     
                 #Éjecte le joueur désigné s'il possède la carte choisie et qu'il peut être éjecté
                 targetHand = chosenOne[0].getHand()
-                if ((targetHand[0].value == chosenCardNumber) and chosenOne.isKnockableOut()):
-                    chosenOne.setKnockedOut(True)
+                if ((targetHand[0].value == chosenCardNumber) and chosenOne[0].isKnockableOut()):
+                    chosenOne[0].setKnockedOut(True)
 
         if self.sanity == Sanity.INSANE:
             #Demande à viser un autre joueur
