@@ -154,7 +154,7 @@ classDiagram
         - knockedReward : int
         - immuneReward : int
 
-        + Player(saneToken : int, insaneToken : int, hand : List<Card>, discard : List<Card>, knockedOut : Boolean, knockableOut : Boolean, immune : Boolean, epsilon : float, alpha : float, gamma : float)
+        + Agent(saneToken : int, insaneToken : int, hand : List<Card>, discard : List<Card>, knockedOut : Boolean, knockableOut : Boolean, immune : Boolean, epsilon : float, alpha : float, gamma : float)
         + getQ(state : List<int>, action : AIActionsEnum) : Dictionnary<Dictionnary<List<int>,AIActionsEnum>,float>
         + learnQ(state : List<int>, action : AIActionsEnum, reward : int, value : float) : void
         + chooseAction(state : List<int>, actions : List<AIActionsEnum>) : AIActionsEnum
@@ -165,7 +165,7 @@ classDiagram
         + update(gameManager : GameManager) : AIActionsEnum
         + _buildListOfActions(gameManager : GameManager) : List<AIActionsEnum>
         + ___readJsonQTable() : Dictionnary<Dictionnary<List<int>,AIActionsEnum>,float>__
-        + ___writeJsonQTable(data : Dictionnary<Dictionnary<List<int>,AIActionsEnum>,float>) : void
+        + ___writeJsonQTable(data : Dictionnary<Dictionnary<List<int>,AIActionsEnum>,float>) : void__
     }
 
     class View {
