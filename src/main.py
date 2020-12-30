@@ -5,7 +5,7 @@ from view.View import View
 if __name__ == '__main__':
 
     gm = GameManager(View(), 2)
-    for i in range(1000):
+    for i in range(10000):
         winner = gm.run()
 #        print("Winner is player " + str(winner + 1))
     gm.printAIQtable()
