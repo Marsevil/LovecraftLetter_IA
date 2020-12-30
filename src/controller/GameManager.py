@@ -15,6 +15,11 @@ from model.ai.AIActionsEnum import AIActionsEnum
 
 class GameManager:
     def __init__(self, view, nbPlayer, nbAI = 0) :
+        if (nbPlayer + nbAI) < 2 :
+            raise Exception("At least 2 player are needed !!")
+
+        self.allAI = (nbPlayer == 0)
+
         self.view = view
         # players indice to the player currently playing.
         self.currentPlayer = 0
@@ -110,6 +115,7 @@ class GameManager:
         # Give some cards to players
         for player in self.players :
             player.setHand(self.buildHand())
+            player.setDiscard([])
             # Reset their states
             player.setKnockedOut(False)
             player.setImmune(False)
@@ -314,6 +320,10 @@ class GameManager:
                     break
                 
         if choosenCard is not None:
+            # Display wich card will be played.
+            if not self.allAI :
+                self.view.displayCardWillBePlayed(self.currentPlayer, choosenCard)
+                
             # Apply card effect
             choosenCard.effect(self)
     
@@ -417,17 +427,19 @@ class GameManager:
         return winner
 
     def sanityCheck(self, player) :
-        if player.nbInsaneCardDiscarded() != 0 :
-            self.view.displayBeginSanityCheck()
+        nbInsaneCard = player.nbInsaneCardDiscarded()
+        if nbInsaneCard != 0 and not self.allAI :
+            self.view.displayBeginSanityCheck(self.currentPlayer, nbInsaneCard)
 
-        for _i in range(player.nbInsaneCardDiscarded()) :
+        for _i in range(nbInsaneCard) :
             if not self.deck :
                 break
 
             card = self.deck.pop()
             self.removedCards.append(card)
 
-            self.view.displayStepSanityCheck(card)
+            if not self.allAI :
+                self.view.displayStepSanityCheck(card)
 
             if card.hasInsane() and player.isKnockableOut() :
                 player.setKnockedOut(True)
@@ -558,8 +570,6 @@ class GameManager:
                 
                 if not currentPlayer.getKnockedOut() :
                     #Sanity check
-                    #TODO : afficher le sanity avec le nombre de carte à piocher
-                    #TODO : afficher chaque carte
                     self.sanityCheck(currentPlayer)
 
                 if not currentPlayer.getKnockedOut() :
@@ -581,18 +591,15 @@ class GameManager:
                 # Switch to the next player
                 self.currentPlayer = (self.currentPlayer + 1) % len(self.players)
 
-
-            allAI = True
-            for player in self.players:
-                #Human playing
-                if not isinstance(player,Agent):
-                    allAI = False
-            if not allAI:
+            # We don't print winner if there are only AI.
+            if not self.allAI:
                 self.view.displayRoundWinner(roundWinner, Sanity.NEUTRAL)
-            self.players[roundWinner].updateToken()
+
+            # -2 indicates that there is a tie.
             if roundWinner != -2 :
                 self.players[roundWinner].updateToken()
 
+            # Check if the game is finish
             gameWinner = self.isGameEnd()
             if gameWinner != -1 :
                 break

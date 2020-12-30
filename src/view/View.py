@@ -206,14 +206,18 @@ class View():
     def _displayNewAction(self):
         print("----------------------------------------------------------")
 
-    def displayBeginSanityCheck(self) :
-        self.cls()
-        print("Sanity check begin.")
+    def displayBeginSanityCheck(self, playerID, nbCard) :
+        print("Sanity check begin for player ", str(playerID + 1), " with ", nbCard, ".")
         input("continue (c) : ")
 
     def displayStepSanityCheck(self, card) :
         print("Name : ", card.getName())
         print("Sanity : ", card.hasInsane())
+        input("continue (c) : ")
+
+    def displayCardWillBePlayed(self, playerID, card) :
+        self.cls()
+        print("Player ", str(playerID + 1), " will play ", card.getName())
         input("continue (c) : ")
     
     """
