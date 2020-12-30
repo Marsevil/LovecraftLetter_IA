@@ -81,10 +81,13 @@ class GameManager:
         print("isGameEnd : ")
         for i in range(len(self.players)) :
             player = self.players[i]
-            print()
+            lastCardPlayed = player.getDiscard()[-1]
+
             if player.getSaneToken() >= 2 :
                 return i
             if player.getInsaneToken() >= 3 :
+                return i
+            if (isinstance(lastCardPlayed, Cthulhu) and lastCardPlayed.sanity == Sanity.INSANE) :
                 return i
 
         return -1 # -1 if no player end the game.
@@ -554,6 +557,7 @@ class GameManager:
                 # Switch to the next player
                 self.currentPlayer = (self.currentPlayer + 1) % len(self.players)
 
+
             allAI = True
             for player in self.players:
                 #Human playing
@@ -562,6 +566,9 @@ class GameManager:
             if not allAI:
                 self.view.displayRoundWinner(roundWinner, Sanity.NEUTRAL)
             self.players[roundWinner].updateToken()
+            if roundWinner != -2 :
+                self.players[roundWinner].updateToken()
+
 
             print("loop : ")
             self.printGameState()
