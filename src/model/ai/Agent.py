@@ -121,35 +121,57 @@ class Agent(Player):
             if gameManager.checkPlayableCard(card):
                 print("playable")
                 #Check if the card can be played with INSANE effect
-                if card.hasInsane() and self.stateOfMind() == Sanity.INSANE :
-                    #TODO Improve this part
-                    if isinstance(card,Cthulhu):
-                        listOfActions.append(AIActionsEnum.CthulhuInsane.value)
-                        listOfActions.append(AIActionsEnum.CthulhuSane.value)
-                    if isinstance(card,DeepOnes):
-                        listOfActions.append(AIActionsEnum.DeepOnesInsane.value)
-                        listOfActions.append(AIActionsEnum.DeepOnesSane.value)
-                    if isinstance(card,GoldenMead):
-                        listOfActions.append(AIActionsEnum.GoldenMeadInsane.value)
-                        listOfActions.append(AIActionsEnum.GoldenMeadSane.value)
-                    if isinstance(card,HoundOfTindalos):
-                        listOfActions.append(AIActionsEnum.HoundOfTindalosInsane.value)
-                        listOfActions.append(AIActionsEnum.HoundOfTindalosSane.value)
-                    if isinstance(card,LiberIvonis):
-                        listOfActions.append(AIActionsEnum.LiberIvonisInsane.value)
-                        listOfActions.append(AIActionsEnum.LiberIvonisSane.value)
-                    if isinstance(card,MiGo):
-                        listOfActions.append(AIActionsEnum.MiGoInsane.value)
-                        listOfActions.append(AIActionsEnum.MiGoSane.value)
-                    if isinstance(card,MiGoBraincase):
-                        listOfActions.append(AIActionsEnum.MiGoBrainCaseInsane.value)
-                        listOfActions.append(AIActionsEnum.MiGoBrainCaseSane.value)
-                    if isinstance(card,Nyarlathotep):
-                        listOfActions.append(AIActionsEnum.NyarlathotepInsane.value)
-                        listOfActions.append(AIActionsEnum.NyarlathotepSane.value)
-                    if isinstance(card,TheShiningTrapezohedron):
-                        listOfActions.append(AIActionsEnum.TheShiningTrapezohedronInsane.value)
-                        listOfActions.append(AIActionsEnum.TheShiningTrapezohedronSane.value)
+                if card.hasInsane():
+                    if self.stateOfMind() == Sanity.INSANE :
+                        #TODO Improve this part
+                        if isinstance(card,Cthulhu):
+                            listOfActions.append(AIActionsEnum.CthulhuInsane.value)
+                            listOfActions.append(AIActionsEnum.CthulhuSane.value)
+                        if isinstance(card,DeepOnes):
+                            listOfActions.append(AIActionsEnum.DeepOnesInsane.value)
+                            listOfActions.append(AIActionsEnum.DeepOnesSane.value)
+                        if isinstance(card,GoldenMead):
+                            listOfActions.append(AIActionsEnum.GoldenMeadInsane.value)
+                            listOfActions.append(AIActionsEnum.GoldenMeadSane.value)
+                        if isinstance(card,HoundOfTindalos):
+                            listOfActions.append(AIActionsEnum.HoundOfTindalosInsane.value)
+                            listOfActions.append(AIActionsEnum.HoundOfTindalosSane.value)
+                        if isinstance(card,LiberIvonis):
+                            listOfActions.append(AIActionsEnum.LiberIvonisInsane.value)
+                            listOfActions.append(AIActionsEnum.LiberIvonisSane.value)
+                        if isinstance(card,MiGo):
+                            listOfActions.append(AIActionsEnum.MiGoInsane.value)
+                            listOfActions.append(AIActionsEnum.MiGoSane.value)
+                        if isinstance(card,MiGoBraincase):
+                            listOfActions.append(AIActionsEnum.MiGoBrainCaseInsane.value)
+                            listOfActions.append(AIActionsEnum.MiGoBrainCaseSane.value)
+                        if isinstance(card,Nyarlathotep):
+                            listOfActions.append(AIActionsEnum.NyarlathotepInsane.value)
+                            listOfActions.append(AIActionsEnum.NyarlathotepSane.value)
+                        if isinstance(card,TheShiningTrapezohedron):
+                            listOfActions.append(AIActionsEnum.TheShiningTrapezohedronInsane.value)
+                            listOfActions.append(AIActionsEnum.TheShiningTrapezohedronSane.value)
+                
+                    if self.stateOfMind() != Sanity.SANE:
+                        if isinstance(card,Cthulhu):
+                            listOfActions.append(AIActionsEnum.CthulhuSane.value)
+                        if isinstance(card,DeepOnes):
+                            listOfActions.append(AIActionsEnum.DeepOnesSane.value)
+                        if isinstance(card,GoldenMead):
+                            listOfActions.append(AIActionsEnum.GoldenMeadSane.value)
+                        if isinstance(card,HoundOfTindalos):
+                            listOfActions.append(AIActionsEnum.HoundOfTindalosSane.value)
+                        if isinstance(card,LiberIvonis):
+                            listOfActions.append(AIActionsEnum.LiberIvonisSane.value)
+                        if isinstance(card,MiGo):
+                            listOfActions.append(AIActionsEnum.MiGoSane.value)
+                        if isinstance(card,MiGoBraincase):
+                            listOfActions.append(AIActionsEnum.MiGoBrainCaseSane.value)
+                        if isinstance(card,Nyarlathotep):
+                            listOfActions.append(AIActionsEnum.NyarlathotepSane.value)
+                        if isinstance(card,TheShiningTrapezohedron):
+                            listOfActions.append(AIActionsEnum.TheShiningTrapezohedronSane.value)
+                
                 #Sane only
                 else:
                     if isinstance(card,CatsOfUlthar):
@@ -171,11 +193,16 @@ class Agent(Player):
             else:
                 #The Shining Trapezogedron && The SIlver Key special case
                 print("not playable")
-                if card.hasInsane() and self.stateOfMind() == Sanity.INSANE :
-                    if isinstance(card,TheShiningTrapezohedron):
-                        listOfActions.append(AIActionsEnum.TheShiningTrapezohedronInsane.value)
-                        listOfActions.append(AIActionsEnum.TheShiningTrapezohedronSane.value)
+                if card.hasInsane():
+                    if self.stateOfMind() == Sanity.INSANE :
+                        if isinstance(card,TheShiningTrapezohedron):
+                            listOfActions.append(AIActionsEnum.TheShiningTrapezohedronInsane.value)
+                            listOfActions.append(AIActionsEnum.TheShiningTrapezohedronSane.value)
+                    if self.stateOfMind() == Sanity.SANE:
+                        if isinstance(card,TheShiningTrapezohedron):
+                            listOfActions.append(AIActionsEnum.TheShiningTrapezohedronSane.value)
                 else:
                     if isinstance(card,TheSilverKey):
                         listOfActions.append(AIActionsEnum.TheSilverKeySane.value)
+                        
         return listOfActions
