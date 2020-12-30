@@ -56,3 +56,31 @@ class TestGameManager(unittest.TestCase) :
         gm.play(1)
 
         self.assertEqual(0, gm.isGameEnd())
+
+    def testGameEndWithSaneToken(self) :
+        gm = GameManager(FakeViewInsane(None), 2)
+
+        gm.players[0].saneToken = 2
+
+        self.assertEqual(0, gm.isGameEnd())
+
+    def testGameEndWithInsaneToken(self) :
+        gm = GameManager(FakeViewInsane(None), 2)
+
+        gm.players[0].insaneToken = 3
+
+        self.assertEqual(0, gm.isGameEnd())
+
+    def testGameNoEndWithSaneToken(self) :
+        gm = GameManager(FakeViewInsane(None), 2)
+
+        gm.players[0].saneToken = 1
+
+        self.assertEqual(-1, gm.isGameEnd())
+
+    def testGameNoEndWithInsaneToken(self) :
+        gm = GameManager(FakeViewInsane(None), 2)
+
+        gm.players[0].insaneToken = 2
+
+        self.assertEqual(-1, gm.isGameEnd())

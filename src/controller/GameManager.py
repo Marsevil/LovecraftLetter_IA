@@ -81,14 +81,15 @@ class GameManager:
         print("isGameEnd : ")
         for i in range(len(self.players)) :
             player = self.players[i]
-            lastCardPlayed = player.getDiscard()[-1]
 
             if player.getSaneToken() >= 2 :
                 return i
             if player.getInsaneToken() >= 3 :
                 return i
-            if (isinstance(lastCardPlayed, Cthulhu) and lastCardPlayed.sanity == Sanity.INSANE) :
-                return i
+            if player.getDiscard() :
+                lastCardPlayed = player.getDiscard()[-1]
+                if (isinstance(lastCardPlayed, Cthulhu) and lastCardPlayed.sanity == Sanity.INSANE) :
+                    return i
 
         return -1 # -1 if no player end the game.
 
