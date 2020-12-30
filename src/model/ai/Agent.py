@@ -152,7 +152,7 @@ class Agent(Player):
                             listOfActions.append(AIActionsEnum.TheShiningTrapezohedronInsane.value)
                             listOfActions.append(AIActionsEnum.TheShiningTrapezohedronSane.value)
                 
-                    if self.stateOfMind() != Sanity.SANE:
+                    if self.stateOfMind() == Sanity.SANE:
                         if isinstance(card,Cthulhu):
                             listOfActions.append(AIActionsEnum.CthulhuSane.value)
                         if isinstance(card,DeepOnes):
