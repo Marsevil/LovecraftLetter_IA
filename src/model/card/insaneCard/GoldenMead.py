@@ -6,14 +6,14 @@ class GoldenMead(InsaneCard):
     def __init__(self):
         super(GoldenMead,self).__init__("Golden Mead",
                        "Sane : When you discard Golden Mead during your turn, choose another"
-                       +"player and look at their hand. Do not reveal it to any other players."
-                       +"If all other players still in the round cannot be chosen (e.g due to Elder Sign"
-                       +"or Liber Ivonis), this card is discarded without effect. \n"
+                       +" player and look at their hand. Do not reveal it to any other players."
+                       +" If all other players still in the round cannot be chosen (e.g due to Elder Sign"
+                       +" or Liber Ivonis), this card is discarded without effect. \n"
                        +"Insane : When you discard Golden Mead during your turn,"
-                       +"choose another player and look at their hand. Do not reveal it to any"
-                       +"other players. Then draw a card (you have 2 cards in your hand now) and discard one."
-                       +"If all other players still in the round cannot be chosen (e.g due to Elder"
-                       +"Sign or Liber Ivonis), this card is discarded without effect.", 2)
+                       +" choose another player and look at their hand. Do not reveal it to any"
+                       +" other players. Then draw a card (you have 2 cards in your hand now) and discard one."
+                       +" If all other players still in the round cannot be chosen (e.g due to Elder"
+                       +" Sign or Liber Ivonis), this card is discarded without effect.", 2)
 
     @property
     def sanity(self):

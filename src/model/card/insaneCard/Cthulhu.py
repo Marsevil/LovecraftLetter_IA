@@ -5,11 +5,11 @@ class Cthulhu(InsaneCard):
 
     def __init__(self):
         super().__init__("Cthulhu", "If you ever discard Cthulhu no matter how or why" +
-                        " (so even during a Sanity Check)— you lose the track of your cousin." +
+                        " (so even during a Sanity Check) — you lose the track of your cousin." +
                         " You are immediately knocked out of the round." +
                         " If Cthulhu was discarded due to a card effect, any remaining" +
                         " effects of that card do not apply (you do not draw a card " +
-                        " from Professor Henry Armitage, for example)."
+                        " from Professor Henry Armitage, for example). \n"
                         " Insane : When you discard Cthulhu during your turn, if you" +
                         " already have 2 or more Insanity cards in your discard pile," +
                         " you win the game. If you do not, you lose the round", 8)
