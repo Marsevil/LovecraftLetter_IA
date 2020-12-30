@@ -46,7 +46,7 @@ class Agent(Player):
     def chooseAction(self, state,actions):
 #        print("choose action : " + str(len(actions)))
         if (len(actions) <= 0):
-            
+            print("actions error")
             return None
         
         if random.random() < self.epsilon:
@@ -79,26 +79,6 @@ class Agent(Player):
 #        for a in actions:
 #            print ("%3d " % (a)) + \
 #                " ".join(["%8.2f" % (self.getQ(s,a)) for s in states])
-
-    def printV(self):
-        keys = self.q.keys()
-        states = [a for a,b in keys]
-        statesX = list(set([x for x,y in states]))
-        statesY = list(set([y for x,y in states]))
-
-        print (" "*4) + " ".join(["%4d" % (s) for s in statesX])
-        for y in statesY:
-            maxQ = [max([self.getQ((x,y),a) for a in self.actions])
-                    for x in statesX]
-            print ("%3d " % (y)) + " ".join([self.ff(q,4) for q in maxQ])
-            
-            
-    def ff(self,f,n):
-        fs = "{:f}".format(f)
-        if len(fs) < n:
-            return ("{:"+n+"s}").format(fs)
-        else:
-            return fs[:n]
         
     #Return the State defined by a tuple 
     def calcState(self):
@@ -133,10 +113,13 @@ class Agent(Player):
     #Actions (playable card) change every turn so we need to retrieve the list of available action
     def _buildListOfActions(self,gameManager):
         listOfActions = []
-        
+        print("--------------------------------------")
+        print("build list of action , hand length : " + str(len(self.hand)))
         for card in self.hand:
+            print("card : " + card.name)
             #Check if the card in the hand is playable
             if gameManager.checkPlayableCard(card):
+                print("playable")
                 #Check if the card can be played with INSANE effect
                 if card.hasInsane() and self.stateOfMind() == Sanity.INSANE :
                     #TODO Improve this part
@@ -185,5 +168,14 @@ class Agent(Player):
                         listOfActions.append(AIActionsEnum.TheNecronomiconSane.value)
                     if isinstance(card,TheSilverKey):
                         listOfActions.append(AIActionsEnum.TheSilverKeySane.value)
-        
+            else:
+                #The Shining Trapezogedron && The SIlver Key special case
+                print("not playable")
+                if card.hasInsane() and self.stateOfMind() == Sanity.INSANE :
+                    if isinstance(card,TheShiningTrapezohedron):
+                        listOfActions.append(AIActionsEnum.TheShiningTrapezohedronInsane.value)
+                        listOfActions.append(AIActionsEnum.TheShiningTrapezohedronSane.value)
+                else:
+                    if isinstance(card,TheSilverKey):
+                        listOfActions.append(AIActionsEnum.TheSilverKeySane.value)
         return listOfActions

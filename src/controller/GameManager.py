@@ -78,7 +78,7 @@ class GameManager:
 
     ## Determines if the game is finished.
     def isGameEnd(self) :
-        print("isGameEnd : ")
+#        print("isGameEnd : ")
         for i in range(len(self.players)) :
             player = self.players[i]
 
@@ -150,7 +150,7 @@ class GameManager:
         if(currentPlayer.getImmune()):
             currentPlayer.setImmune(False)
             
-            
+        print("cardd effect value " + str(cardEffectValue))            
         #TODO improve
         if cardEffectValue == AIActionsEnum.CatsOfUltharSane.value:
             for i in range(len(currentPlayer.hand)):
@@ -269,8 +269,8 @@ class GameManager:
         if cardEffectValue == AIActionsEnum.MiGoSane.value:
             for i in range(len(currentPlayer.hand)):
                 if isinstance(currentPlayer.hand[i],MiGo):
-                    choosenCard.sanity = Sanity.SANE
                     choosenCard = currentPlayer.getCardFromHand(i)
+                    choosenCard.sanity = Sanity.SANE
                     break
         if cardEffectValue == AIActionsEnum.MiGoBrainCaseInsane.value:
             for i in range(len(currentPlayer.hand)):
@@ -476,6 +476,16 @@ class GameManager:
     def askInsanity(self, card) :
         # If insane card, user can choose which effect will be used.
         if card.hasInsane() and self.getCurrentPlayer().stateOfMind() == Sanity.INSANE :
+            #AI playing
+            if isinstance(self.getCurrentPlayer(),Agent):
+                i = random.randint(1,2)
+                if i == 1:
+                    return Sanity.INSANE
+                else:
+                    return Sanity.SANE
+            #Human
+            else:
+                self.view.displayNewTurn(self)
             return self.view.askInsanity()
         else :
             return Sanity.SANE
@@ -494,11 +504,16 @@ class GameManager:
     def playerDiscard(self, player, nbCard) :
         discardedCard = []
         if isinstance(self.getCurrentPlayer(),Agent):
-            discardedCard.append(random.randint(0,1))
+            a = len(player.getHand())-1
+            if a < 0:
+                a = 0
+            discardedCard.append(random.randint(0,a))
         else:
             discardedCard = self.view.playerDiscard(player, nbCard)
 
+        print("playerDiscard : hand length " + str(len(player.hand)))
         for i in discardedCard :
+            print(i)
             player.addDiscardedCard(player.getCardFromHand(i))
 
     def printAIQtable(self):
@@ -570,13 +585,12 @@ class GameManager:
             if roundWinner != -2 :
                 self.players[roundWinner].updateToken()
 
-
-            print("loop : ")
-            self.printGameState()
-            print("------------")
-
             gameWinner = self.isGameEnd()
             if gameWinner != -1 :
                 break
+            
+            print("loop : ")
+            self.printGameState()
+            print("------------")
 
         return gameWinner
