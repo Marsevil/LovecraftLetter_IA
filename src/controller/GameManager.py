@@ -78,8 +78,10 @@ class GameManager:
 
     ## Determines if the game is finished.
     def isGameEnd(self) :
+        print("isGameEnd : ")
         for i in range(len(self.players)) :
             player = self.players[i]
+            print()
             if player.getSaneToken() >= 2 :
                 return i
             if player.getInsaneToken() >= 3 :
@@ -495,6 +497,19 @@ class GameManager:
         for i in discardedCard :
             player.addDiscardedCard(player.getCardFromHand(i))
 
+    def printAIQtable(self):
+        for player in self.players:
+            if isinstance(player,Agent):
+                player.printQ()
+
+
+    def printGameState(self):
+        i = -1
+        for player in self.players:
+            if isinstance(player,Agent):
+                i += 1
+                print("player " + str(i) + str(player.calcState()))
+
     ## Loop for each round.
     def run(self) :
         gameWinner = -1
@@ -548,11 +563,12 @@ class GameManager:
                 self.view.displayRoundWinner(roundWinner, Sanity.NEUTRAL)
             self.players[roundWinner].updateToken()
 
+            print("loop : ")
+            self.printGameState()
+            print("------------")
+
             gameWinner = self.isGameEnd()
             if gameWinner != -1 :
-                for player in self.players:
-                    if isinstance(player,Agent):
-                        player.printQ()
                 break
 
         return gameWinner

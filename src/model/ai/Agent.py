@@ -46,6 +46,7 @@ class Agent(Player):
     def chooseAction(self, state,actions):
 #        print("choose action : " + str(len(actions)))
         if (len(actions) <= 0):
+            
             return None
         
         if random.random() < self.epsilon:
@@ -118,6 +119,8 @@ class Agent(Player):
         reward = self.calcReward()
         state = self.calcState()
         listOfActions = self._buildListOfActions(gameManager)
+        if len(listOfActions) <= 0:
+            gameManager.printGameState()
         action = self.chooseAction(state,listOfActions)
         if self.lastAction is not None and action is not None:
             self.learn(self.lastState, self.lastAction, reward, state,listOfActions)
