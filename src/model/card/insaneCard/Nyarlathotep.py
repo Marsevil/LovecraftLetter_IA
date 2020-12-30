@@ -4,11 +4,12 @@ from ..Sanity import Sanity
 class Nyarlathotep(InsaneCard):
 
     def __init__(self):
-        super(Nyarlathotep,self).__init__("Nyarlathotep", "Sane :" +
-        " When you discard Nyarlathotep" +
+        super(Nyarlathotep,self).__init__("Nyarlathotep",
+        "Sane : When you discard Nyarlathotep" +
         " during your turn, choose another player and trade your hand with" +
         " them. You cannot trade with a player who has been knocked out of" +
-        " the round.\n Insane : When you discard Nyarlathotep during your" +
+        " the round.\n" +
+        "Insane : When you discard Nyarlathotep during your" +
         " turn, collect the hands of all the other players still in the" +
         " round. You may look at them. Then redistribute one card of your" +
         " choice to each player. This effect does not put their cards in your" +

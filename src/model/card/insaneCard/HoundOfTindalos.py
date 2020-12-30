@@ -4,7 +4,8 @@ from ..Sanity import Sanity
 class HoundOfTindalos (InsaneCard):
 
     def __init__(self):
-        super(HoundOfTindalos,self).__init__("Hound of Tindalos", "Sane : When you discard Hound of Tindalos" +
+        super(HoundOfTindalos,self).__init__("Hound of Tindalos",
+        "Sane : When you discard Hound of Tindalos" +
         " during your turn, choose another player. You and that" +
         " player secretly compare your hands. The player with the lower" +
         " number is knocked out of the round. In case of a tie, nothing" +
@@ -12,9 +13,9 @@ class HoundOfTindalos (InsaneCard):
         " (e.g due to Elder Sign or Liber Ivonis), this card is discarded" +
         " without effect. \n"
         +"Insane : When you discard Hound of Tindalos during your turn, choose"
-        +"another player. If they are not Insane, they are knocked out of the round."
-        +"If all other players still in the round cannot be chosen (e.g due to Elder"
-        +"Sign or Liber Ivonis), this card is discarded without effect.", 3)
+        +" another player. If they are not Insane, they are knocked out of the round."
+        +" If all other players still in the round cannot be chosen (e.g due to Elder"
+        +" Sign or Liber Ivonis), this card is discarded without effect.", 3)
 
     @property
     def sanity(self):

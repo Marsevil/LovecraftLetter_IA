@@ -5,18 +5,19 @@ from ..Sanity import Sanity
 class DeepOnes (InsaneCard):
 
     def __init__(self):
-        super(DeepOnes,self).__init__("Deep Ones", "Sane : When you discard Deep Ones" +
+        super(DeepOnes,self).__init__("Deep Ones",
+        "Sane : When you discard Deep Ones" +
         " during your turn, choose another player and name a number (other" +
         " than 1). If that player has that number in their hand, they are" +
         " knocked out of the round. If all other players still in the round" +
         " cannot be chosen (e.g due to Elder Sign or Liber Ivonis), this card" +
         " is discarded without effect. \n" 
         +"Insane : When you discard Deep Ones during your turn, choose another"
-        +"player. If they have a 1 in their hand, they are knocked out of the round. If"
-        +"they do not, you name a number (other than 1). If they have that number"
-        +"in their hand, they are knocked out of the round."
-        +"If all other players still in the round cannot be chosen (e.g due to Elder"
-        +"Sign or Liber Ivonis), this card is discarded without effect.", 1)
+        +" player. If they have a 1 in their hand, they are knocked out of the round. If"
+        +" they do not, you name a number (other than 1). If they have that number"
+        +" in their hand, they are knocked out of the round."
+        +" If all other players still in the round cannot be chosen (e.g due to Elder"
+        +" Sign or Liber Ivonis), this card is discarded without effect.", 1)
 
     @property
     def sanity(self):

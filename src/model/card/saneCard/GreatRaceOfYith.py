@@ -3,7 +3,8 @@ from ..SaneCard import SaneCard
 class GreatRaceOfYith (SaneCard):
 
     def __init__(self):
-        super().__init__("Great Race Of Yith", "When you discard Great Race" +
+        super().__init__("Great Race Of Yith",
+        "When you discard Great Race" +
         " of Yith during your turn, choose another player. You and that" +
         " player secretly compare your hands. The player with the lower" +
         " number is knocked out of the round. In case of a tie, nothing" +
