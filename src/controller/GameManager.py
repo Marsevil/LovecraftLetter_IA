@@ -105,7 +105,10 @@ class GameManager:
         # Give some cards to players
         for player in self.players :
             player.setHand(self.buildHand())
+            # Reset their states
             player.setKnockedOut(False)
+            player.setImmune(False)
+            player.setKnockableOut(True)
 
     ## Apply effect of the card choosen by the player.
     ## @params cardNumber index of card in the hand of currentPlayer.
@@ -113,8 +116,10 @@ class GameManager:
         currentPlayer = self.players[self.currentPlayer]
 
         #delete the immunity of the player if he was immune in the last round
-        if(currentPlayer.getImmune()):
+        if currentPlayer.getImmune() :
             currentPlayer.setImmune(False)
+        if not currentPlayer.isKnockableOut() :
+            currentPlayer.setKnockableOut(True)
 
         # The card that the player want to play.
         card = currentPlayer.getCardFromHand(cardNumber)

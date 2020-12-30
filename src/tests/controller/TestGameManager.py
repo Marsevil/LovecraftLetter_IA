@@ -84,3 +84,31 @@ class TestGameManager(unittest.TestCase) :
         gm.players[0].insaneToken = 2
 
         self.assertEqual(-1, gm.isGameEnd())
+
+    def testResetStateAfterPlay(self) :
+        gm = GameManager(FakeViewInsane(None), 2)
+
+        gm.players[0].hand = []
+        gm.players[0].setHand([DeepOnes(), Cthulhu()])
+        gm.players[0].addDiscardedCard(DeepOnes())
+        gm.players[0].addDiscardedCard(DeepOnes())
+        gm.players[0].immune = True
+        gm.players[0].knockableOut = False
+
+        gm.play(1)
+
+        self.assertTrue(gm.players[0].isKnockableOut())
+        self.assertFalse(gm.players[0].getImmune())
+
+    def testResetStateStartNewRound(self) :
+        gm = GameManager(FakeViewInsane(None), 2)
+
+        gm.players[0].immune = True
+        gm.players[0].knockableOut = False
+        gm.players[0].knockedOut = True
+
+        gm.startNewRound()
+
+        self.assertFalse(gm.players[0].getKnockedOut())
+        self.assertFalse(gm.players[0].getImmune())
+        self.assertTrue(gm.players[0].isKnockableOut())
