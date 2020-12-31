@@ -116,6 +116,8 @@ class Agent(Player):
         listOfActions = []
         print("--------------------------------------")
         print("build list of action , hand length : " + str(len(self.hand)))
+        if len(self.hand) <= 1:
+            print("a")
         for card in self.hand:
             print("card : " + card.name)
             #Check if the card in the hand is playable

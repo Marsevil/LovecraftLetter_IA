@@ -38,6 +38,7 @@ class ProfessorHenryArmitage (SaneCard):
 
             #Discard the hand of the target player
             targetHand = chosenOne[0].getHand()
+            chosenOne[0].setHand([])
             for _i in range(len(targetHand)):
 
                 card = targetHand.pop()
@@ -50,14 +51,14 @@ class ProfessorHenryArmitage (SaneCard):
                     effectSanity = gameManager.askInsanity(card)
                     card.sanity = effectSanity
                     card.effect(gameManager)
+                
+                #The target player draws a new card
+                if gameManager.deck :
+                    #Draw a card
+                    chosenOne[0].pickUp(gameManager.deck.pop())
+                #If the deck is empty he draws the first card
+                #that was removed at the start of the round
                 else:
-                    #The target player draws a new card
-                    if gameManager.deck :
-                        #Draw a card
-                        chosenOne[0].pickUp(gameManager.deck.pop())
-                    #If the deck is empty he draws the first card
-                    #that was removed at the start of the round
-                    else:
-                        chosenOne[0].pickUp(gameManager.removedCards.pop(0))
+                    chosenOne[0].pickUp(gameManager.removedCards.pop(0))
 
                 chosenOne[0].addDiscardedCard(card)

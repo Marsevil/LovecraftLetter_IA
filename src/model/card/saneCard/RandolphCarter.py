@@ -34,6 +34,6 @@ class RandolphCarter (SaneCard):
             player = self.getOwner()
             targetPlayer = chosenOne[0]
 
-            temp = player.getCardFromHand(0)
-            player.pickUp(targetPlayer.getCardFromHand(0))
-            targetPlayer.pickUp(temp)
+            temp = player.getHand()
+            player.setHand(targetPlayer.getHand())
+            targetPlayer.setHand(temp)
