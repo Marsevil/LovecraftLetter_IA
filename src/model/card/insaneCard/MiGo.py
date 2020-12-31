@@ -55,10 +55,10 @@ class MiGo (InsaneCard):
                     card = targetHand.pop()
 
                     #Only apply the effect if the card is The Necromicon
-                    if isinstance(card, TheNecronomicon):
+                    if isinstance(card, TheNecronomicon) and card.getOwner().isKnockableOut() :
                         card.effect(gameManager)
                     #or cthulhu, but this time ask the view for the saniy of its effect
-                    elif isinstance(card, Cthulhu) :
+                    elif isinstance(card, Cthulhu) and card.getOwner().isKnockableOut() :
                         effectSanity = gameManager.askInsanity(card)
                         card.sanity = effectSanity
                         card.effect(gameManager)

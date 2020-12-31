@@ -131,9 +131,6 @@ class GameManager:
         if currentPlayer.getImmune() :
             currentPlayer.setImmune(False)
 
-        if not currentPlayer.isKnockableOut() :
-            currentPlayer.setKnockableOut(True)
-
         # The card that the player want to play.
         card = currentPlayer.getCardFromHand(cardNumber)
     
@@ -574,6 +571,8 @@ class GameManager:
                 print("player " + str(i) + str(player.calcState()))
 
     def startNewGame(self):
+        # reset round counter
+        self.roundNumber = 0
         #reset removedCards
         self.removedCards = []
         #reset all player token and state

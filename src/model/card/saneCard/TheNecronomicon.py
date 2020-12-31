@@ -27,5 +27,5 @@ class TheNecronomicon (SaneCard):
 
     def effect(self, gameManager):
         # You are knocked out if the round if you discard The Necronomicon if the player could be knocked out
-        if(self.getOwner().isKnockableOut()):
+        if(self.getOwner().isKnockableOut() or (self.getOwner() != gameManager.getCurrentPlayer())) :
             self.getOwner().setKnockedOut(True)

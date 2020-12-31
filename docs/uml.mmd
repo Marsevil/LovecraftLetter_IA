@@ -75,7 +75,7 @@ classDiagram
     }
 
     class SpecifiedCard {
-        + SpecifiedCard(_name : string, _description : string, _value : int)
+        + SpecifiedCard(_name : String, _description : String, _value : int)
         + effect(sanity : Sanity) void
     }
 
@@ -88,6 +88,7 @@ classDiagram
         + buildHand() : List<Card>
         + isGameEnd() : int
         + startNewRound() : void
+        + startNewGame() : void
         + play(cardNumber : int) : void
         + playAI(cardEffectValue : int) : void
         + isRoundEnd() : int

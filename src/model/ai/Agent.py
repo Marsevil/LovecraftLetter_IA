@@ -117,7 +117,7 @@ class Agent(Player):
         print("--------------------------------------")
         print("build list of action , hand length : " + str(len(self.hand)))
         if len(self.hand) <= 1:
-            print("a")
+            raise Exception("At least two cards should be present.")
         for card in self.hand:
             print("card : " + card.name)
             #Check if the card in the hand is playable
