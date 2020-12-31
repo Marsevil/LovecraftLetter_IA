@@ -35,18 +35,16 @@ class TestMiGo(unittest.TestCase) :
 
         gm = GameManager(FakeView(None), 2)
         gm.startNewRound()
-        gm.players[0].hand = []
-        gm.players[0].pickUp(GreatRaceOfYith())
-        gm.players[0].pickUp(MiGo())
+        gm.players[0].setHand([GreatRaceOfYith(), MiGo()])
 
-        gm.players[1].hand = []
-        gm.players[1].pickUp(GreatRaceOfYith())
+        gm.players[1].setHand([GreatRaceOfYith()])
 
         gm.deck = []
+        gm.removedCards = [RandolphCarter()]
 
         gm.play(1)
 
-        self.assertIsInstance(gm.players[1].hand[0], MiGoBraincase)
+        self.assertIsInstance(gm.players[1].hand[0], RandolphCarter)
 
     def test_withChtulhu(self) :
         # When Chtulhu is in the hand of the other player the effect should be applied.
@@ -61,6 +59,7 @@ class TestMiGo(unittest.TestCase) :
 
         gm.play(1)
 
+        self.assertFalse(gm.players[1].hand)
         self.assertTrue(gm.players[1].knockedOut)
 
     def test_withNecronomicon(self) :
@@ -76,6 +75,7 @@ class TestMiGo(unittest.TestCase) :
 
         gm.play(1)
 
+        self.assertFalse(gm.players[1].hand)
         self.assertTrue(gm.players[1].knockedOut)
 
     def test_pickMiGoBraincase(self) :

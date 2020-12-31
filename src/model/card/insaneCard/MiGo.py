@@ -50,7 +50,6 @@ class MiGo (InsaneCard):
 
                 #Discard the hand of the target player
                 targetHand = chosenOne[0].getHand()
-                chosenOne[0].setHand([])
                 for _i in range(len(targetHand)):
 
                     card = targetHand.pop()
@@ -65,7 +64,7 @@ class MiGo (InsaneCard):
                         card.effect(gameManager)
                     
                     #The target player draws a new card
-                    if gameManager.deck :
+                    elif gameManager.deck :
                         #Draw a card
                         chosenOne[0].pickUp(gameManager.deck.pop())
                     #If the deck is empty he draws the first card

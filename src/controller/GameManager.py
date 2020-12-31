@@ -106,8 +106,6 @@ class GameManager:
         #reset removedCards
         self.removedCards = []
 
-        # Add Mi-Go Braincase to general discarded cards
-        # self.removedCards.append(MiGoBraincase())
         # Remove the top card of the deck.
         self.removedCards.append(self.deck.pop())
         # If 2 players game remove 5 other cards.
@@ -123,7 +121,6 @@ class GameManager:
             player.setKnockedOut(False)
             player.setImmune(False)
             player.setKnockableOut(True)
-
 
     ## Apply effect of the card choosen by the player.
     ## @params cardNumber index of card in the hand of currentPlayer.
