@@ -338,24 +338,25 @@ class GameManager:
     def isRoundEnd(self) :
         winner = self.findWinnerWthSpecialEffect()
 
-        # Count how many player are not knocked out
-        nbPlayerAlive = 0
-        for i in range(len(self.players)) :
-            player = self.players[i]
-            if not player.getKnockedOut() :
-                nbPlayerAlive += 1
-                winner = i
+        if winner == -1 :
+            # Count how many player are not knocked out
+            nbPlayerAlive = 0
+            for i in range(len(self.players)) :
+                player = self.players[i]
+                if not player.getKnockedOut() :
+                    nbPlayerAlive += 1
+                    winner = i
 
-        # If any player is not knocked out there is a tie.
-        # If there is more than one player not knocked out there isn't winner.
-        if nbPlayerAlive == 0 :
-            winner = -2
-        elif nbPlayerAlive > 1 :
-            winner = -1
+            # If any player is not knocked out there is a tie.
+            # If there is more than one player not knocked out there isn't winner.
+            if nbPlayerAlive == 0 :
+                winner = -2
+            elif nbPlayerAlive > 1 :
+                winner = -1
             
         # Le deck est vide : chaque joueur joue la carte qu'il a en main et celui qui a la plus grosse gagne.
         if (not self.deck) and (winner == -1) :
-            greatestValue = 0
+            greatestValue = -1
             for i in range(len(self.players)) :
                 player = self.players[i]
 
@@ -420,7 +421,8 @@ class GameManager:
 
             if not player.getKnockedOut() and player.discard :
 
-                lastCardPlayed = player.getDiscard()[-1]
+                playerDiscard = player.getDiscard()
+                lastCardPlayed = playerDiscard[-1]
 
                 if (
                     isinstance(lastCardPlayed, TheShiningTrapezohedron)
@@ -433,6 +435,13 @@ class GameManager:
                 if (isinstance(lastCardPlayed, Cthulhu) and lastCardPlayed.sanity == Sanity.INSANE) :
                     winner = i
                     break
+
+                if len(playerDiscard) > 2 :
+                    beforeLastCardPlayed = playerDiscard[-2]
+
+                    if (isinstance(beforeLastCardPlayed, Cthulhu) and beforeLastCardPlayed.sanity == Sanity.INSANE) :
+                        winner = i
+                        break
 
         return winner
 
@@ -505,10 +514,11 @@ class GameManager:
     ## @params card is a Card.
     ## @return Sanity.SANE if its the only one possibility else ask to the view.
     def askInsanity(self, card) :
+        player = card.getOwner()
         # If insane card, user can choose which effect will be used.
-        if card.hasInsane() and self.getCurrentPlayer().stateOfMind() == Sanity.INSANE :
+        if card.hasInsane() and player.stateOfMind() == Sanity.INSANE :
             #AI playing
-            if isinstance(self.getCurrentPlayer(),Agent):
+            if isinstance(player,Agent):
                 i = random.randint(1,2)
                 if i == 1:
                     return Sanity.INSANE
@@ -598,7 +608,7 @@ class GameManager:
                     #Sanity check
                     self.sanityCheck(currentPlayer)
 
-                if not currentPlayer.getKnockedOut() :
+                if not currentPlayer.getKnockedOut() and self.deck :
                     # Player draw a card
                     self.playerDraw(currentPlayer, 1)
                     # Choose a card to play & apply effect.

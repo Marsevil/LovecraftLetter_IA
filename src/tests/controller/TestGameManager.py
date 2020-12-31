@@ -7,6 +7,7 @@ from model.card.insaneCard.Cthulhu import Cthulhu
 from model.card.insaneCard.TheShiningTrapezohedron import TheShiningTrapezohedron
 from model.card.insaneCard.GoldenMead import GoldenMead
 from model.card.saneCard.TheSilverKey import TheSilverKey
+from model.card.saneCard.ProfessorHenryArmitage import ProfessorHenryArmitage
 
 class TestGameManager(unittest.TestCase) :
     def testRoundWinShiningTrapezohedron(self) :
@@ -45,6 +46,17 @@ class TestGameManager(unittest.TestCase) :
         gm.play(1)
 
         self.assertEqual(0, gm.findWinnerWthSpecialEffect())
+
+    def testRoundWinCthulhuXArmitage(self) :
+        gm = GameManager(FakeViewInsane(None), 2)
+
+        gm.players[0].setHand([DeepOnes(), ProfessorHenryArmitage()])
+        gm.players[1].setHand([Cthulhu()])
+        gm.players[1].setDiscard([DeepOnes(), DeepOnes()])
+
+        gm.play(1)
+
+        self.assertEqual(1, gm.findWinnerWthSpecialEffect())
 
     def testGameWinCthulhu(self) :
         gm = GameManager(FakeViewInsane(None), 2)

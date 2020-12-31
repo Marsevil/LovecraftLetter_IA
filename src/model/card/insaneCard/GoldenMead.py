@@ -59,5 +59,6 @@ class GoldenMead(InsaneCard):
                 
                 gameManager.showHandToCurrent(chosenPlayerHand)
                 
-                gameManager.playerDraw(player,1)
-                gameManager.playerDiscard(player,1)
+                if gameManager.deck :
+                    gameManager.playerDraw(player,1)
+                    gameManager.playerDiscard(player,1)
