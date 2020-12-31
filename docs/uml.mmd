@@ -6,33 +6,72 @@ classDiagram
         NEUTRAL
     }
 
+    class AIActionsEnum {
+    <<enumeration>>
+        CatsOfUltharSane = 0
+        ElderSignSane = 1
+        GreatRaceOfYithSane = 2
+        InvestigatorSane = 3
+        ProfessorHenryArmitageSane = 4
+        RandolphCarterSane = 5
+        TheNecronomiconSane = 6
+        TheSilverKeySane =7
+        CthulhuSane = 8
+        DeepOnesSane = 9
+        GoldenMeadSane = 10
+        HoundOfTindalosSane = 11
+        LiberIvonisSane = 12
+        MiGoSane = 13
+        MiGoBrainCaseSane = 14
+        NyarlathotepSane = 15
+        TheShiningTrapezohedronSane = 16
+        CthulhuInsane = 17
+        DeepOnesInsane = 18
+        GoldenMeadInsane = 19
+        HoundOfTindalosInsane = 20
+        LiberIvonisInsane = 21
+        MiGoInsane = 22
+        MiGoBrainCaseInsane = 23
+        NyarlathotepInsane = 24
+        TheShiningTrapezohedronInsane = 25
+    }
+
     class Card {
     <<abstract>>
-        - name : string
-        - description : string
+        - name : String
+        - description : String
         - value : int
         - sanity : Sanity
 
-        + Card(_name : string, _description : string, _value : int)
-        + getDescrption() string
-        + getName() string
-        + getValue() int
-        + hasInsane()* bool
-        + effect(sanity : Sanity)* void
+        + Card(_name : String, _description : String, _value : int)
+        + name() : String
+        + name(newvalue : String) : void
+        + getName() : String
+        + description() : String
+        + description(newvalue : String) : void
+        + getDescrption() : String
+        + value() : int
+        + value(newvalue : int) : void
+        + getValue() : int
+        + getOwner() : Player
+        + setOwner(owner : Player) : void
+        + *sanity() : Sanity*
+        + *sanity(newvalue : Sanity) : void*
+        + *getSanity() : Sanity*
+        + *hasInsane() : Boolean* 
+        + *effect(sanity : Sanity) : void*
     }
 
     class SaneCard {
     <<abstract>>
-        + SaneCard(_name : string, _description : string, _value : int)
-        + effect(sanity : Sanity)* void
-        + hasInsane() bool
+        + SaneCard(_name : String, _description : String, _value : int)
+        + __hasInsane() : Boolean__
     }
 
     class InsaneCard {
     <<abstract>>
-        + InsaneCard(_name : string, _description : string, _value : int)
-        + effect(sanity : Sanity)* void
-        + hasInsane() bool
+        + InsaneCard(_name : String, _description : String, _value : int)
+        + __hasInsane() : Boolean__
     }
 
     class SpecifiedCard {
@@ -41,60 +80,126 @@ classDiagram
     }
 
     class GameManager {
+        - allAI : Boolean
         - roundNumber : int
 
-        + GameManager(nbPlayer : int)
-        + run() : void
+        + GameManager(view : View, nbPlayer : int, nbAI : int)
+        + __buildDeck() : List<Card>__
+        + buildHand() : List<Card>
         + isGameEnd() : int
-        + nextRound() : void
-        + play(int : cardNumber) : void
-        + chooseTargetPlayer(int : nbPlayer) : List<Player>
-        + sanityCheck(Player : player) : void
-        + isGameEnd() : int
-        + isRoundEnd() : int
-        + findWinnerWthSpecialEffect() : void
         + startNewRound() : void
+        + play(cardNumber : int) : void
+        + playAI(cardEffectValue : int) : void
+        + isRoundEnd() : int
         + getCurrentPlayer() : Player
-        + checkPlayableCard(Card : card) : Boolean
+        + chooseTargetPlayer(nbPlayer : int, allowCurrentPlayer : Boolean) : List<Player>
+        + getPlayers() : List<Player>
+        + checkPlayableCard(card : Card) : Boolean
+        + findWinnerWthSpecialEffect() : int
+        + sanityCheck(player : Player) : void
         + redistribute() : void
-        + showHandToCurrent(List<Card> : cards) : void
+        + chooseNumber() : int
+        + showHandToCurrent(hand : List<Card>) : void
+        + askInsanity(card : Card) : Sanity
         + playerDraw(player : Player, nbCard : int) : void
         + playerDiscard(player : Player, nbCard : int) : void
+        + printAIQtable() : void
+        + printGameState() : void
+        + run() : void
     }
 
     class Player {
         - saneToken : int
         - insaneToken : int
+        - knockedOut : Boolean
+        - knockableOut : Boolean
+        - immune : Boolean
 
-        + updateToken() void
+        + Player(saneToken : int, insaneToken : int, hand : List<Card>, discard : List<Card>, knockedOut : Boolean, knockableOut : Boolean, immune : Boolean)
+        + nbInsaneCardDiscarded() : int
+        + stateOfMind() : Sanity
+        + updateToken() : void
+        + pickUp(card : Card) : void
         + getHand() : List<Card>
+        + setHand(hand : List<Card>) : void
         + getDiscard() : List<Card>
-        + getSaneToken() int
-        + getInsaneToken() int
-        + roundWon() : void
-        + getCardFromHand(int : cardNumber) : Card
-        + addDiscardedCard(Card : card) : void
+        + setDiscard(discard : List<Card>) : void
+        + getSaneToken() : int
+        + setSaneToken(saneToken : int) : void
+        + getInsaneToken() : int
+        + setInsaneToken(insaneToken : int) : void
+        + getKnockedOut() : Boolean
+        + setKnockedOut(knockedOut : Boolean) : void
+        + isKnockableOut() : Boolean
+        + setKnockableOut(knockableOut : Boolean) : void
+        + getImmune() : Boolean
+        + setImmune(immune : Boolean) : void
+        + getCardFromHand(cardNumber : int) : Card
+        + addDiscardedCard(card : Card) : void
+    }
+
+    class Agent {
+        - saneToken : int
+        - insaneToken : int
+        - knockedOut : Boolean
+        - knockableOut : Boolean
+        - immune : Boolean
+        - epsilon : float
+        - alpha : float
+        - gamma : float
+        - q : Dictionnary<Dictionnary<List<int>,AIActionsEnum>,float>
+        - lastAction : AIActionsEnum
+        - score : int
+        - winReward : int
+        - knockedReward : int
+        - immuneReward : int
+
+        + Agent(saneToken : int, insaneToken : int, hand : List<Card>, discard : List<Card>, knockedOut : Boolean, knockableOut : Boolean, immune : Boolean, epsilon : float, alpha : float, gamma : float)
+        + getQ(state : List<int>, action : AIActionsEnum) : Dictionnary<Dictionnary<List<int>,AIActionsEnum>,float>
+        + learnQ(state : List<int>, action : AIActionsEnum, reward : int, value : float) : void
+        + chooseAction(state : List<int>, actions : List<AIActionsEnum>) : AIActionsEnum
+        + learn(state1 : List<int>, action1 : AIActionsEnum, reward : int, state2 : List<int>, actions : List<AIActionsEnum>) : void
+        + printQ() : void
+        + calcState() : List<int>
+        + calcReward() : int
+        + update(gameManager : GameManager) : AIActionsEnum
+        + _buildListOfActions(gameManager : GameManager) : List<AIActionsEnum>
+        + ___readJsonQTable() : Dictionnary<Dictionnary<List<int>,AIActionsEnum>,float>__
+        + ___writeJsonQTable(data : Dictionnary<Dictionnary<List<int>,AIActionsEnum>,float>) : void__
     }
 
     class View {
         + View()
-        + chooseTargetPlayer(int : nbPlayer, List<Player> players) : List<Player>
-        + cardCantBePlayed() : int
-        + askInsanity() : sanity : Sanity
-        + redistribute(List<Card> : inGameCards) : List<List<Card>>
-        + chooseNumber() : int
-        + showCards(List<Card> : cards) : void
+        + chooseTargetPlayer(nbPlayer : int, players : List<Player>) : List<Player>
+        + cardToPlay(playerHand : List<Card>) : int
+        + cardCantBePlayed() : void
+        + askInsanity() : Sanity
+        + redistribute(inGameCards : List<Card>) : List<Card>
+        + chooseNumber(minNb : int, maxNb : int) : int
+        + showCards(cards : List<Card>) : void
         + playerDiscard(player : Player, nbCard : int) : List<int>
-        + cardToPlay(List<Card> : playerCard) : int
+        + displayRoundWinner(playerIndex : int, sanity : Sanity) : void
+        + displayNewTurn(gameManager : GameManager) : void
+        + _displayNewAction() : void
+        + displayBeginSanityCheck(playerID : int, nbCard : int) : void
+        + displayStepSanityCheck(card : Card) : void
+        + displayCardWillBePlayed(playerID : int, nbCard : int) : void
+        + cls() : void
     }
 
     Card <|.. SaneCard
-    InsaneCard <|.. SaneCard
-    SpecifiedCard <|.. SaneCard
-    SpecifiedCard <|.. InsaneCard
+    Card "1" -- "1" Player : owner
+    SaneCard <|.. InsaneCard
+    SaneCard <|.. SpecifiedCard
+    InsaneCard <|.. SpecifiedCard
     Player "1" -- "0..*" Card : hand
     Player "1" -- "0..*" Card : discard
+    Player <|.. Agent
     GameManager "1" -- "0..*" Card : deck
-    GameManager "1" -- "2..6" Player
-    GameManager "1" -- "1" Player : Current
-    View "1" -- "1" GameManager
+    GameManager "1" -- "0..*" Card : removedCards
+    GameManager "1" -- "2..6" Player : players
+    GameManager "1" -- "1" Player : currentPlayer
+    GameManager "1" -- "0..2" Agent
+    GameManager "1" -- "1" View : view
+    View "1" -- "0..2" Player
+    View "1" -- "0..2" Agent

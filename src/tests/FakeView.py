@@ -29,6 +29,9 @@ class FakeView :
     def redistribute(self, inGameCards) :
         redistributedCards = []
         while inGameCards :
-            redistributedCards.append([inGameCards.pop()])
+            redistributedCards.append(inGameCards.pop())
 
         return redistributedCards
+
+    def displayNewTurn(self, gm) :
+        pass
