@@ -103,8 +103,11 @@ class GameManager:
         self.roundNumber += 1
         self.deck = GameManager.buildDeck()
 
+        #reset removedCards
+        self.removedCards = []
+
         # Add Mi-Go Braincase to general discarded cards
-        self.removedCards.append(MiGoBraincase())
+        # self.removedCards.append(MiGoBraincase())
         # Remove the top card of the deck.
         self.removedCards.append(self.deck.pop())
         # If 2 players game remove 5 other cards.
@@ -120,6 +123,7 @@ class GameManager:
             player.setKnockedOut(False)
             player.setImmune(False)
             player.setKnockableOut(True)
+
 
     ## Apply effect of the card choosen by the player.
     ## @params cardNumber index of card in the hand of currentPlayer.
@@ -318,7 +322,10 @@ class GameManager:
                     choosenCard = currentPlayer.getCardFromHand(i)
                     choosenCard.sanity = Sanity.SANE
                     break
-                
+
+        if choosenCard is None:
+            raise Exception("No choosen card")
+
         if choosenCard is not None:
             # Display wich card will be played.
             if not self.allAI :
@@ -465,6 +472,7 @@ class GameManager:
         if isinstance(self.getCurrentPlayer(),Agent):
             redistributedCards = inGameCards
             random.shuffle(redistributedCards)
+            print(redistributedCards)
         else:
             redistributedCards = self.view.redistribute(inGameCards)
 
@@ -520,6 +528,7 @@ class GameManager:
     ## @params player who cards will be given.
     ## @params nbCard number of card which have to be given to the player.
     def playerDraw(self, player, nbCard) :
+        
         for _i in range(nbCard) :
             if self.deck :
                 player.pickUp(self.deck.pop())
@@ -556,6 +565,18 @@ class GameManager:
             if isinstance(player,Agent):
                 i += 1
                 print("player " + str(i) + str(player.calcState()))
+
+    def startNewGame(self):
+        #reset removedCards
+        self.removedCards = []
+        #reset all player token and state
+        for player in self.players:
+            player.setInsaneToken(0)
+            player.setSaneToken(0)
+            player.setImmune(False)
+            player.setKnockableOut(True)
+            player.setKnockedOut(False)
+
 
     ## Loop for each round.
     def run(self) :

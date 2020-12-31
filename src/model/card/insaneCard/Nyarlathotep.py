@@ -41,11 +41,11 @@ class Nyarlathotep(InsaneCard):
 
                 #Échange la main avec le joueur
                 player = self.getOwner()
-                target = chosenOne[0]
+                targetPlayer = chosenOne[0]
 
-                temp = player.getCardFromHand(0)
-                player.pickUp(target.getCardFromHand(0))
-                target.pickUp(temp)
+                temp = player.getHand()
+                player.setHand(targetPlayer.getHand())
+                targetPlayer.setHand(temp)
 
         if self.sanity == Sanity.INSANE:
             # Call the function to show all the players card and to redistribute

@@ -17,6 +17,10 @@ class Player:
         #true if the player is immuned to card effect of other players for the current round
         self.immune = immune
 
+        self.drawNumber = 0
+        self.discardNumber = 0
+        self.updateNumber = 0
+
     def nbInsaneCardDiscarded(self):
         #seach the number of insane card in the discard pile
         nbInsane = 0

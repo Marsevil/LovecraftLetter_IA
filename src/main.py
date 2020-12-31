@@ -18,6 +18,7 @@ if __name__ == '__main__':
 
     gm = GameManager(View(), nbPlayer, nbAI)
     for i in range(nbIteration) :
+        gm.startNewGame()
         winner = gm.run()
 #        print("Winner is player " + str(winner + 1))
     gm.printAIQtable()
