@@ -334,34 +334,40 @@ class GameManager:
     def isRoundEnd(self) :
         winner = self.findWinnerWthSpecialEffect()
 
-        # All players are knocked out.
-        if (winner == -1) :
-            for player in range(len(self.players)) :
-                if not self.players[player].getKnockedOut() :
-                    if winner != -1 :
-                        winner = -1
-                        break
-                    else :
-                        winner = player
+        # Count how many player are not knocked out
+        nbPlayerAlive = 0
+        for i in range(len(self.players)) :
+            player = self.players[i]
+            if not player.getKnockedOut() :
+                nbPlayerAlive += 1
+                winner = i
 
-                    winner = player
+        # If any player is not knocked out there is a tie.
+        # If there is more than one player not knocked out there isn't winner.
+        if nbPlayerAlive == 0 :
+            winner = -2
+        elif nbPlayerAlive > 1 :
+            winner = -1
             
         # Le deck est vide : chaque joueur joue la carte qu'il a en main et celui qui a la plus grosse gagne.
-        if not self.players and winner == -1 :
-            greaterValue = -1
-            for player in range(len(self.players)) :
-                value = self.players[player].getHand()[-1].getValue()
-                if value > greaterValue :
-                    greaterValue = value
-                    winner = player
-                elif value == greaterValue :
-                    # Si plusieurs on le même ils sont éliminés.
-                    self.players[player].setKnockedOut(True)
-                    self.players[winner].setKnockedOut(True)
-                    winner = self.isRoundEnd()
+        if (not self.deck) and (winner == -1) :
+            greatestValue = 0
+            for i in range(len(self.players)) :
+                player = self.players[i]
+
+                if not player.getKnockedOut() :
+                    value = player.getHand()[0].getValue()
+                    if value > greatestValue :
+                        greatestValue = value
+                        winner = i
+                    elif value == greatestValue :
+                        player.setKnockedOut(True)
+                        self.players[winner].setKnockedOut(True)
+                        winner = self.isRoundEnd()
+                        break
 
             if winner == -1 :
-                winner = -2
+                raise Exception("A winner have to be found !!!")
 
         return winner
 
@@ -517,6 +523,8 @@ class GameManager:
         for _i in range(nbCard) :
             if self.deck :
                 player.pickUp(self.deck.pop())
+            else :
+                raise Exception("Deck have not to be empty !!!")
 
     ## Discard nbCard from the hand of player.
     ## @params player who discard the cards.

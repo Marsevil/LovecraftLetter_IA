@@ -6,6 +6,7 @@ from model.card.insaneCard.DeepOnes import DeepOnes
 from model.card.insaneCard.Cthulhu import Cthulhu
 from model.card.insaneCard.TheShiningTrapezohedron import TheShiningTrapezohedron
 from model.card.insaneCard.GoldenMead import GoldenMead
+from model.card.saneCard.TheSilverKey import TheSilverKey
 
 class TestGameManager(unittest.TestCase) :
     def testRoundWinShiningTrapezohedron(self) :
@@ -112,3 +113,45 @@ class TestGameManager(unittest.TestCase) :
         self.assertFalse(gm.players[0].getKnockedOut())
         self.assertFalse(gm.players[0].getImmune())
         self.assertTrue(gm.players[0].isKnockableOut())
+
+    def testIsRoundEndWinKnockedOut(self) :
+        gm = GameManager(FakeViewInsane(None), 2)
+        gm.startNewRound()
+
+        gm.players[1].knockedOut = True
+
+        self.assertEqual(0, gm.isRoundEnd())
+
+    def testIsRoundEndNoWinKnockedOut(self) :
+        gm = GameManager(FakeViewInsane(None), 2)
+        gm.startNewRound()
+
+        self.assertEqual(-1, gm.isRoundEnd())
+
+    def testIsRoundEndWinGreatestCard(self) :
+        gm = GameManager(FakeViewInsane(None), 2)
+        gm.startNewRound()
+
+        # Give known card to players
+        gm.players[0].hand = []
+        gm.players[1].hand = []
+        gm.players[0].pickUp(TheShiningTrapezohedron())
+        gm.players[1].pickUp(DeepOnes())
+
+        # Emty Deck
+        gm.deck = []
+
+        # P0 should win because the shining trapezohedron is greater than Deep ones.
+        self.assertEqual(0, gm.isRoundEnd())
+
+    def testIsRoundEndTie(self) :
+        gm = GameManager(FakeViewInsane(None), 2)
+
+        # Give cards with same value to each player
+        gm.players[0].setHand([TheSilverKey()])
+        gm.players[1].setHand([TheShiningTrapezohedron()])
+
+        # Empty deck
+        gm.deck = []
+
+        self.assertEqual(-2, gm.isRoundEnd())
