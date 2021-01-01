@@ -207,12 +207,12 @@ class View():
         print("----------------------------------------------------------")
 
     def displayBeginSanityCheck(self, playerID, nbCard) :
-        print("Sanity check begin for player ", str(playerID + 1), " with ", nbCard, ".")
+        print("Sanity check begin for player", str(playerID + 1), "with", nbCard, "cards.")
         input("continue (c) : ")
 
     def displayStepSanityCheck(self, card) :
         print("Name : ", card.getName())
-        print("Sanity : ", card.hasInsane())
+        print("Sanity : ", Sanity.INSANE if card.hasInsane() else Sanity.SANE)
         input("continue (c) : ")
 
     def displayCardWillBePlayed(self, playerID, card) :

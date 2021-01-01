@@ -403,7 +403,11 @@ class GameManager:
     def checkPlayableCard(self, card) :
         otherCard = self.getCurrentPlayer().getHand()[0]
 
-        if ((isinstance(otherCard, TheSilverKey) or isinstance(otherCard, TheShiningTrapezohedron)) and card.getValue() > 4) :
+        if (
+            (isinstance(otherCard, TheSilverKey) or isinstance(otherCard, TheShiningTrapezohedron))
+            and not (isinstance(card, TheShiningTrapezohedron) or isinstance(card, TheSilverKey))
+            and card.getValue() > 4
+        ) :
             return False
         else :
             return True
@@ -628,7 +632,7 @@ class GameManager:
 
             # We don't print winner if there are only AI.
             if not self.allAI:
-                self.view.displayRoundWinner(roundWinner, Sanity.NEUTRAL)
+                self.view.displayRoundWinner(roundWinner, self.players[roundWinner].stateOfMind())
 
             # -2 indicates that there is a tie.
             if roundWinner != -2 :

@@ -167,3 +167,32 @@ class TestGameManager(unittest.TestCase) :
         gm.deck = []
 
         self.assertEqual(-2, gm.isRoundEnd())
+
+    def testCheckPlayableCardFalse(self) :
+        gm = GameManager(FakeViewInsane(None), 2)
+
+        # If the other card is greater than 4 with TheSilverKey.
+        gm.players[0].setHand([ProfessorHenryArmitage(), TheSilverKey()])
+        self.assertFalse(gm.checkPlayableCard())
+
+        # If the other card is greater than 4 with TheShiningTrapezohedron.
+        gm.players[0].setHand([ProfessorHenryArmitage(), TheShiningTrapezohedron()])
+        self.assertFalse(gm.checkPlayableCard())
+
+    def testCheckPlayableCardTrue(self) :
+        gm = GameManager(FakeViewInsane(None), 2)
+
+        # If the other card is lower than 4 with TheSilverKey
+        gm.players[0].setHand([DeepOnes(), TheSilverKey()])
+        self.assertTrue(gm.checkPlayableCard())
+
+        # If the other card is lower than 4 with TheShiningTrapezohedron
+        gm.players[0].setHand([DeepOnes(), TheShiningTrapezohedron()])
+        self.assertTrue(gm.checkPlayableCard())
+
+        # If the two cards are TheShiningTrapezohedron AND TheSilverKey
+        gm.players[0].setHand([TheSilverKey(), TheShiningTrapezohedron()])
+        self.assertTrue(gm.checkPlayableCard())
+
+        gm.players[0].setHand([TheShiningTrapezohedron(), TheSilverKey()])
+        self.assertTrue(gm.checkPlayableCard())
