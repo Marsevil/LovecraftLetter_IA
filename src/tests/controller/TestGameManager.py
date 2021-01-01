@@ -106,11 +106,9 @@ class TestGameManager(unittest.TestCase) :
         gm.players[0].addDiscardedCard(DeepOnes())
         gm.players[0].addDiscardedCard(DeepOnes())
         gm.players[0].immune = True
-        gm.players[0].knockableOut = False
 
         gm.play(1)
 
-        self.assertTrue(gm.players[0].isKnockableOut())
         self.assertFalse(gm.players[0].getImmune())
 
     def testResetStateStartNewRound(self) :
@@ -173,26 +171,32 @@ class TestGameManager(unittest.TestCase) :
 
         # If the other card is greater than 4 with TheSilverKey.
         gm.players[0].setHand([ProfessorHenryArmitage(), TheSilverKey()])
-        self.assertFalse(gm.checkPlayableCard())
+        card = gm.players[0].getCardFromHand(0)
+        self.assertFalse(gm.checkPlayableCard(card))
 
         # If the other card is greater than 4 with TheShiningTrapezohedron.
         gm.players[0].setHand([ProfessorHenryArmitage(), TheShiningTrapezohedron()])
-        self.assertFalse(gm.checkPlayableCard())
+        card = gm.players[0].getCardFromHand(0)
+        self.assertFalse(gm.checkPlayableCard(card))
 
     def testCheckPlayableCardTrue(self) :
         gm = GameManager(FakeViewInsane(None), 2)
 
         # If the other card is lower than 4 with TheSilverKey
         gm.players[0].setHand([DeepOnes(), TheSilverKey()])
-        self.assertTrue(gm.checkPlayableCard())
+        card = gm.players[0].getCardFromHand(0)
+        self.assertTrue(gm.checkPlayableCard(card))
 
         # If the other card is lower than 4 with TheShiningTrapezohedron
         gm.players[0].setHand([DeepOnes(), TheShiningTrapezohedron()])
-        self.assertTrue(gm.checkPlayableCard())
+        card = gm.players[0].getCardFromHand(0)
+        self.assertTrue(gm.checkPlayableCard(card))
 
         # If the two cards are TheShiningTrapezohedron AND TheSilverKey
         gm.players[0].setHand([TheSilverKey(), TheShiningTrapezohedron()])
-        self.assertTrue(gm.checkPlayableCard())
+        card = gm.players[0].getCardFromHand(0)
+        self.assertTrue(gm.checkPlayableCard(card))
 
         gm.players[0].setHand([TheShiningTrapezohedron(), TheSilverKey()])
-        self.assertTrue(gm.checkPlayableCard())
+        card = gm.players[0].getCardFromHand(0)
+        self.assertTrue(gm.checkPlayableCard(card))
