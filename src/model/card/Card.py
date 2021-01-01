@@ -80,7 +80,7 @@ class Card(ABC):
         
     @staticmethod
     @abstractmethod
-    def hasInsane(self):
+    def hasInsane():
         ...
     
     @abstractmethod
