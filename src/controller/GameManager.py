@@ -576,7 +576,7 @@ class GameManager:
 
     def startNewGame(self):
         # reset round counter
-        self.roundNumber = 0
+        self.roundNumber = -1
         #reset removedCards
         self.removedCards = []
         #reset all player token and state
